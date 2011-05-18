@@ -5,33 +5,62 @@
 
   // Default settings.
   var defaults = {
+    // Whether to cache query results.
     cache: true,
+    // The key to use in comparing data objects. This allows the currently
+    // selected item to be highlighted in the results list.
     compare: null,
+    // Additional data to be sent in the request query string.
     data: {},
+    // The number of milliseconds to delay before firing a request after a
+    // change is made to the input value.
     delay: 250,
+    // Format the text that's displayed when the ajax request fails. Setting
+    // this option to null or returning false suppresses the message from being
+    // displayed.
     formatError: function($item, $input, $list, jqXHR, textStatus, errorThrown) {
       return '<em>Your search could not be completed at this time.</em>';
     },
+    // Format the display of each item in the results list.
     formatItem: function(json, $item, $input, $list) {
       return json.title || json.name;
     },
+    // Format the text that's displayed when the minimum number of characters
+    // (specify with the 'minChars' option) hasn't been reached. Setting this
+    // option to null or returning false suppresses the message from being
+    // displayed.
     formatMinChars: function(minChars, $item, $input, $list) {
       return '<em>Your search must be at least <strong>' + minChars + '</strong> characters.</em>';
     },
+    // Format the text that's displayed when there are no results for the
+    // query. Setting this option to null or returning false suppresses the
+    // message from being displayed.
     formatNoResults: function(q, $item, $input, $list) {
       return '<em>No results for <strong>' + q + '</strong>.</em>';
     },
+    // The minimum number of characters required before a request is fired.
     minChars: 1,
+    // Called when the input value changes.
     onChange: null,
+    // Called when the input field receives focus.
     onFocus: null,
+    // Called before the request is made.
     onRequestBefore: null,
+    // Called after the request completes (either success or error).
     onRequestAfter: null,
+    // Called when an item is selected from the results list or passed in
+    // through the 'selected' option.
     onSelect: function(json, $item, $input, $list) {
       $input.val(json.title || json.name);
     },
+    // Whether to clear the input value when no selection is made from the
+    // results list.
     required: false,
+    // The list items to make selectable.
     selectable: '*',
+    // Prime the input with a selected item.
     selected: null,
+    // The URL to request for the results.
     url: null
   };
 
@@ -538,7 +567,8 @@
           }
         });
       },
-    // Returns the specified inputs to their original state.
+    // Removes the autocomplete functionality and returns the specified inputs
+    // to their original state.
     destroy:
       function() {
         return this.each(function() {
