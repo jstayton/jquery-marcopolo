@@ -75,7 +75,7 @@ Now attach Marco Polo to the input field to power the search:
       }
     });
 
-At this point, two transformation occur in the HTML:
+At this point, two transformations occur in the HTML:
 
 1.  _autocomplete="off"_ is added to the input field to prevent the browser's
     autocomplete functionality from interfering.
@@ -211,8 +211,9 @@ Options
     Format the text that's displayed when the ajax request fails. The message
     is displayed in a list item with the class _mp\_error_:
 
-        <li class="mp_error"><em>Your search could not be completed at this
-        time.</em></li>
+        <li class="mp_error">
+          <em>Your search could not be completed at this time.</em>
+        </li>
 
     Setting this option to _null_ or returning _false_ suppresses the message
     from being displayed.
@@ -241,8 +242,9 @@ Options
     (specify with the _minChars_ option) hasn't been reached. The message is
     displayed in a list item with the class _mp\_min\_chars_:
 
-        <li class="mp_min_chars"><em>Your search must be at least <strong>3
-        </strong> characters.</em></li>
+        <li class="mp_min_chars">
+          <em>Your search must be at least <strong>3</strong> characters.</em>
+        </li>
 
     Setting this option to _null_ or returning _false_ suppresses the message
     from being displayed. It is also not displayed when there is no input
@@ -250,8 +252,7 @@ Options
 
     _Default:_
 
-        return '<em>Your search must be at least <strong>' + minChars + '
-        </strong>characters.</em>';
+        return '<em>Your search must be at least <strong>' + minChars + '</strong>characters.</em>';
 
     ---------------------------------------------------------------------------
 *   **formatNoResults**(q, $item, $input, $list) _function, null_
@@ -259,8 +260,9 @@ Options
     Format the text that's displayed when there are no results for the query.
     The message is displayed in a list item with the class _mp\_no\_results_:
 
-        <li class="mp_no_results"><em>No results for <strong>something
-        </strong>.</em></li>
+        <li class="mp_no_results">
+          <em>No results for <strong>something</strong>.</em>
+        </li>
 
     Setting this option to _null_ or returning _false_ suppresses the message
     from being displayed.
