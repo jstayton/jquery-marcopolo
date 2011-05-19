@@ -415,7 +415,7 @@
 
   // "Public" methods that can be called on the plugin.
   var methods = {
-    // Initializes the plugin on the specified inputs.
+    // Initialize the plugin on the selected input fields.
     init:
       function(options) {
         return this.each(function() {
@@ -594,8 +594,8 @@
           }
         });
       },
-    // Removes the autocomplete functionality and returns the specified inputs
-    // to their original state.
+    // Remove the autocomplete functionality and return the selected input
+    // fields to their original state.
     destroy:
       function() {
         return this.each(function() {
@@ -654,6 +654,33 @@
 
           return this;
         }
+      },
+    // Programmatically trigger a search request using the existing input value
+    // or a new one.
+    search:
+      function(q) {
+        return this.each(function() {
+          var $input = $(this);
+          var data = $input.data('marcoPolo');
+
+          // Skip if this plugin was never initialized on the input.
+          if (!data) {
+            return;
+          }
+
+          // Use the existing input value if a new one is not specified.
+          if (typeof q === 'undefined') {
+            q = $input.val();
+
+            request(q, $input, data.$list, data.settings);
+          }
+          // Otherwise, change the input value to the specified one.
+          else {
+            $input.val(q);
+
+            change(q, $input, data.$list, data.settings);
+          }
+        });
       }
   };
 

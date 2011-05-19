@@ -470,6 +470,21 @@ Methods
           onSelect: function(data, $item, $input, $list) { … }
         });
 
+*   **search**
+
+    Programmatically trigger a search request using the existing input value
+    or a new one.
+
+    _Example:_
+
+    Trigger a search on the existing input value:
+
+        $('#userSearch').marcoPolo('search');
+
+    Trigger a search on a new value:
+
+        $('#userSearch').marcoPolo('search', 'Wilson')
+
 Feedback
 --------
 
