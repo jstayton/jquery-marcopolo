@@ -37,15 +37,15 @@
       return json.title || json.name;
     },
     // Format the text that's displayed when the minimum number of characters
-    // (specify with the 'minChars' option) hasn't been reached. Setting this
+    // (specified with the 'minChars' option) hasn't been reached. Setting this
     // option to null or returning false suppresses the message from being
     // displayed.
     formatMinChars: function(minChars, $item, $input, $list) {
       return '<em>Your search must be at least <strong>' + minChars + '</strong> characters.</em>';
     },
-    // Format the text that's displayed when there are no results for the
-    // query. Setting this option to null or returning false suppresses the
-    // message from being displayed.
+    // Format the text that's displayed when there are no results returned for
+    // the requested input value. Setting this option to null or returning
+    // false suppresses the message from being displayed.
     formatNoResults: function(q, $item, $input, $list) {
       return '<em>No results for <strong>' + q + '</strong>.</em>';
     },
@@ -71,7 +71,7 @@
     selectable: '*',
     // Prime the input with a selected item.
     selected: null,
-    // The URL to request for the results.
+    // The URL to GET request for the results.
     url: null
   };
 

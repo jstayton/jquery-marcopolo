@@ -22,7 +22,7 @@ important principals:
     speed. Patterns and best practices for plugin development have become much
     more formulated. Unfortunately, most autocomplete plugins are stuck in the
     past, and fail to provide the superior user and developer experience that
-    modern plugins (such as this one) foster.
+    modern plugins (such as this) foster.
 
 *   **Thoughtful**
 
@@ -30,14 +30,14 @@ important principals:
     experience. If I find the results list showing when it shouldn't — or
     worse, stuck open and not closing — I know there are likely other details
     that weren't paid the necessary attention. Not that this plugin is perfect,
-    but much thought and care was and is put into what's important.
+    but a lot of thought and care was and is put into what's important.
 
 *   **Lean & Flexible**
 
     There's a fine line between too little and too much. This plugin certainly
     isn't for _every_ situation, but it strives to provide enough options and
     callbacks to allow for _many_ situations. By not baking in specific use
-    cases, the plugin can stay lean (less than 5.5 KB compressed).
+    cases, the plugin can stay lean (less than 5.5 KB compressed) and flexible.
 
 *   **Maintained**
 
@@ -122,20 +122,24 @@ results:
       …
     </ol>
 
-Each list item is created by passing a user json object to the _formatItem_
-callback, which in turn strings together the user's first name and last name
-for display.
+Each list item is created through the passing of a user json object to the
+_formatItem_ callback, which in turn strings together the user's first name
+and last name for display.
 
 Finally, when a user is selected from the results list, their json object is
 passed to the _onSelect_ callback to complete the browser redirect.
 
-And that's it! While this example demonstrated a number of fundamental
+And that's it! While this example demonstrates a number of fundamental
 concepts, the possibilities extend far beyond the straightforward
 _search, click, redirect_ setup shown here. Check out the wiki for some more
 advanced recipes.
 
 Options
 -------
+
+All options are optional, although _url_ is usually specified unless the input
+field is in a form by itself (in which case the form's _action_ attribute can
+be used).
 
 *   **cache** _boolean_
 
@@ -166,8 +170,8 @@ Options
 *   **delay** _integer_
 
     The number of milliseconds to delay before firing a request after a change
-    is made to the input value. This helps prevent a request on every
-    keystroke.
+    is made to the input value. This helps prevent an ajax request on every
+    keystroke from overwhelming the server and slowing down the page.
 
     _Default: 250_
 
@@ -184,17 +188,19 @@ Options
 *   **required** _boolean_
 
     Whether to clear the input value when no selection is made from the results
-    list. This happens when the input field is blurred, either by clicking out
-    of the input field or some other means.
+    list. This happens when the input field is blurred, usually by clicking or
+    tabbing out of the field.
 
     _Default: false_
 
     ---------------------------------------------------------------------------
 *   **selectable** _selector_
 
-    The list items to make selectable. For example, this allows items with a
-    certain class — like all headers with the class _header_ — to be excluded.
-    Selectable items receive the class _mp\_selectable_.
+    The list items to make selectable. For example, say you add the class
+    _header_ to a number of list items (in the _formatItem_ callback) that you
+    want to act as non-selectable headers. They can be excluded with the
+    selector _:not(.header)_. Selectable items receive the class
+    _mp\_selectable_.
 
     _Default: '*'_
 
@@ -209,9 +215,9 @@ Options
     ---------------------------------------------------------------------------
 *   **url** _string, null_
 
-    The URL to request for the results. If no URL is set, the parent form's
+    The URL to GET request for the results. If no URL is set, the parent form's
     _action_ attribute value is used if one exists. _q_ is added to the query
-    string with the input value.
+    string with the input value, along with any additional _data_.
 
     _Default: null_
 
@@ -252,7 +258,7 @@ Options
 
     Format the display of each item in the results list. By default, the
     _title_ or _name_ value of the data object is displayed. The returned value
-    is added to a list item with the class _mp\_list_:
+    is added to a list item with the class _mp\_item_:
 
         <li class="mp_item">The Title of Something</li>
 
@@ -273,7 +279,7 @@ Options
 *   **formatMinChars**(minChars, $item, $input, $list) _function, null_
 
     Format the text that's displayed when the minimum number of characters
-    (specify with the _minChars_ option) hasn't been reached. The message is
+    (specified with the _minChars_ option) hasn't been reached. The message is
     displayed in a list item with the class _mp\_min\_chars_:
 
         <li class="mp_min_chars">
@@ -300,8 +306,9 @@ Options
     ---------------------------------------------------------------------------
 *   **formatNoResults**(q, $item, $input, $list) _function, null_
 
-    Format the text that's displayed when there are no results for the query.
-    The message is displayed in a list item with the class _mp\_no\_results_:
+    Format the text that's displayed when there are no results returned for the
+    requested input value. The message is displayed in a list item with the
+    class _mp\_no\_results_:
 
         <li class="mp_no_results">
           <em>No results for <strong>something</strong>.</em>
@@ -352,7 +359,8 @@ Options
     ---------------------------------------------------------------------------
 *   **onRequestBefore**($input, $list) _function, null_
 
-    Called before the request is made.
+    Called before the request is made. Useful for showing a loading spinner if
+    the request is going to take some time.
 
     _Default: null_
 
@@ -364,7 +372,8 @@ Options
     ---------------------------------------------------------------------------
 *   **onRequestAfter**($input, $list, jqXHR, textStatus) _function, null_
 
-    Called after the request completes (either success or error).
+    Called after the request completes (either success or error). Useful for
+    hiding a loading spinner that's shown in _onRequestBefore_.
 
     _Default: null_
 
