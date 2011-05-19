@@ -163,7 +163,7 @@
       var $item = $('<li class="mp_no_results" />');
 
       // Fire 'formatNoResults' callback.
-      var formatNoResults = settings.formatNoResults && settings.formatNoResults(q, $item, $input, $list);
+      var formatNoResults = settings.formatNoResults && settings.formatNoResults.call($input, q, $item, $input, $list);
 
       // Displaying a "no results" message is optional. It isn't displayed if
       // the 'formatNoResults' callback returns a false value.
@@ -234,7 +234,7 @@
 
     // Fire 'formatError' callback.
     var formatError = settings.formatError &&
-                      settings.formatError($item, $input, $list, jqXHR, textStatus, errorThrown);
+                      settings.formatError.call($input, $item, $input, $list, jqXHR, textStatus, errorThrown);
 
     // Displaying an error message is optional. It isn't displayed if the
     // 'formatError' callback returns a false value.
@@ -265,7 +265,8 @@
     var $item = $('<li class="mp_min_chars" />');
 
     // Fire 'formatMinChars' callback.
-    var formatMinChars = settings.formatMinChars && settings.formatMinChars(settings.minChars, $item, $input, $list);
+    var formatMinChars = settings.formatMinChars &&
+                         settings.formatMinChars.call($input, settings.minChars, $item, $input, $list);
 
     // Displaying a minimum characters message is optional. It isn't displayed
     // if the 'formatMinChars' callback returns a false value.
@@ -325,7 +326,7 @@
       // Otherwise, make an ajax request for the data.
       else {
         // Fire 'onRequestBefore' callback.
-        settings.onRequestBefore && settings.onRequestBefore($input, $list);
+        settings.onRequestBefore && settings.onRequestBefore.call($input, $input, $list);
 
         // Trigger event that bubbles to any listeners.
         $input.trigger('marcopolorequestbefore', [$input, $list]);
@@ -358,7 +359,7 @@
               $input.data('marcoPolo').ajaxAborted = false;
 
               // Fire 'onRequestAfter' callback.
-              settings.onRequestAfter && settings.onRequestAfter($input, $list, jqXHR, textStatus);
+              settings.onRequestAfter && settings.onRequestAfter.call($input, $input, $list, jqXHR, textStatus);
 
               // Trigger event that bubbles to any listeners.
               $input.trigger('marcopolorequestafter', [$input, $list, jqXHR, textStatus]);
@@ -377,7 +378,7 @@
     $input.data('marcoPolo').value = q;
 
     // Fire 'onChange' callback.
-    settings.onChange && settings.onChange(q, $input, $list);
+    settings.onChange && settings.onChange.call($input, q, $input, $list);
 
     // Trigger event that bubbles to any listeners.
     $input.trigger('marcopolochange', [q, $input, $list]);
@@ -393,7 +394,7 @@
     $input.data('marcoPolo').selected = data;
 
     // Fire 'onSelect' callback.
-    settings.onSelect && settings.onSelect(data, $item, $input, $list);
+    settings.onSelect && settings.onSelect.call($input, data, $item, $input, $list);
 
     // Trigger event that bubbles to any listeners.
     $item.trigger('marcopoloselect', [data, $item, $input, $list]);
@@ -470,7 +471,7 @@
               $input.data('marcoPolo').focus = true;
 
               // Fire 'onFocus' callback.
-              settings.onFocus && settings.onFocus($input, $list);
+              settings.onFocus && settings.onFocus.call($input, $input, $list);
 
               // Trigger event that bubbles to any listeners.
               $input.trigger('marcopolofocus', [$input, $list]);
