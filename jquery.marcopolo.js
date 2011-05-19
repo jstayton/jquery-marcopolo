@@ -33,8 +33,8 @@
       return '<em>Your search could not be completed at this time.</em>';
     },
     // Format the display of each item in the results list.
-    formatItem: function(json, $item, $input, $list) {
-      return json.title || json.name;
+    formatItem: function(data, $item, $input, $list) {
+      return data.title || data.name;
     },
     // Format the text that's displayed when the minimum number of characters
     // (specified with the 'minChars' option) hasn't been reached. Setting this
@@ -61,8 +61,8 @@
     onRequestAfter: null,
     // Called when an item is selected from the results list or passed in
     // through the 'selected' option.
-    onSelect: function(json, $item, $input, $list) {
-      $input.val(json.title || json.name);
+    onSelect: function(data, $item, $input, $list) {
+      $input.val(data.title || data.name);
     },
     // Whether to clear the input value when no selection is made from the
     // results list.
@@ -154,12 +154,12 @@
   };
 
   // Build the results list from a successful request.
-  var buildSuccessList = function($input, $list, settings, q, json) {
+  var buildSuccessList = function($input, $list, settings, q, data) {
     // Empty the list of its previous results.
     $list.empty();
 
     // If there are no results...
-    if ($.isEmptyObject(json)) {
+    if ($.isEmptyObject(data)) {
       var $item = $('<li class="mp_no_results" />');
 
       // Fire 'formatNoResults' callback.
@@ -189,12 +189,12 @@
       var selectedMatch = false;
 
       // Loop through each result and add it to the list.
-      $.each(json, function() {
+      for (var i = 0, datum; datum = data[i]; i++) {
         var $item = $('<li class="mp_item" />');
-        var formatItem = settings.formatItem(this, $item, $input, $list);
+        var formatItem = settings.formatItem(datum, $item, $input, $list);
 
         // Store the original data for easy access later.
-        $item.data('marcoPolo', this);
+        $item.data('marcoPolo', datum);
 
         $item
           .html(formatItem)
@@ -202,14 +202,14 @@
 
         // Highlight the currently selected item if it appears in this results
         // list. Comparison is done on the 'compare' setting key.
-        if (compare && this[settings.compare] === selected[settings.compare]) {
+        if (compare && datum[settings.compare] === selected[settings.compare]) {
           addHighlight($item, $list);
 
           // Stop comparing the remaining results, as a match has been made.
           compare = false;
           selectedMatch = true;
         }
-      });
+      }
 
       // Mark all selectable items, based on the 'selectable' selector setting.
       $list
@@ -333,11 +333,11 @@
           dataType: 'json',
           data: params,
           success:
-            function(json) {
-              buildSuccessList($input, $list, settings, q, json);
+            function(data) {
+              buildSuccessList($input, $list, settings, q, data);
 
               // Cache the data.
-              cache[cacheKey] = json;
+              cache[cacheKey] = data;
             },
           error:
             function(jqXHR, textStatus, errorThrown) {
@@ -377,14 +377,14 @@
   };
 
   // Select an item from the results list.
-  var select = function(json, $item, $input, $list, settings) {
+  var select = function(data, $item, $input, $list, settings) {
     hideList($list);
 
     // Save the selection as the currently selected item.
-    $input.data('marcoPolo').selected = json;
+    $input.data('marcoPolo').selected = data;
 
     // Fire 'onSelect' callback.
-    settings.onSelect && settings.onSelect(json, $item, $input, $list);
+    settings.onSelect && settings.onSelect(data, $item, $input, $list);
   };
 
   // Dismiss the results list and cancel any pending activity.

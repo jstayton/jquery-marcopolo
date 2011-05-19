@@ -76,11 +76,11 @@ Now attach Marco Polo to the input field to power the search:
 
     $('#userSearch').marcoPolo({
       url: '/users/search',
-      formatItem: function(json) {
-        return json.first_name + ' ' + json.last_name;
+      formatItem: function(data) {
+        return data.first_name + ' ' + data.last_name;
       },
-      onSelect(json) {
-        window.location = json.profile_url;
+      onSelect(data) {
+        window.location = data.profile_url;
       }
     });
 
@@ -90,12 +90,18 @@ At this point, two transformations occur in the HTML:
     autocomplete functionality from interfering.
 
 2.  An empty, ordered list is created and inserted directly after the input
-    field:
+    field for displaying results:
 
         <ol class="mp_list" />
 
-Go ahead and try a search for _Butler_. The URL _/users/search_ returns an
-array of json objects with each user's info, just like this:
+That's all the setup necessary in your HTML and JavaScript, so let's turn to
+the _/users/search_ backend data source that's going to deliver results. When
+a search happens, a GET request is made to the _url_ with _q_ (the search
+value) added to the query string. (Additional data can be included using the
+_data_ option.) Let's say a search is made for _Butler_. A GET request is made
+to _/users/search?q=Butler_. Your backend code must then use the _q_ parameter
+to find the matching users and return their data as an array of strings or
+JSON. Most likely you'll want to return JSON, like so:
 
     [
       {
@@ -113,7 +119,7 @@ array of json objects with each user's info, just like this:
       …
     ]
 
-Using this json, the ordered list that was created above is populated with
+Using this JSON, the ordered list that was created above is populated with
 results:
 
     <ol class="mp_list">
@@ -122,11 +128,11 @@ results:
       …
     </ol>
 
-Each list item is created through the passing of a user json object to the
+Each list item is created through the passing of a user JSON object to the
 _formatItem_ callback, which in turn strings together the user's first name
 and last name for display.
 
-Finally, when a user is selected from the results list, their json object is
+Finally, when a user is selected from the results list, their JSON object is
 passed to the _onSelect_ callback to complete the browser redirect.
 
 And that's it! While this example demonstrates a number of fundamental
@@ -215,9 +221,10 @@ be used).
     ---------------------------------------------------------------------------
 *   **url** _string, null_
 
-    The URL to GET request for the results. If no URL is set, the parent form's
-    _action_ attribute value is used if one exists. _q_ is added to the query
-    string with the input value, along with any additional _data_.
+    The URL to GET request for the results, which must be an array of strings
+    or JSON. If no URL is set, the parent form's _action_ attribute value is
+    used if one exists. _q_ is added to the query string with the input value,
+    along with any additional _data_.
 
     _Default: null_
 
@@ -255,7 +262,7 @@ be used).
               message.
 
     ---------------------------------------------------------------------------
-*   **formatItem**(json, $item, $input, $list) _function_
+*   **formatItem**(data, $item, $input, $list) _function_
 
     Format the display of each item in the results list. By default, the
     _title_ or _name_ value of the data object is displayed. The returned value
@@ -265,11 +272,11 @@ be used).
 
     _Default:_
 
-        return json.title || json.name;
+        return data.title || data.name;
 
     _Parameters:_
 
-    *   **json** _object_ Data returned from the request.
+    *   **data** _object_ Data returned from the request.
     *   **$item** _jQuery object_ The list item element.
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
@@ -389,7 +396,7 @@ be used).
     *   **textStatus** _string_ Status of the request.
 
     ---------------------------------------------------------------------------
-*   **onSelect**(json, $item, $input, $list) _function, null_
+*   **onSelect**(data, $item, $input, $list) _function, null_
 
     Called when an item is selected from the results list or passed in through
     the _selected_ option. By default, the _title_ or _name_ value of the data
@@ -397,11 +404,11 @@ be used).
 
     _Default:_
 
-        $input.val(json.title || json.name);
+        $input.val(data.title || data.name);
 
     _Parameters:_
 
-    *   **json** _object_ Data returned from the request.
+    *   **data** _object_ Data returned from the request.
     *   **$item** _jQuery object_ The selected results list item element.
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
