@@ -1,3 +1,14 @@
+/**
+ * Marco Polo v1.0.0
+ *
+ * A modern jQuery plugin for autocomplete functionality on a text input.
+ *
+ * https://github.com/jstayton/jquery-marcopolo
+ *
+ * Copyright © 2011 by Justin Stayton
+ * Released under the MIT License
+ * http://en.wikipedia.org/wiki/MIT_License
+ */
 (function($) {
   // The cache spans all instances and is indexed by URL. This allows different
   // instances to pull the same cached results if their URLs match.

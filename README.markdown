@@ -1,7 +1,9 @@
 Marco Polo
 ==========
 
-A modern jQuery plugin for adding autocomplete functionality to an input field.
+A modern jQuery plugin for autocomplete functionality on a text input,
+extracted from the [Ekklesia 360](http://ekklesia360.com) CMS by
+[Monk Development](http://monkdev.com).
 
 Huh? Why?
 ---------
@@ -39,7 +41,8 @@ important principals:
 
 *   **Maintained**
 
-    I developed this plugin for production use at
+    I developed this plugin for production use in the
+    [Ekklesia 360](http://ekklesia360.com) CMS at
     [Monk Development](http://monkdev.com), so you can very much believe that
     it will remain bug-free and up-to-date. Any feature requests, bug reports,
     or feedback you submit will be responded to quickly as well.
@@ -59,7 +62,13 @@ How it Works
 ------------
 
 Let's say you want to create a user search field that redirects to the user's
-profile when a result is selected. Start with a text input field:
+profile when a result is selected. To start, make sure both jQuery and Marco
+Polo are included on the page:
+
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.marcopolo.min.js"></script>
+
+Next, add a text input field:
 
     <input type="text" id="userSearch" name="userSearch" />
 
@@ -119,6 +128,11 @@ for display.
 
 Finally, when a user is selected from the results list, their json object is
 passed to the _onSelect_ callback to complete the browser redirect.
+
+And that's it! While this example demonstrated a number of fundamental
+concepts, the possibilities extend far beyond the straightforward
+_search, click, redirect_ setup shown here. Check out the wiki for some more
+advanced recipes.
 
 Options
 -------
@@ -222,6 +236,17 @@ Options
 
         return '<em>Your search could not be completed at this time.</em>';
 
+    _Parameters:_
+
+    *   **$item** _jQuery object_ The list item element to display the message.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+    *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
+    *   **textStatus** _string_ Error status of the request.
+    *   **errorThrown** _string_ HTTP error status.
+
+    _Return:_ _string_ of HTML to use as the message.
+
     ---------------------------------------------------------------------------
 *   **formatItem**(json, $item, $input, $list) _function_
 
@@ -234,6 +259,15 @@ Options
     _Default:_
 
         return json.title || json.name;
+
+    _Parameters:_
+
+    *   **json** _object_ Data returned from the request.
+    *   **$item** _jQuery object_ The list item element.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Return:_ _string_ of HTML to display the item.
 
     ---------------------------------------------------------------------------
 *   **formatMinChars**(minChars, $item, $input, $list) _function, null_
@@ -254,6 +288,15 @@ Options
 
         return '<em>Your search must be at least <strong>' + minChars + '</strong>characters.</em>';
 
+    _Parameters:_
+
+    *   **minChars** _integer_ The minimum number of characters required.
+    *   **$item** _jQuery object_ The list item element to display the message.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Return:_ _string_ of HTML to use as the message.
+
     ---------------------------------------------------------------------------
 *   **formatNoResults**(q, $item, $input, $list) _function, null_
 
@@ -271,13 +314,28 @@ Options
 
         return '<em>No results for <strong>' + q + '</strong>.</em>';
 
+    _Parameters:_
+
+    *   **q** _string_ The requested input value.
+    *   **$item** _jQuery object_ The list item element to display the message.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Return:_ _string_ of HTML to use as the message.
+
 #### Events
 
 *   **onChange**(q, $input, $list) _function, null_
 
     Called when the input value changes.
 
-    _Default: null_
+    _Default:_ null
+
+    _Parameters:_
+
+    *   **q** _string_ The changed input value.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
 
     ---------------------------------------------------------------------------
 *   **onFocus**($input, $list) _function, null_
@@ -286,6 +344,11 @@ Options
 
     _Default: null_
 
+    _Parameters:_
+
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
     ---------------------------------------------------------------------------
 *   **onRequestBefore**($input, $list) _function, null_
 
@@ -293,12 +356,24 @@ Options
 
     _Default: null_
 
+    _Parameters:_
+
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
     ---------------------------------------------------------------------------
 *   **onRequestAfter**($input, $list, jqXHR, textStatus) _function, null_
 
     Called after the request completes (either success or error).
 
     _Default: null_
+
+    _Parameters:_
+
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+    *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
+    *   **textStatus** _string_ Status of the request.
 
     ---------------------------------------------------------------------------
 *   **onSelect**(json, $item, $input, $list) _function, null_
@@ -310,6 +385,13 @@ Options
     _Default:_
 
         $input.val(json.title || json.name);
+
+    _Parameters:_
+
+    *   **json** _object_ Data returned from the request.
+    *   **$item** _jQuery object_ The selected results list item element.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
 
 Methods
 -------
