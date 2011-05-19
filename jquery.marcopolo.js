@@ -327,6 +327,9 @@
         // Fire 'onRequestBefore' callback.
         settings.onRequestBefore && settings.onRequestBefore($input, $list);
 
+        // Trigger event that bubbles to any listeners.
+        $input.trigger('marcopolorequestbefore', [$input, $list]);
+
         // The ajax request is stored in case it needs to be aborted.
         $input.data('marcoPolo').ajax = $.ajax({
           url: settings.url,
@@ -356,6 +359,9 @@
 
               // Fire 'onRequestAfter' callback.
               settings.onRequestAfter && settings.onRequestAfter($input, $list, jqXHR, textStatus);
+
+              // Trigger event that bubbles to any listeners.
+              $input.trigger('marcopolorequestafter', [$input, $list, jqXHR, textStatus]);
             }
         });
       }
@@ -373,6 +379,9 @@
     // Fire 'onChange' callback.
     settings.onChange && settings.onChange(q, $input, $list);
 
+    // Trigger event that bubbles to any listeners.
+    $input.trigger('marcopolochange', [q, $input, $list]);
+
     request(q, $input, $list, settings);
   };
 
@@ -385,6 +394,9 @@
 
     // Fire 'onSelect' callback.
     settings.onSelect && settings.onSelect(data, $item, $input, $list);
+
+    // Trigger event that bubbles to any listeners.
+    $item.trigger('marcopoloselect', [data, $item, $input, $list]);
   };
 
   // Dismiss the results list and cancel any pending activity.
@@ -459,6 +471,9 @@
 
               // Fire 'onFocus' callback.
               settings.onFocus && settings.onFocus($input, $list);
+
+              // Trigger event that bubbles to any listeners.
+              $input.trigger('marcopolofocus', [$input, $list]);
 
               request($input.val(), $input, $list, settings);
             })

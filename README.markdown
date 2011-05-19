@@ -153,7 +153,7 @@ be used).
     is a big advantage when many of the same field type appear on the same
     page. For example, a tags field that's repeated for every record on a page.
 
-    _Default: true_
+    _Default:_ true
 
     ---------------------------------------------------------------------------
 *   **compare** _string, null_
@@ -161,7 +161,7 @@ be used).
     The key to use in comparing data objects. This allows the currently
     selected item to be highlighted in the results list.
 
-    _Default: null_
+    _Default:_ null
 
     ---------------------------------------------------------------------------
 *   **data** _object, string_
@@ -170,7 +170,7 @@ be used).
     always sent with the input value and will overwrite _q_ in the data object
     if set.)
 
-    _Default: {}_
+    _Default:_ {}
 
     ---------------------------------------------------------------------------
 *   **delay** _integer_
@@ -179,7 +179,7 @@ be used).
     is made to the input value. This helps prevent an ajax request on every
     keystroke from overwhelming the server and slowing down the page.
 
-    _Default: 250_
+    _Default:_ 250
 
     ---------------------------------------------------------------------------
 *   **minChars** _integer_
@@ -188,7 +188,7 @@ be used).
     the _formatMinChars_ callback to format the (optional) message displayed
     when this value is not reached.
 
-    _Default: 1_
+    _Default:_ 1
 
     ---------------------------------------------------------------------------
 *   **required** _boolean_
@@ -197,7 +197,7 @@ be used).
     list. This happens when the input field is blurred, usually by clicking or
     tabbing out of the field.
 
-    _Default: false_
+    _Default:_ false
 
     ---------------------------------------------------------------------------
 *   **selectable** _selector_
@@ -208,7 +208,7 @@ be used).
     selector _:not(.header)_. Selectable items receive the class
     _mp\_selectable_.
 
-    _Default: '*'_
+    _Default:_ '*'
 
     ---------------------------------------------------------------------------
 *   **selected** _object, null_
@@ -216,7 +216,7 @@ be used).
     Prime the input with a selected item. _onSelect_ is called just as if the
     item were selected from the results list.
 
-    _Default: null_
+    _Default:_ null
 
     ---------------------------------------------------------------------------
 *   **url** _string, null_
@@ -226,7 +226,7 @@ be used).
     used if one exists. _q_ is added to the query string with the input value,
     along with any additional _data_.
 
-    _Default: null_
+    _Default:_ null
 
 ### Callbacks
 
@@ -355,6 +355,10 @@ be used).
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
 
+    _Bind:_ You can also bind to the _marcopolochange_ event:
+
+        $(selector).bind('marcopolochange', function(event, q, $input, $list) { … });
+
     ---------------------------------------------------------------------------
 *   **onFocus**($input, $list) _function, null_
 
@@ -366,6 +370,10 @@ be used).
 
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
+
+    _Bind:_ You can also bind to the _marcopolofocus_ event:
+
+        $(selector).bind('marcopolofocus', function(event, $input, $list) { … });
 
     ---------------------------------------------------------------------------
 *   **onRequestBefore**($input, $list) _function, null_
@@ -379,6 +387,10 @@ be used).
 
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
+
+    _Bind:_ You can also bind to the _marcopolorequestbefore_ event:
+
+        $(selector).bind('marcopolorequestbefore', function(event, $input, $list) { … });
 
     ---------------------------------------------------------------------------
 *   **onRequestAfter**($input, $list, jqXHR, textStatus) _function, null_
@@ -394,6 +406,10 @@ be used).
     *   **$list** _jQuery object_ The results list element.
     *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
     *   **textStatus** _string_ Status of the request.
+
+    _Bind:_ You can also bind to the _marcopolorequestafter_ event:
+
+        $(selector).bind('marcopolorequestafter', function(event, $input, $list, jqXHR, textStatus) { … });
 
     ---------------------------------------------------------------------------
 *   **onSelect**(data, $item, $input, $list) _function, null_
@@ -412,6 +428,10 @@ be used).
     *   **$item** _jQuery object_ The selected results list item element.
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
+
+    _Bind:_ You can also bind to the _marcopoloselect_ event:
+
+        $(selector).bind('marcopoloselect', function(event, data, $item, $input, $list) { … });
 
 Methods
 -------
