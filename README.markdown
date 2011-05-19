@@ -438,7 +438,7 @@ Methods
 
 *   **destroy**
 
-    Removes the autocomplete functionality and returns the selected input
+    Remove the autocomplete functionality and return the selected input
     fields to their original state.
 
     _Example:_
