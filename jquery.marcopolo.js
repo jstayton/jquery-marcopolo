@@ -622,6 +622,38 @@
             .unbind('.marcoPolo')
             .removeData('marcoPolo');
         });
+      },
+    // Get or set one or more options.
+    option:
+      function(nameOrValues, value) {
+        var $input = $(this);
+        var data = $input.data('marcoPolo');
+
+        // Skip if this plugin was never initialized on the input.
+        if (!data) {
+          return;
+        }
+
+        // Return all options if no arguments are specified.
+        if (typeof nameOrValues === 'undefined') {
+          return data.settings;
+        }
+        else if (typeof value === 'undefined') {
+          // Set multiple options if an object is passed.
+          if ($.isPlainObject(nameOrValues)) {
+            data.settings = $.extend(data.settings, nameOrValues);
+          }
+          // Otherwise, return a specific option value.
+          else {
+            return data.settings[nameOrValues];
+          }
+        }
+        // If both arguments are specified, set a specific option.
+        else {
+          data.settings[nameOrValues] = value;
+
+          return this;
+        }
       }
   };
 

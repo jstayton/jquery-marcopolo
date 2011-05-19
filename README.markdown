@@ -445,6 +445,31 @@ Methods
 
         $('#userSearch').marcoPolo('destroy');
 
+*   **option**
+
+    Get or set one or more options.
+
+    _Example:_
+
+    Get a specific option:
+
+        $('#userSearch').marcoPolo('option', 'url');
+
+    Get the entire options object:
+
+        $('#userSearch').marcoPolo('option');
+
+    Set a specific option:
+
+        $('#userSearch').marcoPolo('option', 'url', '/new/url');
+
+    Set multiple options:
+
+        $('#userSearch').marcoPolo('option', {
+          url: '/new/url',
+          onSelect: function(data, $item, $input, $list) { … }
+        });
+
 Feedback
 --------
 
