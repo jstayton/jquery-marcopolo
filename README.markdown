@@ -251,7 +251,8 @@ be used).
     *   **textStatus** _string_ Error status of the request.
     *   **errorThrown** _string_ HTTP error status.
 
-    _Return:_ _string_ of HTML to use as the message.
+    _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
+              message.
 
     ---------------------------------------------------------------------------
 *   **formatItem**(json, $item, $input, $list) _function_
@@ -273,7 +274,8 @@ be used).
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
 
-    _Return:_ _string_ of HTML to display the item.
+    _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
+              display.
 
     ---------------------------------------------------------------------------
 *   **formatMinChars**(minChars, $item, $input, $list) _function, null_
@@ -301,7 +303,8 @@ be used).
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
 
-    _Return:_ _string_ of HTML to use as the message.
+    _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
+              message.
 
     ---------------------------------------------------------------------------
 *   **formatNoResults**(q, $item, $input, $list) _function, null_
@@ -328,7 +331,8 @@ be used).
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
 
-    _Return:_ _string_ of HTML to use as the message.
+    _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
+              message.
 
 #### Events
 
