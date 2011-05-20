@@ -470,6 +470,11 @@ Methods
           onSelect: function(data, $item, $input, $list) { … }
         });
 
+    _Parameters:_
+
+    *   **nameOrValues** _string, object_ Optional options to get or set.
+    *   **value** _mixed_ Optional option value to set.
+
 *   **search**
 
     Programmatically trigger a search request using the existing input value
@@ -483,7 +488,11 @@ Methods
 
     Trigger a search on a new value:
 
-        $('#userSearch').marcoPolo('search', 'Wilson')
+        $('#userSearch').marcoPolo('search', 'Wilson');
+
+    _Parameters:_
+
+    *   **q** _string_ Optional new input value to search on.
 
 Feedback
 --------
