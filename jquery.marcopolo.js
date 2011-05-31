@@ -204,7 +204,7 @@
       // Loop through each result and add it to the list.
       for (var i = 0, datum; datum = data[i]; i++) {
         var $item = $('<li class="mp_item" />');
-        var formatItem = settings.formatItem(datum, $item, $input, $list);
+        var formatItem = settings.formatItem.call($input, datum, $item, $input, $list);
 
         // Store the original data for easy access later.
         $item.data('marcoPolo', datum);
