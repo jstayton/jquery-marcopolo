@@ -360,6 +360,27 @@ be used).
         $(selector).bind('marcopolochange', function(event, q, $input, $list) { … });
 
     ---------------------------------------------------------------------------
+*   **onError**($item, $input, $list, jqXHR, textStatus, errorThrown)
+    _function, null_
+
+    Called when the ajax request fails.
+
+    _Default: null_
+
+    _Parameters:_
+
+    *   **$item** _jQuery object_ The list item element to display the message.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+    *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
+    *   **textStatus** _string_ Error status of the request.
+    *   **errorThrown** _string_ HTTP error status.
+
+    _Bind:_ You can also bind to the _marcopoloerror_ event:
+
+        $(selector).bind('marcopoloerror', function(event, $item, $input, $list, jqXHR, textStatus, errorThrown) { … });
+
+    ---------------------------------------------------------------------------
 *   **onFocus**($input, $list) _function, null_
 
     Called when the input field receives focus.
@@ -376,10 +397,47 @@ be used).
         $(selector).bind('marcopolofocus', function(event, $input, $list) { … });
 
     ---------------------------------------------------------------------------
+*   **onMinChars**(minChars, $item, $input, $list) _function, null_
+
+    Called when the minimum number of characters (specified with the _minChars_
+    option) hasn't been reached by the end of the _delay_.
+
+    _Default: null_
+
+    _Parameters:_
+
+    *   **minChars** _integer_ The minimum number of characters required.
+    *   **$item** _jQuery object_ The list item element to display the message.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Bind:_ You can also bind to the _marcopolominchars_ event:
+
+        $(selector).bind('marcopolominchars', function(event, minChars, $item, $input, $list) { … });
+
+    ---------------------------------------------------------------------------
+*   **onNoResults**(q, $item, $input, $list) _function, null_
+
+    Called when there are no results returned for the request.
+
+    _Default: null_
+
+    _Parameters:_
+
+    *   **q** _string_ The requested input value.
+    *   **$item** _jQuery object_ The list item element to display the message.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Bind:_ You can also bind to the _marcopolonoresults_ event:
+
+        $(selector).bind('marcopolonoresults', function(event, q, $item, $input, $list) { … });
+
+    ---------------------------------------------------------------------------
 *   **onRequestBefore**($input, $list) _function, null_
 
-    Called before the request is made. Useful for showing a loading spinner if
-    the request is going to take some time.
+    Called before the ajax request is made. Useful for showing a loading
+    spinner if the request is going to take some time.
 
     _Default: null_
 
@@ -395,7 +453,7 @@ be used).
     ---------------------------------------------------------------------------
 *   **onRequestAfter**($input, $list, jqXHR, textStatus) _function, null_
 
-    Called after the request completes (either success or error). Useful for
+    Called after the ajax request completes (success or error). Useful for
     hiding a loading spinner that's shown in _onRequestBefore_.
 
     _Default: null_
@@ -412,6 +470,23 @@ be used).
         $(selector).bind('marcopolorequestafter', function(event, $input, $list, jqXHR, textStatus) { … });
 
     ---------------------------------------------------------------------------
+*   **onResults**(data, $input, $list) _function, null_
+
+    Called when there are results to be displayed.
+
+    _Default: null_
+
+    _Parameters:_
+
+    *   **data** _object_ Data returned from the request.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Bind:_ You can also bind to the _marcopoloresults_ event:
+
+        $(selector).bind('marcopoloresults', function(event, data, $input, $list) { … });
+
+    ---------------------------------------------------------------------------
 *   **onSelect**(data, $item, $input, $list) _function, null_
 
     Called when an item is selected from the results list or passed in through
@@ -425,7 +500,8 @@ be used).
     _Parameters:_
 
     *   **data** _object_ Data returned from the request.
-    *   **$item** _jQuery object_ The selected results list item element.
+    *   **$item** _jQuery object, null_ The selected results list item element.
+                                        _null_ if _selected_ option used.
     *   **$input** _jQuery object_ The input field element.
     *   **$list** _jQuery object_ The results list element.
 

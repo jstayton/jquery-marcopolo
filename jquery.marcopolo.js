@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.0.0
+ * Marco Polo v1.1.0
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -53,12 +53,21 @@
     minChars: 1,
     // Called when the input value changes.
     onChange: null,
+    // Called when the ajax request fails.
+    onError: null,
     // Called when the input field receives focus.
     onFocus: null,
-    // Called before the request is made.
+    // Called when the minimum number of characters (specified with the
+    // 'minChars' option) hasn't been reached by the end of the 'delay'.
+    onMinChars: null,
+    // Called when there are no results returned for the request.
+    onNoResults: null,
+    // Called before the ajax request is made.
     onRequestBefore: null,
-    // Called after the request completes (either success or error).
+    // Called after the ajax request completes (success or error).
     onRequestAfter: null,
+    // Called when there are results to be displayed.
+    onResults: null,
     // Called when an item is selected from the results list or passed in
     // through the 'selected' option.
     onSelect: function(data, $item, $input, $list) {
@@ -165,12 +174,16 @@
       // Fire 'formatNoResults' callback.
       var formatNoResults = settings.formatNoResults && settings.formatNoResults.call($input, q, $item, $input, $list);
 
+      formatNoResults && $item.html(formatNoResults);
+
+      // Fire 'onNoResults' callback.
+      settings.onNoResults && settings.onNoResults.call($input, q, $item, $input, $list);
+      $input.trigger('marcopolonoresults', [q, $item, $input, $list]);
+
       // Displaying a "no results" message is optional. It isn't displayed if
       // the 'formatNoResults' callback returns a false value.
       if (formatNoResults) {
-        $item
-          .html(formatNoResults)
-          .appendTo($list);
+        $item.appendTo($list);
 
         showList($list);
       }
@@ -222,6 +235,10 @@
         highlightFirst($list);
       }
 
+      // Fire 'onResults' callback.
+      settings.onResults && settings.onResults.call($input, data, $input, $list);
+      $input.trigger('marcopoloresults', [data, $input, $list]);
+
       showList($list);
     }
   };
@@ -236,12 +253,16 @@
     var formatError = settings.formatError &&
                       settings.formatError.call($input, $item, $input, $list, jqXHR, textStatus, errorThrown);
 
+    formatError && $item.html(formatError);
+
+    // Fire 'onError' callback.
+    settings.onError && settings.onError.call($input, $item, $input, $list, jqXHR, textStatus, errorThrown);
+    $input.trigger('marcopoloerror', [$item, $input, $list, jqXHR, textStatus, errorThrown]);
+
     // Displaying an error message is optional. It isn't displayed if the
     // 'formatError' callback returns a false value.
     if (formatError) {
-      $item
-        .html(formatError)
-        .appendTo($list);
+      $item.appendTo($list);
 
       showList($list);
     }
@@ -268,12 +289,16 @@
     var formatMinChars = settings.formatMinChars &&
                          settings.formatMinChars.call($input, settings.minChars, $item, $input, $list);
 
+    formatMinChars && $item.html(formatMinChars);
+
+    // Fire 'onMinChars' callback.
+    settings.onMinChars && settings.onMinChars.call($input, settings.minChars, $item, $input, $list);
+    $input.trigger('marcopolominchars', [settings.minChars, $item, $input, $list]);
+
     // Displaying a minimum characters message is optional. It isn't displayed
     // if the 'formatMinChars' callback returns a false value.
     if (formatMinChars) {
-      $item
-        .html(formatMinChars)
-        .appendTo($list);
+      $item.appendTo($list);
 
       showList($list);
     }
@@ -327,9 +352,11 @@
       else {
         // Fire 'onRequestBefore' callback.
         settings.onRequestBefore && settings.onRequestBefore.call($input, $input, $list);
-
-        // Trigger event that bubbles to any listeners.
         $input.trigger('marcopolorequestbefore', [$input, $list]);
+
+        // Add a class to the input's parent that can be hooked-into by the CSS
+        // to show a busy indicator.
+        $inputParent = $input.parent().addClass('mp_busy');
 
         // The ajax request is stored in case it needs to be aborted.
         $input.data('marcoPolo').ajax = $.ajax({
@@ -358,10 +385,11 @@
               $input.data('marcoPolo').ajax = null;
               $input.data('marcoPolo').ajaxAborted = false;
 
+              // Remove the "busy" indicator class on the input's parent.
+              $inputParent.removeClass('mp_busy');
+
               // Fire 'onRequestAfter' callback.
               settings.onRequestAfter && settings.onRequestAfter.call($input, $input, $list, jqXHR, textStatus);
-
-              // Trigger event that bubbles to any listeners.
               $input.trigger('marcopolorequestafter', [$input, $list, jqXHR, textStatus]);
             }
         });
@@ -379,8 +407,6 @@
 
     // Fire 'onChange' callback.
     settings.onChange && settings.onChange.call($input, q, $input, $list);
-
-    // Trigger event that bubbles to any listeners.
     $input.trigger('marcopolochange', [q, $input, $list]);
 
     request(q, $input, $list, settings);
@@ -395,9 +421,7 @@
 
     // Fire 'onSelect' callback.
     settings.onSelect && settings.onSelect.call($input, data, $item, $input, $list);
-
-    // Trigger event that bubbles to any listeners.
-    $item.trigger('marcopoloselect', [data, $item, $input, $list]);
+    $input.trigger('marcopoloselect', [data, $item, $input, $list]);
   };
 
   // Dismiss the results list and cancel any pending activity.
@@ -472,8 +496,6 @@
 
               // Fire 'onFocus' callback.
               settings.onFocus && settings.onFocus.call($input, $input, $list);
-
-              // Trigger event that bubbles to any listeners.
               $input.trigger('marcopolofocus', [$input, $list]);
 
               request($input.val(), $input, $list, settings);
@@ -626,33 +648,59 @@
     // Get or set one or more options.
     option:
       function(nameOrValues, value) {
-        var $input = $(this);
-        var data = $input.data('marcoPolo');
-
-        // Skip if this plugin was never initialized on the input.
-        if (!data) {
-          return;
-        }
-
         // Return all options if no arguments are specified.
         if (typeof nameOrValues === 'undefined') {
+          var $input = $(this);
+          var data = $input.data('marcoPolo');
+
+          // Skip if this plugin was never initialized on the input.
+          if (!data) {
+            return;
+          }
+
           return data.settings;
         }
         else if (typeof value === 'undefined') {
           // Set multiple options if an object is passed.
           if ($.isPlainObject(nameOrValues)) {
-            data.settings = $.extend(data.settings, nameOrValues);
+            return this.each(function() {
+              var $input = $(this);
+              var data = $input.data('marcoPolo');
+
+              // Skip if this plugin was never initialized on the input.
+              if (!data) {
+                return;
+              }
+
+              data.settings = $.extend(data.settings, nameOrValues);
+            });
           }
           // Otherwise, return a specific option value.
           else {
+            var $input = $(this);
+            var data = $input.data('marcoPolo');
+
+            // Skip if this plugin was never initialized on the input.
+            if (!data) {
+              return;
+            }
+
             return data.settings[nameOrValues];
           }
         }
         // If both arguments are specified, set a specific option.
         else {
-          data.settings[nameOrValues] = value;
+          return this.each(function() {
+            var $input = $(this);
+            var data = $input.data('marcoPolo');
 
-          return this;
+            // Skip if this plugin was never initialized on the input.
+            if (!data) {
+              return;
+            }
+
+            data.settings[nameOrValues] = value;
+          });
         }
       },
     // Programmatically trigger a search request using the existing input value
