@@ -422,6 +422,10 @@
     // Fire 'onSelect' callback.
     settings.onSelect && settings.onSelect.call($input, data, $item, $input, $list);
     $input.trigger('marcopoloselect', [data, $item, $input, $list]);
+
+    // Store the latest input value for later comparison, as it's common to
+    // update the value with the selected item during 'onSelect'.
+    $input.data('marcoPolo').value = $input.val();
   };
 
   // Dismiss the results list and cancel any pending activity.
@@ -493,6 +497,10 @@
               // It's overly complicated to check if an input field has focus,
               // so "manually" keep track in the 'focus' and 'blur' events.
               $input.data('marcoPolo').focus = true;
+
+              // Store the latest input value for later comparison in case it
+              // has changed since initialization or the last interaction.
+              $input.data('marcoPolo').value = $input.val();
 
               // Fire 'onFocus' callback.
               settings.onFocus && settings.onFocus.call($input, $input, $list);
