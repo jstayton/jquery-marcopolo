@@ -324,9 +324,27 @@
     return $input.data('marcoPolo').ajaxAborted;
   };
 
+  //Mark the input as changed due to a different value.
+  var change = function(q, $input, $list, settings) {
+    // Reset the currently selected item.
+    $input.data('marcoPolo').selected = null;
+
+    // Keep track of the new input value for later comparison.
+    $input.data('marcoPolo').value = q;
+
+    // Fire 'onChange' callback.
+    settings.onChange && settings.onChange.call($input, q, $input, $list);
+    $input.trigger('marcopolochange', [q, $input, $list]);
+  };
+
   // Make a request for the specified query and build the results list.
   var request = function(q, $input, $list, settings) {
     cancelPendingRequest($input);
+
+    // Check if the input value has changed.
+    if (q !== $input.data('marcoPolo').value) {
+      change(q, $input, $list, settings);
+    }
 
     // Requests are buffered the number of ms specified by the 'delay' setting.
     // This helps prevent an ajax request for every keystroke.
@@ -395,21 +413,6 @@
         });
       }
     }, settings.delay);
-  };
-
-  // Mark the input as changed due to a different value.
-  var change = function(q, $input, $list, settings) {
-    // Reset the currently selected item.
-    $input.data('marcoPolo').selected = null;
-
-    // Keep track of the new input value for later comparison.
-    $input.data('marcoPolo').value = q;
-
-    // Fire 'onChange' callback.
-    settings.onChange && settings.onChange.call($input, q, $input, $list);
-    $input.trigger('marcopolochange', [q, $input, $list]);
-
-    request(q, $input, $list, settings);
   };
 
   // Select an item from the results list.
@@ -498,10 +501,6 @@
               // so "manually" keep track in the 'focus' and 'blur' events.
               $input.data('marcoPolo').focus = true;
 
-              // Store the latest input value for later comparison in case it
-              // has changed since initialization or the last interaction.
-              $input.data('marcoPolo').value = $input.val();
-
               // Fire 'onFocus' callback.
               settings.onFocus && settings.onFocus.call($input, $input, $list);
               $input.trigger('marcopolofocus', [$input, $list]);
@@ -560,9 +559,9 @@
             })
             .bind('keyup.marcoPolo', function(key) {
               // Check if the input value has changed. This prevents keys like
-              // CTRL and SHIFT from firing a 'change' event.
+              // CTRL and SHIFT from firing a new request.
               if ($input.val() !== $input.data('marcoPolo').value) {
-                change($input.val(), $input, $list, settings);
+                request($input.val(), $input, $list, settings);
               }
             })
             .bind('blur.marcoPolo', function() {
@@ -724,18 +723,15 @@
             return;
           }
 
-          // Use the existing input value if a new one is not specified.
-          if (typeof q === 'undefined') {
-            q = $input.val();
-
-            request(q, $input, data.$list, data.settings);
-          }
-          // Otherwise, change the input value to the specified one.
-          else {
+          // Change the input value if a new value is specified. Otherwise, use
+          // the existing input value.
+          if (typeof q !== 'undefined') {
             $input.val(q);
-
-            change(q, $input, data.$list, data.settings);
           }
+
+          // Focus on the input to start the request and enable keyboard
+          // navigation (only available when the input has focus).
+          $input.focus();
         });
       }
   };

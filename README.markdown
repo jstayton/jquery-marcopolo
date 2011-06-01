@@ -554,7 +554,7 @@ Methods
 *   **search**
 
     Programmatically trigger a search request using the existing input value
-    or a new one.
+    or a new one. The input receives focus to allow for keyboard navigation.
 
     _Example:_
 
