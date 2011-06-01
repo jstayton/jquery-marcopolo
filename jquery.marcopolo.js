@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.1.0
+ * Marco Polo v1.1.1
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -620,6 +620,28 @@
           // Initialize the input with a selected item.
           if (settings.selected) {
             select(settings.selected, null, $input, $list, settings);
+          }
+        });
+      },
+    // Programmatically change the input value without triggering a search
+    // request (use the 'search' method for that). If the value is different
+    // than the current input value, the 'onChange' callback is fired.
+    change:
+      function(q) {
+        return this.each(function() {
+          var $input = $(this);
+          var data = $input.data('marcoPolo');
+
+          // Skip if this plugin was never initialized on the input.
+          if (!data) {
+            return;
+          }
+
+          // Change the input value if a new value is specified.
+          if (q !== data.value) {
+            $input.val(q);
+
+            change(q, $input, data.$list, data.settings);
           }
         });
       },

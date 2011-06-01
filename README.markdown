@@ -37,7 +37,7 @@ important principals:
     There's a fine line between too little and too much. This plugin certainly
     isn't for _every_ situation, but it strives to provide enough options and
     callbacks to allow for _many_ situations. By not baking in specific use
-    cases, the plugin can stay lean (less than 5.5 KB compressed) and flexible.
+    cases, the plugin can stay lean (about 7.4 KB compressed) and flexible.
 
 *   **Maintained**
 
@@ -511,6 +511,20 @@ be used).
 
 Methods
 -------
+
+*   **change**
+
+    Programmatically change the input value without triggering a search request
+    (use the _search_ method for that). If the value is different than the
+    current input value, the _onChange_ callback is fired.
+
+    _Example:_
+
+        $('#userSearch').marcoPolo('change', 'Wilson');
+
+    _Parameters:_
+
+    *   **q** _string_ New input value.
 
 *   **destroy**
 
