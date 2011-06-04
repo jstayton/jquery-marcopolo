@@ -5,7 +5,7 @@ A modern jQuery plugin for autocomplete functionality on a text input,
 extracted from the [Ekklesia 360](http://ekklesia360.com) CMS by
 [Monk Development](http://monkdev.com).
 
-*   [Examples](http://jstayton.github.com/jquery-marcopolo)
+*   [Example](http://jstayton.github.com/jquery-marcopolo)
 *   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
 
 Huh? Why?
@@ -146,9 +146,7 @@ passed to the _onSelect_ callback to complete the browser redirect.
 
 And that's it! While this example demonstrates a number of fundamental
 concepts, the possibilities extend far beyond the straightforward
-_search, click, redirect_ setup shown here. Check out the
-[examples](http://jstayton.github.com/jquery-marcopolo) for some more advanced
-recipes.
+_search, click, redirect_ setup shown here. See what you can do!
 
 Options
 -------
