@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.1.1
+ * Marco Polo v1.1.2
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -26,6 +26,10 @@
     // The number of milliseconds to delay before firing a request after a
     // change is made to the input value.
     delay: 250,
+    // Format the raw data that's returned from the ajax request. Useful for
+    // further filtering the data or returning the array of results that's
+    // embedded deeper in the object.
+    formatData: null,
     // Format the text that's displayed when the ajax request fails. Setting
     // this option to null or returning false suppresses the message from being
     // displayed.
@@ -166,6 +170,11 @@
   var buildSuccessList = function($input, $list, settings, q, data) {
     // Empty the list of its previous results.
     $list.empty();
+
+    // Fire 'formatData' callback.
+    if (settings.formatData) {
+      data = settings.formatData.call($input, data, $input, $list);
+    }
 
     // If there are no results...
     if ($.isEmptyObject(data)) {

@@ -232,6 +232,23 @@ be used).
 
 #### Formatting
 
+*   **formatData**(data, input, $list) _function, null_
+
+    Format the raw data that's returned from the ajax request. Useful for
+    further filtering the data or returning the array of results that's
+    embedded deeper in the object.
+
+    _Default:_ null
+
+    _Parameters:_
+
+    *   **data** _object_ Data returned from the request.
+    *   **$input** _jQuery object_ The input field element.
+    *   **$list** _jQuery object_ The results list element.
+
+    _Return:_ _array_ of _objects_ to use as the data.
+
+    ---------------------------------------------------------------------------
 *   **formatError**($item, $input, $list, jqXHR, textStatus, errorThrown)
     _function, null_
 
