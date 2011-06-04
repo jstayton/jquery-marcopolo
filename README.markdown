@@ -5,6 +5,9 @@ A modern jQuery plugin for autocomplete functionality on a text input,
 extracted from the [Ekklesia 360](http://ekklesia360.com) CMS by
 [Monk Development](http://monkdev.com).
 
+*   [Examples](http://jstayton.github.com/jquery-marcopolo)
+*   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
+
 Huh? Why?
 ---------
 
@@ -94,14 +97,20 @@ At this point, two transformations occur in the HTML:
 
         <ol class="mp_list" />
 
-That's all the setup necessary in your HTML and JavaScript, so let's turn to
-the _/users/search_ backend data source that's going to deliver results. When
-a search happens, a GET request is made to the _url_ with _q_ (the search
-value) added to the query string. (Additional data can be included using the
-_data_ option.) Let's say a search is made for _Butler_. A GET request is made
-to _/users/search?q=Butler_. Your backend code must then use the _q_ parameter
-to find the matching users and return their data as an array of strings or
-JSON. Most likely you'll want to return JSON, like so:
+That's all the setup necessary in your HTML and JavaScript. As for CSS, the
+[CSS Starter Template](https://github.com/jstayton/jquery-marcopolo/wiki/CSS-Starter-Template)
+has some basic styling to get started and stubs for all of the available
+classes. Also be sure to check out the
+[HTML Breakdown](https://github.com/jstayton/jquery-marcopolo/wiki/HTML-Breakdown)
+for a complete look into the HTML markup.
+
+Let's turn to the _/users/search_ backend data source that's going to deliver
+results. When a search happens, a GET request is made to the _url_ with _q_
+(the search value) added to the query string. (Additional data can be included
+using the _data_ option.) Let's say a search is made for _Butler_. A GET
+request is made to _/users/search?q=Butler_. Your backend code must then use
+the _q_ parameter to find the matching users and return their data as an array
+of strings or JSON. Most likely you'll want to return JSON, like so:
 
     [
       {
@@ -137,8 +146,9 @@ passed to the _onSelect_ callback to complete the browser redirect.
 
 And that's it! While this example demonstrates a number of fundamental
 concepts, the possibilities extend far beyond the straightforward
-_search, click, redirect_ setup shown here. Check out the wiki for some more
-advanced recipes.
+_search, click, redirect_ setup shown here. Check out the
+[examples](http://jstayton.github.com/jquery-marcopolo) for some more advanced
+recipes.
 
 Options
 -------
