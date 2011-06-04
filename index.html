@@ -1,77 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
-
-  <title>jstayton/jquery-marcopolo @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #95d307;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #6a2cf8; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #6a2cf8; }
-    h3 { text-align: center; color: #6a2cf8; }
-    a { color: #6a2cf8; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
-
-<body>
-  <a href="http://github.com/jstayton/jquery-marcopolo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/jstayton/jquery-marcopolo/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/jstayton/jquery-marcopolo/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+  <head>
+    <title>Marco Polo</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.marcopolo.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('#twitterPeopleSearch').marcoPolo({
+          data: {
+            apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469',
+          },
+          formatData: function(data, $input, $list) {
+            return data.results.slice(0, 20);
+          },
+          formatItem: function(data, $item, $input, $list) {
+            return data.screen_name;
+          },
+          onSelect: function(data, $item, $input, $list) {
+            $input.val(data.screen_name);
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Marco Polo</h1>
+      <h2>Try it Out</h2>
+      <form action="http://api.infochimps.com/social/network/tw/search/people_search" method="get">
+        <input type="text" name="twitterPeopleSearch" id="twitterPeopleSearch" />
+      </form>
+      <h2>How it Works</h2>
+      <p>This example uses the <a href="http://www.infochimps.com">Infochimps</a> API to search for people on Twitter based on their profile info.</p>
+      <ul>
+        <li>The URL is taken from the form's <em>action</em> attribute. This can also be set explicitly using the <em>url</em> option, but since this form is solely for the search field, it makes sense to use the <em>action</em> attribute.</li>
+        <li>The API key is sent as extra data with the request. The search value is automatically included as <em>q</em>.</li>
+        <li>Since the API embeds the array of result objects in the <em>results</em> key &mdash; and doesn't provide a way to limit the number of results &mdash; we return the first 20 results programmatically in <em>formatData</em>.</li>
+        <li>The person's Twitter username (<em>screen_name</em>) is used as the display text for each result item.</li>
+        <li>When a username is selected from the results list, that username is then set as the search field value.</em>
+      </ul>
+      <h2>Source</h2>
+      <script src="https://gist.github.com/1008099.js"> </script>
     </div>
-
-    <h1><a href="http://github.com/jstayton/jquery-marcopolo">jquery-marcopolo</a>
-      <span class="small">by <a href="http://github.com/jstayton">jstayton</a></span></h1>
-
-    <div class="description">
-      A modern jQuery plugin for autocomplete functionality on a text input.
-    </div>
-
-    <h2>Authors</h2>
-<p>Justin Stayton (justin.stayton@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Justin Stayton (justin.stayton@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/jstayton/jquery-marcopolo/zipball/master">zip</a> or
-      <a href="http://github.com/jstayton/jquery-marcopolo/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/jstayton/jquery-marcopolo</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/jstayton/jquery-marcopolo">jstayton/jquery-marcopolo</a>
-    </div>
-
-  </div>
-
-  
-</body>
+  </body>
 </html>

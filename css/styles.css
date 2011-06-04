@@ -1,3 +1,28 @@
+body {
+  font-family: Georgia, sans-serif;
+  padding: 40px;
+}
+
+div#container {
+  margin: auto;
+  width: 780px;
+}
+
+em {
+  font-style: italic;
+}
+
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #C0C0C0;
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+
 input {
   border: 1px solid #000000;
   font: inherit;
@@ -6,6 +31,24 @@ input {
   outline: none;
 	padding: 3px;
 	width: 250px;
+}
+
+p {
+  margin: 20px 0;
+  line-height: 1.4em;
+}
+
+ul {
+  list-style-type: square;
+  margin-left: 20px;
+}
+
+ul li {
+  line-height: 1.4em;
+}
+
+pre {
+  line-height: 1.4em;
 }
 
 /* The unordered list inserted directly after the input field. */
