@@ -23,7 +23,17 @@ h2 {
   margin: 20px 0;
 }
 
-input {
+form img {
+  display: none;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+
+form.mp_busy img {
+  display: inline;
+}
+
+form input {
   border: 1px solid #000000;
   font: inherit;
   font-size: 100%;
