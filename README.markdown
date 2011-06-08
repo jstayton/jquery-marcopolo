@@ -5,7 +5,7 @@ A modern jQuery plugin for autocomplete functionality on a text input,
 extracted from the [Ekklesia 360](http://ekklesia360.com) CMS by
 [Monk Development](http://monkdev.com).
 
-*   [Example](http://jstayton.github.com/jquery-marcopolo)
+*   [Examples](http://jstayton.github.com/jquery-marcopolo)
 *   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
 
 Huh? Why?
