@@ -9,10 +9,9 @@
     <script type="text/javascript">
       $(function() {
         $('#twitterUsernameSearch').marcoPolo({
-          compare: 0,
+          compare: true,
           data: {
-            apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469',
-            prefix: function() { return $('#twitterUsernameSearch').val(); }
+            apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469'
           },
           formatData: function(data, $input, $list) {
             return data.completions.slice(0, 20);
@@ -24,6 +23,7 @@
           onSelect: function(data, $item, $input, $list) {
             $input.val(data);
           },
+          param: 'prefix',
           required: true
         });
       });
