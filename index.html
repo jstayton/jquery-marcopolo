@@ -1,49 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Marco Polo</title>
+    <title>Marco Polo &mdash; Examples</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.marcopolo.min.js"></script>
-    <script type="text/javascript">
-      $(function() {
-        $('#twitterPeopleSearch').marcoPolo({
-          data: {
-            apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469',
-          },
-          formatData: function(data, $input, $list) {
-            return data.results.slice(0, 20);
-          },
-          formatItem: function(data, $item, $input, $list) {
-            return data.screen_name;
-          },
-          onSelect: function(data, $item, $input, $list) {
-            $input.val(data.screen_name);
-          }
-        });
-      });
-    </script>
   </head>
   <body>
     <div id="container">
       <h1>Marco Polo</h1>
-      <h2>Try it Out</h2>
-      <form action="http://api.infochimps.com/social/network/tw/search/people_search" method="get">
-        <input type="text" name="twitterPeopleSearch" id="twitterPeopleSearch" />
-        <img src="img/busy.gif" />
-      </form>
-      <h2>How it Works</h2>
-      <p>This example uses the <a href="http://www.infochimps.com">Infochimps</a> API to search for people on Twitter based on their profile info.</p>
-      <ul>
-        <li>The URL is taken from the form's <em>action</em> attribute. This can also be set explicitly using the <em>url</em> option, but since this form is solely for the search field, it makes sense to use the <em>action</em> attribute.</li>
-        <li>The API key is sent as extra data with the request. The search value is automatically included as <em>q</em>.</li>
-        <li>Since the API embeds the array of result objects in the <em>results</em> key &mdash; and doesn't provide a way to limit the number of results &mdash; we return the first 20 results programmatically in <em>formatData</em>.</li>
-        <li>The person's Twitter username (<em>screen_name</em>) is used as the display text for each result item.</li>
-        <li>When a username is selected from the results list, that username is then set as the search field value.</em>
-      </ul>
-      <h2>Source</h2>
-      <script src="https://gist.github.com/1008099.js"> </script>
+      <h2>Examples</h2>
+      <ol id="examples">
+        <li>
+          <h3><a href="example1.html">Example 1</a></h3>
+          <p>Search for Twitter users based on their profile info.</p>
+          <p>Uses: <em>data</em>, <em>formatData</em>, <em>formatItem</em>, <em>onSelect</em></p>
+        </li>
+        <li>
+          <h3><a href="example2.html">Example 2</a></h3>
+          <p>Autocomplete Twitter usernames.</p>
+          <p>Uses: <em>compare</em>, <em>data</em>, <em>formatData</em>, <em>formatItem</em>, <em>minChars</em>, <em>onSelect</em>, <em>param</em>, <em>required</em></p>
+        </li>
+      </ol>
     </div>
   </body>
 </html>

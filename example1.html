@@ -1,30 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Marco Polo &mdash; Example 2</title>
+    <title>Marco Polo &mdash; Example 1</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.marcopolo.min.js"></script>
     <script type="text/javascript">
       $(function() {
-        $('#twitterUsernameSearch').marcoPolo({
-          compare: true,
+        $('#twitterUserSearch').marcoPolo({
           data: {
-            apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469'
+            apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469',
           },
           formatData: function(data, $input, $list) {
-            return data.completions.slice(0, 20);
+            return data.results.slice(0, 20);
           },
           formatItem: function(data, $item, $input, $list) {
-            return data;
+            return data.screen_name;
           },
-          minChars: 3,
           onSelect: function(data, $item, $input, $list) {
-            $input.val(data);
-          },
-          param: 'prefix',
-          required: true
+            $input.val(data.screen_name);
+          }
         });
       });
     </script>
@@ -33,12 +29,12 @@
     <div id="container">
       <h1>Marco Polo</h1>
       <h2>Try it Out</h2>
-      <form action="http://api.infochimps.com/social/network/tw/util/autocomplete_sn" method="get">
-        <input type="text" name="twitterUsernameSearch" id="twitterUsernameSearch" />
+      <form action="http://api.infochimps.com/social/network/tw/search/people_search" method="get">
+        <input type="text" name="twitterUserSearch" id="twitterUserSearch" />
         <img src="img/busy.gif" />
       </form>
       <h2>How it Works</h2>
-      <script src="https://gist.github.com/1014790.js"> </script>
+      <script src="https://gist.github.com/1008099.js"> </script>
     </div>
   </body>
 </html>

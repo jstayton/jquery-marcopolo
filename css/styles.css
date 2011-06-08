@@ -8,13 +8,17 @@ div#container {
   width: 780px;
 }
 
+a {
+  color: #000000;
+}
+
 em {
   font-style: italic;
 }
 
 h1 {
   font-size: 1.8em;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 h2 {
@@ -43,18 +47,14 @@ form input {
 	width: 250px;
 }
 
-p {
-  margin: 20px 0;
-  line-height: 1.4em;
-}
-
-ul {
+ol#examples {
   list-style-type: square;
   margin-left: 20px;
 }
 
-ul li {
+ol#examples li {
   line-height: 1.4em;
+  margin-bottom: 20px;
 }
 
 pre {
