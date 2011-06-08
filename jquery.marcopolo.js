@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.1.2
+ * Marco Polo v1.1.3
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -18,9 +18,12 @@
   var defaults = {
     // Whether to cache query results.
     cache: true,
-    // The key to use in comparing data objects. This allows the currently
-    // selected item to be highlighted in the results list.
-    compare: null,
+    // Whether to compare the selected item against items displayed in the
+    // results list. The selected item is highlighted if a match is found,
+    // instead of the first item in the list (by default). Set this option to
+    // 'true' if the data is a string; otherwise, specify the data object
+    // attribute name to compare on.
+    compare: false,
     // Additional data to be sent in the request query string.
     data: {},
     // The number of milliseconds to delay before firing a request after a
@@ -31,8 +34,8 @@
     // embedded deeper in the object.
     formatData: null,
     // Format the text that's displayed when the ajax request fails. Setting
-    // this option to null or returning false suppresses the message from being
-    // displayed.
+    // this option to 'null' or returning 'false' suppresses the message from
+    // being displayed.
     formatError: function($item, $input, $list, jqXHR, textStatus, errorThrown) {
       return '<em>Your search could not be completed at this time.</em>';
     },
@@ -42,14 +45,14 @@
     },
     // Format the text that's displayed when the minimum number of characters
     // (specified with the 'minChars' option) hasn't been reached. Setting this
-    // option to null or returning false suppresses the message from being
+    // option to 'null' or returning 'false' suppresses the message from being
     // displayed.
     formatMinChars: function(minChars, $item, $input, $list) {
       return '<em>Your search must be at least <strong>' + minChars + '</strong> characters.</em>';
     },
     // Format the text that's displayed when there are no results returned for
-    // the requested input value. Setting this option to null or returning
-    // false suppresses the message from being displayed.
+    // the requested input value. Setting this option to 'null' or returning
+    // 'false' suppresses the message from being displayed.
     formatNoResults: function(q, $item, $input, $list) {
       return '<em>No results for <strong>' + q + '</strong>.</em>';
     },
@@ -77,6 +80,8 @@
     onSelect: function(data, $item, $input, $list) {
       $input.val(data.title || data.name);
     },
+    // The name of the query string parameter that is set with the input value.
+    param: 'q',
     // Whether to clear the input value when no selection is made from the
     // results list.
     required: false,
@@ -201,14 +206,16 @@
       }
     }
     else {
-      // The currently selected item data.
+      // The currently selected item data for use in comparison.
       var selected = $input.data('marcoPolo').selected;
 
-      // Whether to compare the currently selected item with the new results.
-      // A 'compare' setting key has to be specified, and there must be a
-      // currently selected item with the same key.
-      var compare = settings.compare && selected && selected[settings.compare];
-      var selectedMatch = false;
+      // Whether to compare the currently selected item with the results. A
+      // 'compare' setting key has to be specified, and there must be a
+      // currently selected item.
+      var compare = settings.compare && selected;
+      var compareCurrent;
+      var compareSelected;
+      var compareMatch = false;
 
       // Loop through each result and add it to the list.
       for (var i = 0, datum; datum = data[i]; i++) {
@@ -222,14 +229,28 @@
           .html(formatItem)
           .appendTo($list);
 
-        // Highlight the currently selected item if it appears in this results
-        // list. Comparison is done on the 'compare' setting key.
-        if (compare && datum[settings.compare] === selected[settings.compare]) {
-          addHighlight($item, $list);
+        if (compare) {
+          // If the 'compare' setting is set to boolean 'true', assume the data
+          // is a string and compare directly.
+          if (settings.compare === true) {
+            compareCurrent = datum;
+            compareSelected = selected;
+          }
+          // Otherwise, assume the data is an object and the 'compare' setting
+          // is the attribute name to compare on.
+          else {
+            compareCurrent = datum[settings.compare];
+            compareSelected = selected[settings.compare];
+          }
 
-          // Stop comparing the remaining results, as a match has been made.
-          compare = false;
-          selectedMatch = true;
+          // Highlight this item if it matches the selected item.
+          if (compareCurrent === compareSelected) {
+            addHighlight($item, $list);
+
+            // Stop comparing the remaining results, as a match has been made.
+            compare = false;
+            compareMatch = true;
+          }
         }
       }
 
@@ -240,7 +261,7 @@
 
       // Highlight the first item in the results list if the currently selected
       // item was not found and already highlighted.
-      if (!selectedMatch) {
+      if (!compareMatch) {
         highlightFirst($list);
       }
 
@@ -333,7 +354,7 @@
     return $input.data('marcoPolo').ajaxAborted;
   };
 
-  //Mark the input as changed due to a different value.
+  // Mark the input as changed due to a different value.
   var change = function(q, $input, $list, settings) {
     // Reset the currently selected item.
     $input.data('marcoPolo').selected = null;
@@ -366,7 +387,10 @@
       }
 
       // Add the query to the additional data to be sent with the request.
-      var params = $.extend({ q: q }, settings.data);
+      var param = {};
+      param[settings.param] = q;
+
+      var params = $.extend({}, settings.data, param);
 
       // Build the request URL with query string data to use as the cache key.
       var cacheKey = settings.url + (settings.url.indexOf('?') === -1 ? '?' : '&') + $.param(params);

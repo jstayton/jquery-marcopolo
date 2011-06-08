@@ -164,19 +164,23 @@ be used).
     _Default:_ true
 
     ---------------------------------------------------------------------------
-*   **compare** _string, null_
+*   **compare** _boolean, string_
 
-    The key to use in comparing data objects. This allows the currently
-    selected item to be highlighted in the results list.
+    Whether to compare the selected item against items displayed in the results
+    list. The selected item is highlighted if a match is found, instead of the
+    first item in the list (by default). Set this option to _true_ if the data
+    is a string; otherwise, specify the data object attribute name to compare
+    on.
 
-    _Default:_ null
+    _Default:_ false
 
     ---------------------------------------------------------------------------
 *   **data** _object, string_
 
-    Additional data to be sent in the request query string. (Note: _q_ is
-    always sent with the input value and will overwrite _q_ in the data object
-    if set.)
+    Additional data to be sent in the request query string. (Note: The query
+    string parameter that is set with the input value (_param_ option) will
+    overwrite the value in the data object if an attribute with the same name
+    exists.)
 
     _Default:_ {}
 
@@ -197,6 +201,13 @@ be used).
     when this value is not reached.
 
     _Default:_ 1
+
+    ---------------------------------------------------------------------------
+*   **param** _string_
+
+    The name of the query string parameter that is set with the input value.
+
+    _Default:_ q
 
     ---------------------------------------------------------------------------
 *   **required** _boolean_
