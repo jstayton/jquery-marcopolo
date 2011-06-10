@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.1.3
+ * Marco Polo v1.1.4
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -607,11 +607,11 @@
               setTimeout(function() {
                 // If the $list 'mousedown' event has fired without a 'mouseup'
                 // event, wait for that before dismissing everything.
-                if ($input.data('marcoPolo').mousedown) {
-                  return;
-                }
+                if (!$input.data('marcoPolo').mousedown) {
+                  dismiss($input, $list, settings);
 
-                dismiss($input, $list, settings);
+                  $list.empty();
+                }
               }, 1);
             });
 
@@ -644,6 +644,8 @@
             // above, before this code fires.)
             if (!$input.data('marcoPolo').focus && $list.is(':visible')) {
               dismiss($input, $list, settings);
+
+              $list.empty();
             }
           };
 
