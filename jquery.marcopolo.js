@@ -5,7 +5,7 @@
  *
  * https://github.com/jstayton/jquery-marcopolo
  *
- * Copyright © 2011 by Justin Stayton
+ * Copyright Â© 2011 by Justin Stayton
  * Released under the MIT License
  * http://en.wikipedia.org/wiki/MIT_License
  */
@@ -666,6 +666,8 @@
         return this.each(function() {
           var $input = $(this);
           var data = $input.data('marcoPolo');
+          var $list = data.$list;
+          var settings = data.settings;
 
           // Skip if this plugin was never initialized on the input.
           if (!data) {
@@ -676,7 +678,13 @@
           if (q !== data.value) {
             $input.val(q);
 
-            change(q, $input, data.$list, data.settings);
+            change(q, $input, $list, settings);
+
+            // Dismiss and empty the existing results to prevent future stale
+            // results in case the change is made while the input has focus.
+            dismiss($input, $list, settings);
+
+            $list.empty();
           }
         });
       },
