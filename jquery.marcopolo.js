@@ -5,7 +5,7 @@
  *
  * https://github.com/jstayton/jquery-marcopolo
  *
- * Copyright Â© 2011 by Justin Stayton
+ * Copyright 2011 by Justin Stayton
  * Released under the MIT License
  * http://en.wikipedia.org/wiki/MIT_License
  */
@@ -523,6 +523,7 @@
             $list: $list,
             mousedown: false,
             selected: null,
+            selectedMouseup: false,
             settings: settings,
             timer: null,
             value: $input.val()
@@ -534,11 +535,19 @@
               // so "manually" keep track in the 'focus' and 'blur' events.
               $input.data('marcoPolo').focus = true;
 
-              // Fire 'onFocus' callback.
-              settings.onFocus && settings.onFocus.call($input, $input, $list);
-              $input.trigger('marcopolofocus', [$input, $list]);
+              // If this focus is the result of a mouse selection (which re-
+              // focuses on the input), ignore as if a blur never occurred.
+              if ($input.data('marcoPolo').selectedMouseup) {
+                $input.data('marcoPolo').selectedMouseup = false;
+              }
+              // For everything else, initiate a request.
+              else {
+                // Fire 'onFocus' callback.
+                settings.onFocus && settings.onFocus.call($input, $input, $list);
+                $input.trigger('marcopolofocus', [$input, $list]);
 
-              request($input.val(), $input, $list, settings);
+                request($input.val(), $input, $list, settings);
+              }
             })
             .bind('keydown.marcoPolo', function(key) {
               switch (key.which) {
@@ -576,9 +585,6 @@
                   var $highlighted = highlighted($list);
 
                   if ($highlighted.length) {
-                    // Blur the input to mimic how it works on mouse click.
-                    $input.blur();
-
                     select($highlighted.data('marcoPolo'), $highlighted, $input, $list, settings);
                   }
 
@@ -630,6 +636,14 @@
               var $item = $(this);
 
               select($item.data('marcoPolo'), $item, $input, $list, settings);
+
+              // This event is tracked so that when 'focus' is called on the
+              // input (below), a new request isn't fired.
+              $input.data('marcoPolo').selectedMouseup = true;
+
+              // Give focus back to the input for easy tabbing on to the next
+              // field.
+              $input.focus();
             });
 
           // A reference to this function is maintained for unbinding in the
