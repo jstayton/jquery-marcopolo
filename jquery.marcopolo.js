@@ -106,12 +106,12 @@
 
   // Get the first selectable item in the results list.
   var firstSelectableItem = function($list) {
-    return $list.children('li.mp_selectable:first');
+    return $list.children('li.mp_selectable:visible:first');
   };
 
   // Get the last selectable item in the results list.
   var lastSelectableItem = function($list) {
-    return $list.children('li.mp_selectable:last');
+    return $list.children('li.mp_selectable:visible:last');
   };
 
   // Get the currently highlighted item in the results list.
@@ -141,7 +141,7 @@
   // Highlight the item before the currently highlighted item.
   var highlightPrev = function($list) {
     var $highlighted = highlighted($list);
-    var $prev = $highlighted.prevAll('li.mp_selectable:first');
+    var $prev = $highlighted.prevAll('li.mp_selectable:visible:first');
 
     // If there is no "previous" selectable item, continue at the list's end.
     if (!$prev.length) {
@@ -154,7 +154,7 @@
   // Highlight the item after the currently highlighted item.
   var highlightNext = function($list) {
     var $highlighted = highlighted($list);
-    var $next = $highlighted.nextAll('li.mp_selectable:first');
+    var $next = $highlighted.nextAll('li.mp_selectable:visible:first');
 
     // If there is no "next" selectable item, continue at the list's beginning.
     if (!$next.length) {
@@ -262,17 +262,17 @@
         .children(settings.selectable)
         .addClass('mp_selectable');
 
-      // Highlight the first item in the results list if the currently selected
-      // item was not found and already highlighted.
-      if (!compareMatch) {
-        highlightFirst($list);
-      }
-
       // Fire 'onResults' callback.
       settings.onResults && settings.onResults.call($input, data, $input, $list);
       $input.trigger('marcopoloresults', [data, $input, $list]);
 
       showList($list);
+
+      // Highlight the first item in the results list if the currently selected
+      // item was not found and already highlighted.
+      if (!compareMatch) {
+        highlightFirst($list);
+      }
     }
   };
 
