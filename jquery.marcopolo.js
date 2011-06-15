@@ -56,6 +56,9 @@
     formatNoResults: function(q, $item, $input, $list) {
       return '<em>No results for <strong>' + q + '</strong>.</em>';
     },
+    // Whether to hide the results list when an item is selected. The results
+    // list is still hidden when the input is blurred for any other reason.
+    hideOnSelect: true,
     // The minimum number of characters required before a request is fired.
     minChars: 1,
     // Called when the input value changes.
@@ -450,7 +453,9 @@
 
   // Select an item from the results list.
   var select = function(data, $item, $input, $list, settings) {
-    hideList($list);
+    if (settings.hideOnSelect) {
+      hideList($list);
+    }
 
     // Save the selection as the currently selected item.
     $input.data('marcoPolo').selected = data;
