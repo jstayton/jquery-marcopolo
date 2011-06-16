@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.1.4
+ * Marco Polo v1.2.0
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -59,6 +59,12 @@
     // Whether to hide the results list when an item is selected. The results
     // list is still hidden when the input is blurred for any other reason.
     hideOnSelect: true,
+    // Positioning a label over an input is a common design pattern (sometimes
+    // referred to as 'overlabel') that unfortunately doesn't work so well with
+    // all of the input focus/blur events that occur with autocomplete. With
+    // this option, however, the hiding/showing of the label is handled
+    // internally to provide a built-in solution to the problem.
+    label: null,
     // The minimum number of characters required before a request is fired.
     minChars: 1,
     // Called when the input value changes.
@@ -102,6 +108,49 @@
     ENTER: 13,
     ESC: 27,
     UP: 38
+  };
+
+  // Initialize certain settings that require a little extra work.
+  var initSettings = function(settings, $input) {
+    // If no 'url' setting is specified, use the parent form's 'action'.
+    if (!settings.url) {
+      settings.url = $input.closest('form').attr('action');
+    }
+
+    // Ensure that the 'label' is a jQuery object if a selector string or plain
+    // DOM element is passed.
+    if (settings.label) {
+      settings.label = $(settings.label).addClass('mp_label');
+
+      hideLabel(settings.label, $input);
+    }
+
+    return settings;
+  };
+
+  // Show the label if one exists and the input has no value.
+  var showLabel = function($label, $input) {
+    if ($label && !$input.val()) {
+      $label.show();
+
+      return true;
+    }
+    else {
+      return false;
+    }
+  };
+
+  // Hide the label if one exists. If $input is specified (it's optional), only
+  // hide the label if the input has a value.
+  var hideLabel = function($label, $input) {
+    if ($label && (typeof $input === 'undefined' || $input.val())) {
+      $label.hide();
+
+      return true;
+    }
+    else {
+      return false;
+    }
   };
 
   // Get the first selectable item in the results list.
@@ -510,12 +559,7 @@
                         .insertAfter($input);
 
           // Combine default and instance settings.
-          var settings = $.extend({}, defaults, options);
-
-          // If no 'url' setting is specified, use the parent form's 'action'.
-          if (!settings.url) {
-            settings.url = $input.closest('form').attr('action');
-          }
+          var settings = initSettings($.extend({}, defaults, options), $input);;
 
           // All "instance" variables are saved to the jQuery object for easy
           // access throughout its life.
@@ -539,6 +583,8 @@
               // It's overly complicated to check if an input field has focus,
               // so "manually" keep track in the 'focus' and 'blur' events.
               $input.data('marcoPolo').focus = true;
+
+              hideLabel(settings.label);
 
               // If this focus is the result of a mouse selection (which re-
               // focuses on the input), ignore as if a blur never occurred.
@@ -621,6 +667,8 @@
                 if (!$input.data('marcoPolo').mousedown) {
                   dismiss($input, $list, settings);
 
+                  showLabel(settings.label, $input);
+
                   $list.empty();
                 }
               }, 1);
@@ -664,6 +712,8 @@
             if (!$input.data('marcoPolo').focus && $list.is(':visible')) {
               dismiss($input, $list, settings);
 
+              showLabel(settings.label, $input);
+
               $list.empty();
             }
           };
@@ -675,6 +725,9 @@
           if (settings.selected) {
             select(settings.selected, null, $input, $list, settings);
           }
+
+          // Hide the label if the input has an initial value.
+          hideLabel(settings.label, $input);
         });
       },
     // Programmatically change the input value without triggering a search
@@ -714,6 +767,8 @@
         return this.each(function() {
           var $input = $(this);
           var data = $input.data('marcoPolo');
+          var $list = data.$list;
+          var settings = data.settings;
 
           // Skip if this plugin was never initialized on the input.
           if (!data) {
@@ -721,11 +776,16 @@
           }
 
           // Remove the results list element.
-          data.$list.remove();
+          $list.remove();
 
           // Re-enable 'autocomplete' on the input if it was enabled initially.
           if (data.autocomplete !== 'off') {
             $input.removeAttr('autocomplete');
+          }
+
+          // Remove the added class from the label.
+          if (settings.label) {
+            settings.label.removeClass('mp_label');
           }
 
           // Remove all events and data specific to this plugin.
@@ -743,13 +803,14 @@
         if (typeof nameOrValues === 'undefined') {
           var $input = $(this);
           var data = $input.data('marcoPolo');
+          var settings = data.settings;
 
           // Skip if this plugin was never initialized on the input.
           if (!data) {
             return;
           }
 
-          return data.settings;
+          return settings;
         }
         else if (typeof value === 'undefined') {
           // Set multiple options if an object is passed.
@@ -757,26 +818,30 @@
             return this.each(function() {
               var $input = $(this);
               var data = $input.data('marcoPolo');
+              var settings = data.settings;
 
               // Skip if this plugin was never initialized on the input.
               if (!data) {
                 return;
               }
 
-              data.settings = $.extend(data.settings, nameOrValues);
+              settings = $.extend(settings, nameOrValues);
+
+              initSettings(settings, $input);
             });
           }
           // Otherwise, return a specific option value.
           else {
             var $input = $(this);
             var data = $input.data('marcoPolo');
+            var settings = data.settings;
 
             // Skip if this plugin was never initialized on the input.
             if (!data) {
               return;
             }
 
-            return data.settings[nameOrValues];
+            return settings[nameOrValues];
           }
         }
         // If both arguments are specified, set a specific option.
@@ -784,13 +849,16 @@
           return this.each(function() {
             var $input = $(this);
             var data = $input.data('marcoPolo');
+            var settings = data.settings;
 
             // Skip if this plugin was never initialized on the input.
             if (!data) {
               return;
             }
 
-            data.settings[nameOrValues] = value;
+            settings[nameOrValues] = value;
+
+            initSettings(settings, $input);
           });
         }
       },
