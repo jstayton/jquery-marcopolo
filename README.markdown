@@ -194,6 +194,28 @@ be used).
     _Default:_ 250
 
     ---------------------------------------------------------------------------
+*   **hideOnSelect** _boolean_
+
+    Whether to hide the results list when an item is selected. Interesting
+    things can be done when this is set to _false_, such as hiding and showing
+    certain items when other items are selected. The results list is still
+    hidden when the input is blurred for any other reason.
+
+    _Default:_ true
+
+    ---------------------------------------------------------------------------
+*   **label** _selector, jQuery object, DOM element, null_
+
+    Positioning a label over an input is a common design pattern (sometimes
+    referred to as _overlabel_) that unfortunately doesn't work so well with
+    all of the input focus/blur events that occur with autocomplete. With this
+    option, however, the hiding/showing of the label is handled internally to
+    provide a built-in solution to the problem. The label receives the class
+    _mp\_label_.
+
+    _Default:_ null
+
+    ---------------------------------------------------------------------------
 *   **minChars** _integer_
 
     The minimum number of characters required before a request is fired. See
