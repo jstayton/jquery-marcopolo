@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.2.0
+ * Marco Polo v1.2.1
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -607,11 +607,11 @@
                   // the input value. Keep it in its current place.
                   key.preventDefault();
 
-                  // Highlight the previous item.
-                  highlightPrev($list);
-
                   // Show the list if it has been hidden by ESC.
                   showList($list);
+
+                  // Highlight the previous item.
+                  highlightPrev($list);
 
                   break;
 
@@ -620,11 +620,11 @@
                   // the input value. Keep it in its current place.
                   key.preventDefault();
 
-                  // Highlight the next item.
-                  highlightNext($list);
-
                   // Show the list if it has been hidden by ESC.
                   showList($list);
+
+                  // Highlight the next item.
+                  highlightNext($list);
 
                   break;
 
