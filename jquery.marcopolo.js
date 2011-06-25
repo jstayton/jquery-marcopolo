@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.2.1
+ * Marco Polo v1.2.2
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -145,6 +145,24 @@
   var hideLabel = function($label, $input) {
     if ($label && (typeof $input === 'undefined' || $input.val())) {
       $label.hide();
+
+      return true;
+    }
+    else {
+      return false;
+    }
+  };
+
+  // Show or hide the label (if one exists) depending on if the input has a
+  // value.
+  var toggleLabel = function($label, $input) {
+    if ($label) {
+      if ($input.val()) {
+        $label.hide();
+      }
+      else {
+        $label.show();
+      }
 
       return true;
     }
@@ -750,13 +768,19 @@
           if (q !== data.value) {
             $input.val(q);
 
+            if (data.focus) {
+              // Dismiss and empty the existing results to prevent future stale
+              // results in case the change is made while the input has focus.
+              dismiss($input, $list, settings);
+
+              $list.empty();
+            }
+            else {
+              // Show or hide the label depending on if the input has a value.
+              toggleLabel(settings.label, $input);
+            }
+
             change(q, $input, $list, settings);
-
-            // Dismiss and empty the existing results to prevent future stale
-            // results in case the change is made while the input has focus.
-            dismiss($input, $list, settings);
-
-            $list.empty();
           }
         });
       },
