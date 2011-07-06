@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.2.3
+ * Marco Polo v1.2.4
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -603,13 +603,17 @@
 
     cancelPendingRequest($input);
 
-    // Empty the input value if the 'required' setting is enabled
-    // and nothing was selected.
+    hideList($list).empty();
+
+    // Empty the input value if the 'required' setting is enabled and nothing
+    // is selected.
     if (settings.required && !data.selected) {
-      $input.marcoPolo('change', '');
+      $input.val('');
+
+      change('', $input, $list, settings);
     }
 
-    hideList($list);
+    showLabel(settings.label, $input);
   };
 
   // "Public" methods that can be called on the plugin.
@@ -736,7 +740,9 @@
 
                 // Hide the list.
                 case keys.ESC:
-                  dismiss($input, $list, settings);
+                  cancelPendingRequest($input);
+
+                  hideList($list);
 
                   break;
               }
@@ -759,13 +765,9 @@
                 // If the $list 'mousedown' event has fired without a 'mouseup'
                 // event, wait for that before dismissing everything.
                 if (!data.mousedown) {
-                  data.focusPseudo = true;
+                  data.focusPseudo = false;
 
                   dismiss($input, $list, settings);
-
-                  showLabel(settings.label, $input);
-
-                  $list.empty();
                 }
               }, 1);
             });
@@ -806,13 +808,9 @@
             // input is clicked. (A click on a selectable list item is handled
             // above, before this code fires.)
             if (!data.focusReal && $list.is(':visible')) {
-              data.focusPseudo = true;
+              data.focusPseudo = false;
 
               dismiss($input, $list, settings);
-
-              showLabel(settings.label, $input);
-
-              $list.empty();
             }
           });
 
@@ -846,19 +844,19 @@
           if (q !== data.value) {
             $input.val(q);
 
-            if (data.focusPseudo) {
-              // Dismiss and empty the existing results to prevent future stale
-              // results in case the change is made while the input has focus.
-              dismiss($input, $list, settings);
+            change(q, $input, $list, settings);
 
-              $list.empty();
+            if (data.focusPseudo) {
+              // Clear out the existing results to prevent future stale results
+              // in case the change is made while the input has focus.
+              cancelPendingRequest($input);
+
+              hideList($list).empty();
             }
             else {
               // Show or hide the label depending on if the input has a value.
               toggleLabel(settings.label, $input);
             }
-
-            change(q, $input, $list, settings);
           }
         });
       },
