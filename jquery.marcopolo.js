@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.2.4
+ * Marco Polo v1.2.5
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -668,6 +668,12 @@
 
           $input
             .bind('focus.marcoPolo', function () {
+              // Do nothing if the input already has focus. This prevents
+              // additional 'focus' events from initiating the same request.
+              if (data.focusReal) {
+                return;
+              }
+
               // It's overly complicated to check if an input field has focus,
               // so "manually" keep track in the 'focus' and 'blur' events.
               data.focusPseudo = true;
