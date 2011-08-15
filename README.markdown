@@ -40,7 +40,7 @@ important principals:
     There's a fine line between too little and too much. This plugin certainly
     isn't for _every_ situation, but it strives to provide enough options and
     callbacks to allow for _many_ situations. By not baking in specific use
-    cases, the plugin can stay lean (about 7.4 KB compressed) and flexible.
+    cases, the plugin can stay lean (about 12 KB compressed) and flexible.
 
 *   **Maintained**
 
@@ -59,7 +59,9 @@ important principals:
 Requirements
 ------------
 
-jQuery 1.4.2 or newer. All modern browsers are supported, as well as IE 6 and newer.
+*   jQuery 1.4.2 or newer.
+*   jQuery UI Widget 1.8.14. Included in the minified version.
+*   All modern browsers are supported, as well as IE 6 and newer.
 
 How it Works
 ------------
@@ -79,10 +81,10 @@ Now attach Marco Polo to the input field to power the search:
 
     $('#userSearch').marcoPolo({
       url: '/users/search',
-      formatItem: function(data) {
+      formatItem: function (data) {
         return data.first_name + ' ' + data.last_name;
       },
-      onSelect(data) {
+      onSelect (data) {
         window.location = data.profile_url;
       }
     });
@@ -273,7 +275,7 @@ be used).
 
 #### Formatting
 
-*   **formatData**(data, input, $list) _function, null_
+*   **formatData** (data, input, $list) _function, null_
 
     Format the raw data that's returned from the ajax request. Useful for
     further filtering the data or returning the array of results that's
@@ -290,7 +292,7 @@ be used).
     _Return:_ _array_ of _objects_ to use as the data.
 
     ---------------------------------------------------------------------------
-*   **formatError**($item, $input, $list, jqXHR, textStatus, errorThrown)
+*   **formatError** ($item, $input, $list, jqXHR, textStatus, errorThrown)
     _function, null_
 
     Format the text that's displayed when the ajax request fails. The message
@@ -320,7 +322,7 @@ be used).
               message.
 
     ---------------------------------------------------------------------------
-*   **formatItem**(data, $item, $input, $list) _function_
+*   **formatItem** (data, $item, $input, $list) _function_
 
     Format the display of each item in the results list. By default, the
     _title_ or _name_ value of the data object is displayed. The returned value
@@ -343,7 +345,7 @@ be used).
               display.
 
     ---------------------------------------------------------------------------
-*   **formatMinChars**(minChars, $item, $input, $list) _function, null_
+*   **formatMinChars** (minChars, $item, $input, $list) _function, null_
 
     Format the text that's displayed when the minimum number of characters
     (specified with the _minChars_ option) hasn't been reached. The message is
@@ -372,7 +374,7 @@ be used).
               message.
 
     ---------------------------------------------------------------------------
-*   **formatNoResults**(q, $item, $input, $list) _function, null_
+*   **formatNoResults** (q, $item, $input, $list) _function, null_
 
     Format the text that's displayed when there are no results returned for the
     requested input value. The message is displayed in a list item with the
@@ -401,7 +403,7 @@ be used).
 
 #### Events
 
-*   **onChange**(q, $input, $list) _function, null_
+*   **onChange** (q, $input, $list) _function, null_
 
     Called when the input value changes.
 
@@ -415,10 +417,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopolochange_ event:
 
-        $(selector).bind('marcopolochange', function(event, q, $input, $list) { … });
+        $(selector).bind('marcopolochange', function (event, q, $input, $list) { … });
 
     ---------------------------------------------------------------------------
-*   **onError**($item, $input, $list, jqXHR, textStatus, errorThrown)
+*   **onError** ($item, $input, $list, jqXHR, textStatus, errorThrown)
     _function, null_
 
     Called when the ajax request fails.
@@ -436,10 +438,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopoloerror_ event:
 
-        $(selector).bind('marcopoloerror', function(event, $item, $input, $list, jqXHR, textStatus, errorThrown) { … });
+        $(selector).bind('marcopoloerror', function (event, $item, $input, $list, jqXHR, textStatus, errorThrown) { … });
 
     ---------------------------------------------------------------------------
-*   **onFocus**($input, $list) _function, null_
+*   **onFocus** ($input, $list) _function, null_
 
     Called when the input field receives focus.
 
@@ -452,10 +454,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopolofocus_ event:
 
-        $(selector).bind('marcopolofocus', function(event, $input, $list) { … });
+        $(selector).bind('marcopolofocus', function (event, $input, $list) { … });
 
     ---------------------------------------------------------------------------
-*   **onMinChars**(minChars, $item, $input, $list) _function, null_
+*   **onMinChars** (minChars, $item, $input, $list) _function, null_
 
     Called when the minimum number of characters (specified with the _minChars_
     option) hasn't been reached by the end of the _delay_.
@@ -471,10 +473,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopolominchars_ event:
 
-        $(selector).bind('marcopolominchars', function(event, minChars, $item, $input, $list) { … });
+        $(selector).bind('marcopolominchars', function (event, minChars, $item, $input, $list) { … });
 
     ---------------------------------------------------------------------------
-*   **onNoResults**(q, $item, $input, $list) _function, null_
+*   **onNoResults** (q, $item, $input, $list) _function, null_
 
     Called when there are no results returned for the request.
 
@@ -489,10 +491,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopolonoresults_ event:
 
-        $(selector).bind('marcopolonoresults', function(event, q, $item, $input, $list) { … });
+        $(selector).bind('marcopolonoresults', function (event, q, $item, $input, $list) { … });
 
     ---------------------------------------------------------------------------
-*   **onRequestBefore**($input, $list) _function, null_
+*   **onRequestBefore** ($input, $list) _function, null_
 
     Called before the ajax request is made. Useful for showing a loading
     spinner if the request is going to take some time.
@@ -506,10 +508,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopolorequestbefore_ event:
 
-        $(selector).bind('marcopolorequestbefore', function(event, $input, $list) { … });
+        $(selector).bind('marcopolorequestbefore', function (event, $input, $list) { … });
 
     ---------------------------------------------------------------------------
-*   **onRequestAfter**($input, $list, jqXHR, textStatus) _function, null_
+*   **onRequestAfter** ($input, $list, jqXHR, textStatus) _function, null_
 
     Called after the ajax request completes (success or error). Useful for
     hiding a loading spinner that's shown in _onRequestBefore_.
@@ -525,10 +527,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopolorequestafter_ event:
 
-        $(selector).bind('marcopolorequestafter', function(event, $input, $list, jqXHR, textStatus) { … });
+        $(selector).bind('marcopolorequestafter', function (event, $input, $list, jqXHR, textStatus) { … });
 
     ---------------------------------------------------------------------------
-*   **onResults**(data, $input, $list) _function, null_
+*   **onResults** (data, $input, $list) _function, null_
 
     Called when there are results to be displayed.
 
@@ -542,10 +544,10 @@ be used).
 
     _Bind:_ You can also bind to the _marcopoloresults_ event:
 
-        $(selector).bind('marcopoloresults', function(event, data, $input, $list) { … });
+        $(selector).bind('marcopoloresults', function (event, data, $input, $list) { … });
 
     ---------------------------------------------------------------------------
-*   **onSelect**(data, $item, $input, $list) _function, null_
+*   **onSelect** (data, $item, $input, $list) _function, null_
 
     Called when an item is selected from the results list or passed in through
     the _selected_ option. By default, the _title_ or _name_ value of the data
@@ -565,7 +567,7 @@ be used).
 
     _Bind:_ You can also bind to the _marcopoloselect_ event:
 
-        $(selector).bind('marcopoloselect', function(event, data, $item, $input, $list) { … });
+        $(selector).bind('marcopoloselect', function (event, data, $item, $input, $list) { … });
 
 Methods
 -------
@@ -593,6 +595,14 @@ Methods
 
         $('#userSearch').marcoPolo('destroy');
 
+*   **list**
+
+    Get the results list element.
+
+    _Example:_
+
+        $('#userSearch').marcoPolo('list');
+
 *   **option**
 
     Get or set one or more options.
@@ -615,7 +625,7 @@ Methods
 
         $('#userSearch').marcoPolo('option', {
           url: '/new/url',
-          onSelect: function(data, $item, $input, $list) { … }
+          onSelect: function (data, $item, $input, $list) { … }
         });
 
     _Parameters:_
