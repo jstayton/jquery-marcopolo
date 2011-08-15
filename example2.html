@@ -4,7 +4,7 @@
     <title>Marco Polo &mdash; Example 2</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.marcopolo.min.js"></script>
     <script type="text/javascript">
       $(function() {
@@ -13,14 +13,14 @@
           data: {
             apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469'
           },
-          formatData: function(data, $input, $list) {
+          formatData: function (data, $input, $list) {
             return data.completions.slice(0, 20);
           },
-          formatItem: function(data, $item, $input, $list) {
+          formatItem: function (data, $item, $input, $list) {
             return data;
           },
           minChars: 3,
-          onSelect: function(data, $item, $input, $list) {
+          onSelect: function (data, $item, $input, $list) {
             $input.val(data);
           },
           param: 'prefix',
