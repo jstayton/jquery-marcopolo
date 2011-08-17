@@ -251,7 +251,7 @@ be used).
     selector _:not(.header)_. Selectable items receive the class
     _mp\_selectable_.
 
-    _Default:_ '*'
+    _Default:_ *
 
     ---------------------------------------------------------------------------
 *   **selected** _object, null_
@@ -425,7 +425,7 @@ be used).
 
     Called when the ajax request fails.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
@@ -445,7 +445,7 @@ be used).
 
     Called when the input field receives focus.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
@@ -462,7 +462,7 @@ be used).
     Called when the minimum number of characters (specified with the _minChars_
     option) hasn't been reached by the end of the _delay_.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
@@ -480,7 +480,7 @@ be used).
 
     Called when there are no results returned for the request.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
@@ -499,7 +499,7 @@ be used).
     Called before the ajax request is made. Useful for showing a loading
     spinner if the request is going to take some time.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
@@ -516,7 +516,7 @@ be used).
     Called after the ajax request completes (success or error). Useful for
     hiding a loading spinner that's shown in _onRequestBefore_.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
@@ -534,7 +534,7 @@ be used).
 
     Called when there are results to be displayed.
 
-    _Default: null_
+    _Default:_ null
 
     _Parameters:_
 
