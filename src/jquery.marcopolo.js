@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.3.0
+ * Marco Polo v1.3.1
  *
  * A modern jQuery plugin for autocomplete functionality on a text input.
  *
@@ -305,12 +305,23 @@
       return this.$list;
     },
 
+    // Trigger a callback subscribed to via an option or using .bind().
+    _trigger: function (name, params) {
+      var self = this,
+          callbackName = 'on' + name.charAt(0).toUpperCase() + name.slice(1),
+          triggerName = self.widgetEventPrefix.toLowerCase() + name.toLowerCase(),
+          callback = self.options[callbackName];
+
+      self.$input.trigger(triggerName, params);
+
+      return callback && callback.apply(self.$input, params);
+    },
+
     // Bind the necessary events to the input.
     _bindInput: function () {
       var self = this,
           $input = self.$input,
-          $list = self.$list,
-          options = self.options;
+          $list = self.$list;
 
       $input
         .bind('focus.marcoPolo', function () {
@@ -334,12 +345,7 @@
           }
           // For everything else, initiate a request.
           else {
-            // Fire 'onFocus' callback.
-            if (options.onFocus) {
-              options.onFocus.call($input, $input, $list);
-            }
-
-            $input.trigger('marcopolofocus', [$input, $list]);
+            self._trigger('focus', [$input, $list]);
 
             self._request($input.val());
           }
@@ -618,12 +624,7 @@
         $item.html(formatNoResults);
       }
 
-      // Fire 'onNoResults' callback.
-      if (options.onNoResults) {
-        options.onNoResults.call($input, q, $item, $input, $list);
-      }
-
-      $input.trigger('marcopolonoresults', [q, $item, $input, $list]);
+      self._trigger('noResults', [q, $item, $input, $list]);
 
       // Displaying a "no results" message is optional. It isn't displayed if
       // the 'formatNoResults' callback returns a false value.
@@ -701,12 +702,7 @@
         .children(options.selectable)
         .addClass('mp_selectable');
 
-      // Fire 'onResults' callback.
-      if (options.onResults) {
-        options.onResults.call($input, data, $input, $list);
-      }
-
-      $input.trigger('marcopoloresults', [data, $input, $list]);
+      self._trigger('results', [data, $input, $list]);
 
       self._showList();
 
@@ -762,12 +758,7 @@
         $item.html(formatError);
       }
 
-      // Fire 'onError' callback.
-      if (options.onError) {
-        options.onError.call($input, $item, $input, $list, jqXHR, textStatus, errorThrown);
-      }
-
-      $input.trigger('marcopoloerror', [$item, $input, $list, jqXHR, textStatus, errorThrown]);
+      self._trigger('error', [$item, $input, $list, jqXHR, textStatus, errorThrown]);
 
       // Displaying an error message is optional. It isn't displayed if the
       // 'formatError' callback returns a false value.
@@ -811,12 +802,7 @@
         $item.html(formatMinChars);
       }
 
-      // Fire 'onMinChars' callback.
-      if (options.onMinChars) {
-        options.onMinChars.call($input, options.minChars, $item, $input, $list);
-      }
-
-      $input.trigger('marcopolominchars', [options.minChars, $item, $input, $list]);
+      self._trigger('minChars', [options.minChars, $item, $input, $list]);
 
       // Displaying a minimum characters message is optional. It isn't
       // displayed if the 'formatMinChars' callback returns a false value.
@@ -855,8 +841,7 @@
     _change: function (q) {
       var self = this,
           $input = self.$input,
-          $list = self.$list,
-          options = self.options;
+          $list = self.$list;
 
       // Reset the currently selected item.
       self.selected = null;
@@ -864,14 +849,7 @@
       // Keep track of the new input value for later comparison.
       self.value = q;
 
-      // Fire 'onChange' callback.
-      // if (options.onChange) {
-      //   options.onChange.call($input, q, $input, $list);
-      // }
-      //
-      // $input.trigger('marcopolochange', [q, $input, $list]);
-
-      self._trigger('onChange', null, [q, $input, $list]);
+      self._trigger('change', [q, $input, $list]);
 
       return self;
     },
@@ -920,12 +898,7 @@
         }
         // Otherwise, make an ajax request for the data.
         else {
-          // Fire 'onRequestBefore' callback.
-          if (options.onRequestBefore) {
-            options.onRequestBefore.call($input, $input, $list);
-          }
-
-          $input.trigger('marcopolorequestbefore', [$input, $list]);
+          self._trigger('requestBefore', [$input, $list]);
 
           // Add a class to the input's parent that can be hooked-into by the
           // CSS to show a busy indicator.
@@ -961,12 +934,7 @@
                 // Remove the "busy" indicator class on the input's parent.
                 $inputParent.removeClass('mp_busy');
 
-                // Fire 'onRequestAfter' callback.
-                if (options.onRequestAfter) {
-                  options.onRequestAfter.call($input, $input, $list, jqXHR, textStatus);
-                }
-
-                $input.trigger('marcopolorequestafter', [$input, $list, jqXHR, textStatus]);
+                self._trigger('requestAfter', [$input, $list, jqXHR, textStatus]);
               }
           });
         }
@@ -994,12 +962,7 @@
         self._hideList();
       }
 
-      // Fire 'onSelect' callback.
-      if (options.onSelect) {
-        options.onSelect.call($input, data, $item, $input, $list);
-      }
-
-      $input.trigger('marcopoloselect', [data, $item, $input, $list]);
+      self._trigger('select', [data, $item, $input, $list]);
 
       // It's common to update the input value with the selected item during
       // 'onSelect', so check if that has occurred and store the new value.
