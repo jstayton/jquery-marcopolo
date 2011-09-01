@@ -73,7 +73,7 @@ Then attach Marco Polo to the text input in your JavaScript:
       formatItem: function (data, $item) {
         return data.first_name + ' ' + data.last_name;
       },
-      onSelect (data, $item) {
+      onSelect: function (data, $item) {
         window.location = data.profile_url;
       }
     });
