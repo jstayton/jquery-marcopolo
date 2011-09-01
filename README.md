@@ -70,10 +70,10 @@ Then attach Marco Polo to the text input in your JavaScript:
 
     $('#userSearch').marcoPolo({
       url: '/users/search',
-      formatItem: function (data) {
+      formatItem: function (data, $item) {
         return data.first_name + ' ' + data.last_name;
       },
-      onSelect (data) {
+      onSelect (data, $item) {
         window.location = data.profile_url;
       }
     });
@@ -587,7 +587,7 @@ Methods
 
         $('#userSearch').marcoPolo('option', {
           url: '/new/url',
-          onSelect: function (data, $item, $input, $list) { … }
+          onSelect: function (data, $item) { … }
         });
 
     _Parameters:_
