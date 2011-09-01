@@ -1,8 +1,8 @@
 Marco Polo
 ==========
 
-A jQuery plugin that adds autocomplete functionality to a text input, extracted
-from the [Ekklesia 360](http://ekklesia360.com) CMS by
+A jQuery autocomplete plugin for the discerning developer, extracted from the
+[Ekklesia 360](http://ekklesia360.com) CMS by
 [Monk Development](http://monkdev.com).
 
 After spending years struggling with various autocomplete plugins, I became fed
@@ -239,7 +239,7 @@ be used).
 
 #### Formatting
 
-*   **formatData** (data, input, $list) _function, null_
+*   **formatData** (data) _function, null_
 
     Format the raw data that's returned from the ajax request. Useful for
     further filtering the data or returning the array of results that's
@@ -250,15 +250,13 @@ be used).
     _Parameters:_
 
     *   **data** _object_ Data returned from the request.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Return:_ _array_ of _objects_ to use as the data.
 
     ---------------------------------------------------------------------------
-*   **formatError** ($item, $input, $list, jqXHR, textStatus, errorThrown)
+*   **formatError** ($item, jqXHR, textStatus, errorThrown)
     _function, null_
 
     Format the text that's displayed when the ajax request fails. The message
@@ -277,20 +275,18 @@ be used).
 
     _Parameters:_
 
-    *   **$item** _jQuery object_ The list item element to display the message.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **$item** _jQuery object_ List item to display the message.
     *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
     *   **textStatus** _string_ Error status of the request.
     *   **errorThrown** _string_ HTTP error status.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               message.
 
     ---------------------------------------------------------------------------
-*   **formatItem** (data, $item, $input, $list) _function_
+*   **formatItem** (data, $item) _function_
 
     Format the display of each item in the results list. By default, the
     _title_ or _name_ value of the data object is displayed. The returned value
@@ -305,17 +301,15 @@ be used).
     _Parameters:_
 
     *   **data** _object_ Data returned from the request.
-    *   **$item** _jQuery object_ The list item element.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **$item** _jQuery object_ List item to display the result.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               display.
 
     ---------------------------------------------------------------------------
-*   **formatMinChars** (minChars, $item, $input, $list) _function, null_
+*   **formatMinChars** (minChars, $item) _function, null_
 
     Format the text that's displayed when the minimum number of characters
     (specified with the _minChars_ option) hasn't been reached. The message is
@@ -335,18 +329,16 @@ be used).
 
     _Parameters:_
 
-    *   **minChars** _integer_ The minimum number of characters required.
-    *   **$item** _jQuery object_ The list item element to display the message.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **minChars** _integer_ Minimum number of characters required.
+    *   **$item** _jQuery object_ List item to display the message.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               message.
 
     ---------------------------------------------------------------------------
-*   **formatNoResults** (q, $item, $input, $list) _function, null_
+*   **formatNoResults** (q, $item) _function, null_
 
     Format the text that's displayed when there are no results returned for the
     requested input value. The message is displayed in a list item with the
@@ -365,19 +357,17 @@ be used).
 
     _Parameters:_
 
-    *   **q** _string_ The requested input value.
-    *   **$item** _jQuery object_ The list item element to display the message.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **q** _string_ Requested input value.
+    *   **$item** _jQuery object_ List item to display the message.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               message.
 
 #### Events
 
-*   **onChange** (q, $input, $list) _function, null_
+*   **onChange** (q) _function, null_
 
     Called when the input value changes.
 
@@ -385,18 +375,16 @@ be used).
 
     _Parameters:_
 
-    *   **q** _string_ The changed input value.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **q** _string_ Changed input value.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopolochange_ event:
 
-        $(selector).bind('marcopolochange', function (event, q, $input, $list) { … });
+        $(selector).bind('marcopolochange', function (event, q) { … });
 
     ---------------------------------------------------------------------------
-*   **onError** ($item, $input, $list, jqXHR, textStatus, errorThrown)
+*   **onError** ($item, jqXHR, textStatus, errorThrown)
     _function, null_
 
     Called when the ajax request fails.
@@ -405,39 +393,34 @@ be used).
 
     _Parameters:_
 
-    *   **$item** _jQuery object_ The list item element to display the message.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **$item** _jQuery object_ List item to display the message.
     *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
     *   **textStatus** _string_ Error status of the request.
     *   **errorThrown** _string_ HTTP error status.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopoloerror_ event:
 
-        $(selector).bind('marcopoloerror', function (event, $item, $input, $list, jqXHR, textStatus, errorThrown) { … });
+        $(selector).bind('marcopoloerror', function (event, $item, jqXHR, textStatus, errorThrown) { … });
 
     ---------------------------------------------------------------------------
-*   **onFocus** ($input, $list) _function, null_
+*   **onFocus** () _function, null_
 
     Called when the text input receives focus.
 
     _Default:_ null
 
-    _Parameters:_
+    _Parameters:_ none
 
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
-
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopolofocus_ event:
 
-        $(selector).bind('marcopolofocus', function (event, $input, $list) { … });
+        $(selector).bind('marcopolofocus', function (event) { … });
 
     ---------------------------------------------------------------------------
-*   **onMinChars** (minChars, $item, $input, $list) _function, null_
+*   **onMinChars** (minChars, $item) _function, null_
 
     Called when the minimum number of characters (specified with the _minChars_
     option) hasn't been reached by the end of the _delay_.
@@ -446,19 +429,17 @@ be used).
 
     _Parameters:_
 
-    *   **minChars** _integer_ The minimum number of characters required.
-    *   **$item** _jQuery object_ The list item element to display the message.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **minChars** _integer_ Minimum number of characters required.
+    *   **$item** _jQuery object_ List item to display the message.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopolominchars_ event:
 
-        $(selector).bind('marcopolominchars', function (event, minChars, $item, $input, $list) { … });
+        $(selector).bind('marcopolominchars', function (event, minChars, $item) { … });
 
     ---------------------------------------------------------------------------
-*   **onNoResults** (q, $item, $input, $list) _function, null_
+*   **onNoResults** (q, $item) _function, null_
 
     Called when there are no results returned for the request.
 
@@ -466,38 +447,33 @@ be used).
 
     _Parameters:_
 
-    *   **q** _string_ The requested input value.
-    *   **$item** _jQuery object_ The list item element to display the message.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **q** _string_ Requested input value.
+    *   **$item** _jQuery object_ List item to display the message.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopolonoresults_ event:
 
-        $(selector).bind('marcopolonoresults', function (event, q, $item, $input, $list) { … });
+        $(selector).bind('marcopolonoresults', function (event, q, $item) { … });
 
     ---------------------------------------------------------------------------
-*   **onRequestBefore** ($input, $list) _function, null_
+*   **onRequestBefore** () _function, null_
 
     Called before the ajax request is made. Useful for showing a loading
     spinner if the request is going to take some time.
 
     _Default:_ null
 
-    _Parameters:_
+    _Parameters:_ none
 
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
-
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopolorequestbefore_ event:
 
-        $(selector).bind('marcopolorequestbefore', function (event, $input, $list) { … });
+        $(selector).bind('marcopolorequestbefore', function (event) { … });
 
     ---------------------------------------------------------------------------
-*   **onRequestAfter** ($input, $list, jqXHR, textStatus) _function, null_
+*   **onRequestAfter** (jqXHR, textStatus) _function, null_
 
     Called after the ajax request completes (success or error). Useful for
     hiding a loading spinner that's shown in _onRequestBefore_.
@@ -506,19 +482,17 @@ be used).
 
     _Parameters:_
 
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
     *   **jqXHR** _object_ or _XMLHTTPRequest_ in jQuery 1.4.x.
     *   **textStatus** _string_ Status of the request.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopolorequestafter_ event:
 
-        $(selector).bind('marcopolorequestafter', function (event, $input, $list, jqXHR, textStatus) { … });
+        $(selector).bind('marcopolorequestafter', function (event, jqXHR, textStatus) { … });
 
     ---------------------------------------------------------------------------
-*   **onResults** (data, $input, $list) _function, null_
+*   **onResults** (data) _function, null_
 
     Called when there are results to be displayed.
 
@@ -527,17 +501,15 @@ be used).
     _Parameters:_
 
     *   **data** _object_ Data returned from the request.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopoloresults_ event:
 
-        $(selector).bind('marcopoloresults', function (event, data, $input, $list) { … });
+        $(selector).bind('marcopoloresults', function (event, data) { … });
 
     ---------------------------------------------------------------------------
-*   **onSelect** (data, $item, $input, $list) _function, null_
+*   **onSelect** (data, $item) _function, null_
 
     Called when an item is selected from the results list or passed in through
     the _selected_ option. By default, the _title_ or _name_ value of the data
@@ -550,16 +522,14 @@ be used).
     _Parameters:_
 
     *   **data** _object_ Data returned from the request.
-    *   **$item** _jQuery object, null_ The selected results list item element.
-                                        _null_ if _selected_ option used.
-    *   **$input** _jQuery object_ The input field element.
-    *   **$list** _jQuery object_ The results list element.
+    *   **$item** _jQuery object, null_ Selected results list item. _null_ if
+                                        _selected_ option used.
 
-    _this:_ Input element as a jQuery object (no need to wrap like _$(this)_).
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
     _Bind:_ You can also bind to the _marcopoloselect_ event:
 
-        $(selector).bind('marcopoloselect', function (event, data, $item, $input, $list) { … });
+        $(selector).bind('marcopoloselect', function (event, data, $item) { … });
 
 Methods
 -------

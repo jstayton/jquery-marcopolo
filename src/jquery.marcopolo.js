@@ -1,7 +1,7 @@
 /**
- * Marco Polo v1.3.1
+ * Marco Polo v1.3.2
  *
- * A modern jQuery plugin for autocomplete functionality on a text input.
+ * A jQuery autocomplete plugin for the discerning developer.
  *
  * https://github.com/jstayton/jquery-marcopolo
  *
@@ -41,24 +41,24 @@
       // Format the text that's displayed when the ajax request fails. Setting
       // this option to 'null' or returning 'false' suppresses the message from
       // being displayed.
-      formatError: function ($item, $input, $list, jqXHR, textStatus, errorThrown) {
+      formatError: function ($item, jqXHR, textStatus, errorThrown) {
         return '<em>Your search could not be completed at this time.</em>';
       },
       // Format the display of each item in the results list.
-      formatItem: function (data, $item, $input, $list) {
+      formatItem: function (data, $item) {
         return data.title || data.name;
       },
       // Format the text that's displayed when the minimum number of characters
       // (specified with the 'minChars' option) hasn't been reached. Setting
       // this option to 'null' or returning 'false' suppresses the message from
       // being displayed.
-      formatMinChars: function (minChars, $item, $input, $list) {
+      formatMinChars: function (minChars, $item) {
         return '<em>Your search must be at least <strong>' + minChars + '</strong> characters.</em>';
       },
       // Format the text that's displayed when there are no results returned
       // for the requested input value. Setting this option to 'null' or
       // returning 'false' suppresses the message from being displayed.
-      formatNoResults: function (q, $item, $input, $list) {
+      formatNoResults: function (q, $item) {
         return '<em>No results for <strong>' + q + '</strong>.</em>';
       },
       // Whether to hide the results list when an item is selected. The results
@@ -92,8 +92,8 @@
       onResults: null,
       // Called when an item is selected from the results list or passed in
       // through the 'selected' option.
-      onSelect: function (data, $item, $input, $list) {
-        $input.val(data.title || data.name);
+      onSelect: function (data, $item) {
+        this.val(data.title || data.name);
       },
       // The name of the query string parameter that is set with the input
       // value.
@@ -305,18 +305,6 @@
       return this.$list;
     },
 
-    // Trigger a callback subscribed to via an option or using .bind().
-    _trigger: function (name, params) {
-      var self = this,
-          callbackName = 'on' + name.charAt(0).toUpperCase() + name.slice(1),
-          triggerName = self.widgetEventPrefix.toLowerCase() + name.toLowerCase(),
-          callback = self.options[callbackName];
-
-      self.$input.trigger(triggerName, params);
-
-      return callback && callback.apply(self.$input, params);
-    },
-
     // Bind the necessary events to the input.
     _bindInput: function () {
       var self = this,
@@ -345,7 +333,7 @@
           }
           // For everything else, initiate a request.
           else {
-            self._trigger('focus', [$input, $list]);
+            self._trigger('focus');
 
             self._request($input.val());
           }
@@ -618,13 +606,13 @@
           formatNoResults;
 
       // Fire 'formatNoResults' callback.
-      formatNoResults = options.formatNoResults && options.formatNoResults.call($input, q, $item, $input, $list);
+      formatNoResults = options.formatNoResults && options.formatNoResults.call($input, q, $item);
 
       if (formatNoResults) {
         $item.html(formatNoResults);
       }
 
-      self._trigger('noResults', [q, $item, $input, $list]);
+      self._trigger('noResults', [q, $item]);
 
       // Displaying a "no results" message is optional. It isn't displayed if
       // the 'formatNoResults' callback returns a false value.
@@ -663,7 +651,7 @@
       for (var i = 0; data[i]; i++) {
         datum = data[i];
         $item = $('<li class="mp_item" />');
-        formatItem = options.formatItem.call($input, datum, $item, $input, $list);
+        formatItem = options.formatItem.call($input, datum, $item);
 
         // Store the original data for easy access later.
         $item.data('marcoPolo', datum);
@@ -702,7 +690,7 @@
         .children(options.selectable)
         .addClass('mp_selectable');
 
-      self._trigger('results', [data, $input, $list]);
+      self._trigger('results', [data]);
 
       self._showList();
 
@@ -726,7 +714,7 @@
 
       // Fire 'formatData' callback.
       if (options.formatData) {
-        data = options.formatData.call($input, data, $input, $list);
+        data = options.formatData.call($input, data);
       }
 
       if ($.isEmptyObject(data)) {
@@ -751,14 +739,13 @@
       $list.empty();
 
       // Fire 'formatError' callback.
-      formatError = options.formatError &&
-                    options.formatError.call($input, $item, $input, $list, jqXHR, textStatus, errorThrown);
+      formatError = options.formatError && options.formatError.call($input, $item, jqXHR, textStatus, errorThrown);
 
       if (formatError) {
         $item.html(formatError);
       }
 
-      self._trigger('error', [$item, $input, $list, jqXHR, textStatus, errorThrown]);
+      self._trigger('error', [$item, jqXHR, textStatus, errorThrown]);
 
       // Displaying an error message is optional. It isn't displayed if the
       // 'formatError' callback returns a false value.
@@ -795,14 +782,13 @@
       $list.empty();
 
       // Fire 'formatMinChars' callback.
-      formatMinChars = options.formatMinChars &&
-                       options.formatMinChars.call($input, options.minChars, $item, $input, $list);
+      formatMinChars = options.formatMinChars && options.formatMinChars.call($input, options.minChars, $item);
 
       if (formatMinChars) {
         $item.html(formatMinChars);
       }
 
-      self._trigger('minChars', [options.minChars, $item, $input, $list]);
+      self._trigger('minChars', [options.minChars, $item]);
 
       // Displaying a minimum characters message is optional. It isn't
       // displayed if the 'formatMinChars' callback returns a false value.
@@ -839,9 +825,7 @@
 
     // Mark the input as changed due to a different value.
     _change: function (q) {
-      var self = this,
-          $input = self.$input,
-          $list = self.$list;
+      var self = this;
 
       // Reset the currently selected item.
       self.selected = null;
@@ -849,7 +833,7 @@
       // Keep track of the new input value for later comparison.
       self.value = q;
 
-      self._trigger('change', [q, $input, $list]);
+      self._trigger('change', [q]);
 
       return self;
     },
@@ -898,7 +882,7 @@
         }
         // Otherwise, make an ajax request for the data.
         else {
-          self._trigger('requestBefore', [$input, $list]);
+          self._trigger('requestBefore');
 
           // Add a class to the input's parent that can be hooked-into by the
           // CSS to show a busy indicator.
@@ -934,7 +918,7 @@
                 // Remove the "busy" indicator class on the input's parent.
                 $inputParent.removeClass('mp_busy');
 
-                self._trigger('requestAfter', [$input, $list, jqXHR, textStatus]);
+                self._trigger('requestAfter', [jqXHR, textStatus]);
               }
           });
         }
@@ -947,8 +931,7 @@
     _select: function (data, $item) {
       var self = this,
           $input = self.$input,
-          $list = self.$list,
-          options = self.options;
+          hideOnSelect = self.options.hideOnSelect;
 
       // Save the selection as the currently selected item.
       self.selected = data;
@@ -958,11 +941,11 @@
         return self;
       }
 
-      if (options.hideOnSelect) {
+      if (hideOnSelect) {
         self._hideList();
       }
 
-      self._trigger('select', [data, $item, $input, $list]);
+      self._trigger('select', [data, $item]);
 
       // It's common to update the input value with the selected item during
       // 'onSelect', so check if that has occurred and store the new value.
@@ -997,6 +980,18 @@
       self._toggleLabel();
 
       return self;
+    },
+
+    // Trigger a callback subscribed to via an option or using .bind().
+    _trigger: function (name, args) {
+      var self = this,
+          callbackName = 'on' + name.charAt(0).toUpperCase() + name.slice(1),
+          triggerName = self.widgetEventPrefix.toLowerCase() + name.toLowerCase(),
+          callback = self.options[callbackName];
+
+      self.element.trigger(triggerName, args);
+
+      return callback && callback.apply(self.element, args);
     }
   });
 })(jQuery);
