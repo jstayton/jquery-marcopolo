@@ -517,7 +517,7 @@ be used).
 
     _Default:_
 
-        $input.val(data.title || data.name);
+        this.val(data.title || data.name);
 
     _Parameters:_
 
