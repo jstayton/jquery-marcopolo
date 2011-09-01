@@ -13,15 +13,15 @@
           data: {
             apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469'
           },
-          formatData: function (data, $input, $list) {
+          formatData: function (data) {
             return data.completions.slice(0, 20);
           },
-          formatItem: function (data, $item, $input, $list) {
+          formatItem: function (data, $item) {
             return data;
           },
           minChars: 3,
-          onSelect: function (data, $item, $input, $list) {
-            $input.val(data);
+          onSelect: function (data, $item) {
+            this.val(data);
           },
           param: 'prefix',
           required: true

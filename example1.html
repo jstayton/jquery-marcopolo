@@ -12,14 +12,14 @@
           data: {
             apikey: 'api_test-W1cipwpcdu9Cbd9pmm8D4Cjc469',
           },
-          formatData: function (data, $input, $list) {
+          formatData: function (data) {
             return data.results.slice(0, 20);
           },
-          formatItem: function (data, $item, $input, $list) {
+          formatItem: function (data, $item) {
             return data.screen_name;
           },
-          onSelect: function (data, $item, $input, $list) {
-            $input.val(data.screen_name);
+          onSelect: function (data, $item) {
+            this.val(data.screen_name);
           }
         });
       });
