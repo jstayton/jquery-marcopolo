@@ -1,60 +1,49 @@
 Marco Polo
 ==========
 
-A modern jQuery plugin for autocomplete functionality on a text input,
-extracted from the [Ekklesia 360](http://ekklesia360.com) CMS by
+A jQuery plugin that adds autocomplete functionality to a text input, extracted
+from the [Ekklesia 360](http://ekklesia360.com) CMS by
 [Monk Development](http://monkdev.com).
-
-*   [Examples](http://jstayton.github.com/jquery-marcopolo)
-*   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
-
-Huh? Why?
----------
 
 After spending years struggling with various autocomplete plugins, I became fed
 up with their bugginess, poor documentation, lack of updates, inflexibility,
 and antiquated coding patterns. Surely something as fundamental as autocomplete
-could — really, _should_ — be done better.
+could — really, _should_ — be done better. And now it has. Meet Marco Polo. For
+the discerning developer.
 
-So, I set out to create an autocomplete plugin that followed a number of
-important principals:
+*   [Examples](http://jstayton.github.com/jquery-marcopolo)
+*   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
 
-*   **Modern**
+Features
+--------
 
-    jQuery has come a long way in the past few years, and not just in terms of
-    speed. Patterns and best practices for plugin development have become much
-    more formulated. Unfortunately, most autocomplete plugins are stuck in the
-    past, and fail to provide the superior user and developer experience that
-    modern plugins (such as this) foster.
-
-*   **Thoughtful**
-
-    Maybe it's just me, but I judge any new autocomplete plugin by its user
-    experience. If I find the results list showing when it shouldn't — or
-    worse, stuck open and not closing — I know there are likely other details
-    that weren't paid the necessary attention. Not that this plugin is perfect,
-    but a lot of thought and care was and is put into what's important.
-
-*   **Lean & Flexible**
-
-    There's a fine line between too little and too much. This plugin certainly
-    isn't for _every_ situation, but it strives to provide enough options and
-    callbacks to allow for _many_ situations. By not baking in specific use
-    cases, the plugin can stay lean (about 12 KB compressed) and flexible.
-
-*   **Maintained**
-
-    I developed this plugin for production use in the
+*   **Cache and buffer.** Marco Polo prevents unnecessary requests through its
+    build-in results cache (shared by all instances) and key press buffer (only
+    makes a request after the user has finished typing).
+*   **Remembers selection.** Once a result is selected, if that same result
+    appears in the results again, it's automatically highlighted. This is very
+    similar to how _select_ inputs mark the currently selected item.
+*   **Require selection.** Marco Polo can be configured to require a selection
+    be made from the results, ensuring that the text input is left empty when
+    no selection is made.
+*   **Overlabel support.** _Overlabel_ is the concept of placing a _label_
+    element over a text input for a more compact display. Marco Polo offers
+    built-in support for hiding and showing the label automatically, depending
+    on the state of interaction with the plugin.
+*   **Complete styling control.** With straightforward markup that's explained
+    in detail, you can easily style and modify all of the components to fit
+    your needs and aesthetic.
+*   **Callbacks for all major events.** Add your own twist when a search is
+    made, result is selected, error occurs, and more.
+*   **Maintained.**  I developed this plugin for production use in the
     [Ekklesia 360](http://ekklesia360.com) CMS at
     [Monk Development](http://monkdev.com), so you can very much believe that
     it will remain bug-free and up-to-date. Any feature requests, bug reports,
     or feedback you submit will be responded to quickly as well.
-
-*   **Documented**
-
-    I believe that code is only as useful as its documentation. This manifests
-    itself not only in clear and thorough developer documentation (below), but
-    also verbose documentation within the code itself.
+*   **Documented.** I believe that code is only as useful as its documentation.
+    This manifests itself not only in clear and thorough developer
+    documentation (below), but also verbose documentation within the code
+    itself.
 
 Requirements
 ------------
@@ -63,21 +52,21 @@ Requirements
 *   jQuery UI Widget 1.8.14. Included in the minified version.
 *   All modern browsers are supported, as well as IE 6 and newer.
 
-How it Works
-------------
+Getting Started
+---------------
 
 Let's say you want to create a user search field that redirects to the user's
 profile when a result is selected. To start, make sure both jQuery and Marco
-Polo are included on the page:
+Polo are included in your HTML:
 
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="jquery.marcopolo.min.js"></script>
 
-Next, add a text input field:
+Next, add a text input, if you haven't already:
 
-    <input type="text" id="userSearch" name="userSearch" />
+    <input type="text" name="userSearch" id="userSearch" />
 
-Now attach Marco Polo to the input field to power the search:
+Then attach Marco Polo to the text input in your JavaScript:
 
     $('#userSearch').marcoPolo({
       url: '/users/search',
@@ -89,30 +78,11 @@ Now attach Marco Polo to the input field to power the search:
       }
     });
 
-At this point, two transformations occur in the HTML:
-
-1.  _autocomplete="off"_ is added to the input field to prevent the browser's
-    autocomplete functionality from interfering.
-
-2.  An empty, ordered list is created and inserted directly after the input
-    field for displaying results:
-
-        <ol class="mp_list" />
-
-That's all the setup necessary in your HTML and JavaScript. As for CSS, the
-[CSS Starter Template](https://github.com/jstayton/jquery-marcopolo/wiki/CSS-Starter-Template)
-has some basic styling to get started and stubs for all of the available
-classes. Also be sure to check out the
-[HTML Breakdown](https://github.com/jstayton/jquery-marcopolo/wiki/HTML-Breakdown)
-for a complete look into the HTML markup.
-
-Let's turn to the _/users/search_ backend data source that's going to deliver
-results. When a search happens, a GET request is made to the _url_ with _q_
+When a search happens, a GET request is made to the _url_ with _q_
 (the search value) added to the query string. (Additional data can be included
 using the _data_ option.) Let's say a search is made for _Butler_. A GET
 request is made to _/users/search?q=Butler_. Your backend code must then use
-the _q_ parameter to find the matching users and return their data as an array
-of strings or JSON. Most likely you'll want to return JSON, like so:
+the _q_ parameter to find and return the matching users in JSON format:
 
     [
       {
@@ -130,25 +100,19 @@ of strings or JSON. Most likely you'll want to return JSON, like so:
       …
     ]
 
-Using this JSON, the ordered list that was created above is populated with
-results:
+Each JSON user object is passed to the _formatItem_ callback option for display
+in the results list. And when a user is selected from the results list, their
+JSON object is then passed to the _onSelect_ callback option to complete the
+browser redirect.
 
-    <ol class="mp_list">
-      <li class="mp_item mp_selectable">James Butler</li>
-      <li class="mp_item mp_selectable">Win Butler</li>
-      …
-    </ol>
+You should now have enough understanding of Marco Polo to start configuring it
+for your specific needs. While this example demonstrates a number of
+fundamental concepts, the possibilities extend far beyond the straightforward
+_search, click, redirect_ setup shown here. And when you're ready, consider
+reading through some of the more advanced guides:
 
-Each list item is created through the passing of a user JSON object to the
-_formatItem_ callback, which in turn strings together the user's first name
-and last name for display.
-
-Finally, when a user is selected from the results list, their JSON object is
-passed to the _onSelect_ callback to complete the browser redirect.
-
-And that's it! While this example demonstrates a number of fundamental
-concepts, the possibilities extend far beyond the straightforward
-_search, click, redirect_ setup shown here. See what you can do!
+*   [CSS Starter Template](https://github.com/jstayton/jquery-marcopolo/wiki/CSS-Starter-Template)
+*   [HTML Breakdown](https://github.com/jstayton/jquery-marcopolo/wiki/HTML-Breakdown)
 
 Options
 -------
@@ -237,7 +201,7 @@ be used).
 *   **required** _boolean_
 
     Whether to clear the input value when no selection is made from the results
-    list. This happens when the input field is blurred, usually by clicking or
+    list. This happens when the input is blurred, usually by clicking or
     tabbing out of the field.
 
     _Default:_ false
@@ -457,7 +421,7 @@ be used).
     ---------------------------------------------------------------------------
 *   **onFocus** ($input, $list) _function, null_
 
-    Called when the input field receives focus.
+    Called when the text input receives focus.
 
     _Default:_ null
 
