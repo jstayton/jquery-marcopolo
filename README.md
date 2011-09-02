@@ -113,6 +113,7 @@ reading through some of the more advanced guides:
 
 *   [CSS Starter Template](https://github.com/jstayton/jquery-marcopolo/wiki/CSS-Starter-Template)
 *   [HTML Breakdown](https://github.com/jstayton/jquery-marcopolo/wiki/HTML-Breakdown)
+*   [Showing a Busy Indicator](https://github.com/jstayton/jquery-marcopolo/wiki/Showing-a-Busy-Indicator)
 
 Options
 -------
