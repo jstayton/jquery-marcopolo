@@ -115,6 +115,12 @@ reading through some of the more advanced guides:
 *   [HTML Breakdown](https://github.com/jstayton/jquery-marcopolo/wiki/HTML-Breakdown)
 *   [Showing a Busy Indicator](https://github.com/jstayton/jquery-marcopolo/wiki/Showing-a-Busy-Indicator)
 
+Feedback
+--------
+
+Please open an issue to request a feature or submit a bug report. Or even if
+you just want to provide some feedback, I'd love to hear.
+
 Options
 -------
 
@@ -614,9 +620,3 @@ Methods
     _Parameters:_
 
     *   **q** _string_ Optional new input value to search on.
-
-Feedback
---------
-
-Please open an issue to request a feature or submit a bug report. Or even if
-you just want to provide some feedback, I'd love to hear.
