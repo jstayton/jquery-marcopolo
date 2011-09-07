@@ -27,26 +27,6 @@ h2 {
   margin: 20px 0;
 }
 
-form img {
-  display: none;
-  margin-left: 10px;
-  vertical-align: bottom;
-}
-
-form.mp_busy img {
-  display: inline;
-}
-
-form input {
-  border: 1px solid #000000;
-  font: inherit;
-  font-size: 100%;
-  margin: 0;
-  outline: none;
-  padding: 3px;
-  width: 250px;
-}
-
 ol#examples {
   list-style-type: square;
   margin-left: 20px;
@@ -57,37 +37,48 @@ ol#examples li {
   margin-bottom: 20px;
 }
 
+form img {
+  display: none;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+
+form.mp_busy img {
+  display: inline;
+}
+
 pre {
   line-height: 1.4em;
 }
 
-/* The unordered list inserted directly after the input field. */
-ol.mp_list {
-  background-color: #FFFFFF;
-  border: 0;
-  border-left: 1px solid #C0C0C0;
-  border-right: 1px solid #C0C0C0;
+/*** Marco Polo ***/
+
+/* The input. */
+input.mp_input {
+  border: 1px solid #000000;
   font: inherit;
   font-size: 100%;
-  list-style: none;
   margin: 0;
-  outline: 0;
+  outline: none;
+  padding: 3px;
+  width: 250px;
+}
+
+/* Ordered list for display results. */
+ol.mp_list {
+  background-color: #FFFFFF;
+  border-left: 1px solid #C0C0C0;
+  border-right: 1px solid #C0C0C0;
   overflow: hidden;
-  padding: 0;
   position: absolute;
-  vertical-align: baseline;
   width: 256px;
   z-index: 99999;
 }
 
 /* Each list item, regardless of success, error, etc. */
 ol.mp_list li {
-  border: 0;
   border-bottom: 1px solid #C0C0C0;
-  margin: 0;
-  outline: 0;
-  padding: 4px;
-  vertical-align: baseline;
+  padding: 4px 4px 5px;
 }
 
 /* Each list item from a successful request. */
@@ -100,7 +91,7 @@ ol.mp_list li.mp_selectable {
   cursor: pointer;
 }
 
-/* The list item that's currently highlighted. */
+/* Currently highlighted list item. */
 ol.mp_list li.mp_highlighted {
   background-color: #E0E0E0;
 }
