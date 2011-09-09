@@ -1,15 +1,17 @@
 Marco Polo
 ==========
 
-A jQuery autocomplete plugin for the discerning developer, extracted from the
-[Ekklesia 360](http://ekklesia360.com) CMS by
-[Monk Development](http://monkdev.com).
+A jQuery autocomplete plugin for the discerning developer.
 
 After spending years struggling with various autocomplete plugins, I became fed
 up with their bugginess, poor documentation, lack of updates, inflexibility,
 and antiquated coding patterns. Surely something as fundamental as autocomplete
 could — really, _should_ — be done better. And now it has. Meet Marco Polo. For
 the discerning developer.
+
+Developed by [Justin Stayton](http://twitter.com/jstayton) at
+[Monk Development](http://monkdev.com) for the
+[Ekklesia 360](http://ekklesia360.com) CMS.
 
 *   [Examples](http://jstayton.github.com/jquery-marcopolo)
 *   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
@@ -119,7 +121,8 @@ Feedback
 --------
 
 Please open an issue to request a feature or submit a bug report. Or even if
-you just want to provide some feedback, I'd love to hear.
+you just want to provide some feedback, I'd love to hear. I'm also available on
+Twitter as [@jstayton](http://twitter.com/jstayton).
 
 Options
 -------
