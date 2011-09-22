@@ -128,7 +128,6 @@
       // Create a more appropriately named alias for the input.
       self.$input = self.element.attr({
           'class'             : 'mp_input',
-          'aria-expanded'     : 'false',
           'aria-autocomplete' : 'list'
         });
 
@@ -568,7 +567,9 @@
 
     // Remove the highlight class from the specified item.
     _removeHighlight: function ($item) {
-      $item.removeClass('mp_highlighted').removeAttr('aria-selected');
+      $item
+        .removeClass('mp_highlighted')
+        .removeAttr('aria-selected');
 
       return this;
     },
@@ -579,7 +580,9 @@
       // highlighted at a time.
       this._removeHighlight(this._highlighted());
 
-      $item.addClass('mp_highlighted').attr('aria-selected', 'true');
+      $item
+        .addClass('mp_highlighted')
+        .attr('aria-selected', 'true');
 
       return this;
     },
@@ -636,6 +639,9 @@
       // But only if there are results to be shown.
       if ($list.children().length) {
         $list.show();
+
+        // Make this event reflected in ARIA attributes.
+        this.$list.attr('aria-expanded', 'true');
       }
 
       return this;
@@ -645,6 +651,9 @@
     _hideList: function () {
       this.$list.hide();
 
+      // Make this event reflected in ARIA attributes.
+      this.$list.attr('aria-expanded', 'false');
+
       return this;
     },
 
@@ -653,6 +662,9 @@
       this.$list
         .hide()
         .empty();
+
+      // Make this event reflected in ARIA attributes.
+      this.$list.attr('aria-expanded', 'false');
 
       return this;
     },
