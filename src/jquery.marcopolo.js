@@ -71,6 +71,10 @@
       // label is handled internally to provide a built-in solution to the
       // problem.
       label: null,
+      // A selector that points to a listbox that will be used, instead of
+      // having marcopolo create one from scratch. This eases adding custom
+      // classes, etc. to the listbox.
+      listbox: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
       // Called when the input value changes.
@@ -119,16 +123,23 @@
 
     // Initialize the plugin on an input.
     _create: function () {
-      var self = this;
+      var self = this,
+          options = self.options;
 
       // Create a more appropriately named alias for the input.
       self.$input = self.element.addClass('mp_input');
 
       // Create an empty list for displaying future results. Insert it directly
       // after the input element.
-      self.$list = $('<ol class="mp_list" />')
-                     .hide()
-                     .insertAfter(self.$input);
+      if (options.listbox) {
+        self.$list = $(options.listbox).hide();
+      }
+      else {
+        self.$list = $('<ol class="mp_list" />')
+                       .hide()
+                       .insertAfter(self.$input);
+      }
+
 
       // The current 'autocomplete' value is remembered for when 'destroy' is
       // called and the input is returned to its original state.
