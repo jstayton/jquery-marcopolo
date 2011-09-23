@@ -568,7 +568,7 @@
     // Remove the highlight class from the specified item.
     _removeHighlight: function ($item) {
       $item
-        .removeClass('mp_highlighted')
+        .removeClass('mp_highlighted selected')
         .removeAttr('aria-selected');
 
       return this;
@@ -581,7 +581,7 @@
       this._removeHighlight(this._highlighted());
 
       $item
-        .addClass('mp_highlighted')
+        .addClass('mp_highlighted selected')
         .attr('aria-selected', 'true');
 
       return this;
