@@ -132,7 +132,7 @@
       // Create an empty list for displaying future results. Insert it directly
       // after the input element.
       if (options.listbox) {
-        self.$list = $(options.listbox).hide();
+        self.$list = $(options.listbox).hide().addClass('mp_list');
       }
       else {
         self.$list = $('<ol class="mp_list" />')
