@@ -71,7 +71,8 @@
       // label is handled internally to provide a built-in solution to the
       // problem.
       label: null,
-      // Custom classes to add to the listbox.
+      // Custom classes to add to the listbox. This makes it detach your styles
+      // and scripts from marcopolo, you don't need to select off of '.mp_list'
       listboxClass: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
