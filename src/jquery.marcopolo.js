@@ -71,9 +71,9 @@
       // label is handled internally to provide a built-in solution to the
       // problem.
       label: null,
-      // Custom id and classes to add to the listbox. This makes it detach your
-      // styles and scripts from marcopolo, so you don't need to select off of
-      // '.mp_list'.
+      // Custom id and classes to add to the listbox. This makes it easy to
+      // detach your own styles and scripts from marcopolo, so you don't
+      // need to select off of '.mp_list'.
       listboxClass: null,
       listboxId: null,
       // The minimum number of characters required before a request is fired.
@@ -108,6 +108,10 @@
       required: false,
       // The list items to make selectable.
       selectable: '*',
+      // Custom classes to add to the selectable options. This makes it easy
+      // to decouple your own styles and scripts from marcopolo, so you don't
+      // need to select off of '.mp_selectable'.
+      selectableOptionClass: null,
       // Prime the input with a selected item.
       selected: null,
       // The URL to GET request for the results.
@@ -703,7 +707,7 @@
       // Mark all selectable items, based on the 'selectable' selector setting.
       $list
         .children(options.selectable)
-        .addClass('mp_selectable');
+        .addClass('mp_selectable ' + options.selectableOptionClass);
 
       self._trigger('results', [data]);
 
