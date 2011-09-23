@@ -71,9 +71,11 @@
       // label is handled internally to provide a built-in solution to the
       // problem.
       label: null,
-      // Custom classes to add to the listbox. This makes it detach your styles
-      // and scripts from marcopolo, you don't need to select off of '.mp_list'
+      // Custom id and classes to add to the listbox. This makes it detach your
+      // styles and scripts from marcopolo, so you don't need to select off of
+      // '.mp_list'.
       listboxClass: null,
+      listboxId: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
       // Called when the input value changes.
@@ -134,9 +136,14 @@
                      .hide()
                      .insertAfter(self.$input);
 
-      // If there have been custom classes supplied, apply them.
-      if (options.listboxClass)
+      // If there have been custom id or classes supplied, apply them.
+      if (options.listboxClass) {
         self.$list.addClass(options.listboxClass);
+      }
+
+      if (options.listboxId) {
+        self.$list.attr('id', options.listboxId);
+      }
 
       // The current 'autocomplete' value is remembered for when 'destroy' is
       // called and the input is returned to its original state.
