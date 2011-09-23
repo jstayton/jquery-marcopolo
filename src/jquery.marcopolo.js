@@ -105,6 +105,10 @@
       selectable: '*',
       // Prime the input with a selected item.
       selected: null,
+      // A class that is applied to options that have focus. This allows
+      // you to customize the class so that you have control over what
+      // class you key off of.
+      selectedOptionClass: 'selected',
       // The URL to GET request for the results.
       url: null
     },
@@ -568,7 +572,7 @@
     // Remove the highlight class from the specified item.
     _removeHighlight: function ($item) {
       $item
-        .removeClass('mp_highlighted selected')
+        .removeClass('mp_highlighted ' + this.options.selectedOptionClass)
         .removeAttr('aria-selected');
 
       return this;
@@ -581,7 +585,7 @@
       this._removeHighlight(this._highlighted());
 
       $item
-        .addClass('mp_highlighted selected')
+        .addClass('mp_highlighted ' + this.options.selectedOptionClass)
         .attr('aria-selected', 'true');
 
       return this;
