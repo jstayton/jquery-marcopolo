@@ -130,8 +130,7 @@
       var self = this;
 
       // Create a more appropriately named alias for the input.
-      self.$input = self.element.attr({
-          'class'             : 'mp_input',
+      self.$input = self.element.addClass('mp_input').attr({
           'aria-autocomplete' : 'list'
         });
 
@@ -141,7 +140,7 @@
                      .hide()
                      .insertAfter(self.$input);
 
-      // Add an accessible required attribute if the input value is required.
+      // Add an accessible required attribute if a list value is required.
       if (self.options.required === true)
         self.$list.attr('aria-required', 'true');
 
@@ -302,7 +301,7 @@
         self.$input.removeAttr('autocomplete');
       }
 
-      self.$input.removeClass('mp_input').removeAttr('aria-expanded').removeAttr('aria-autocomplete');
+      self.$input.removeClass('mp_input').removeAttr('aria-autocomplete');
 
       if (options.label) {
         options.label.removeClass('mp_label');
