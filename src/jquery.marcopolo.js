@@ -117,7 +117,7 @@
       // Custom classes to add to the selectable options. This makes it easy
       // to decouple your own styles and scripts from marcopolo, so you don't
       // need to select off of '.mp_selectable'.
-      selectableOptionClass: null,
+      selectableOptionClass: 'selectable',
       // Prime the input with a selected item.
       selected: null,
       // The URL to GET request for the results.
@@ -713,7 +713,7 @@
       // Mark all selectable items, based on the 'selectable' selector setting.
       $list
         .children(options.selectable)
-        .addClass('mp_selectable ' + (options.selectableOptionClass || ''));
+        .addClass('mp_selectable ' + options.selectableOptionClass);
 
       self._trigger('results', [data]);
 
