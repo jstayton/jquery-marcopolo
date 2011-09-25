@@ -34,6 +34,8 @@
       // The number of milliseconds to delay before firing a request after a
       // change is made to the input value.
       delay: 250,
+      // The class to apply to the <li> when an error occurs.
+      errorClass: 'error',
       // Format the raw data that's returned from the ajax request. Useful for
       // further filtering the data or returning the array of results that's
       // embedded deeper in the object.
@@ -78,6 +80,10 @@
       listboxId: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
+      // The class to apply to the <li> when the minimum characters aren't reached.
+      minCharsClass: 'min_chars',
+      // The class to apply to the <li> when no results are returned for a query.
+      noResultsClass: 'no_results',
       // Called when the input value changes.
       onChange: null,
       // Called when the ajax request fails.
@@ -621,7 +627,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_no_results" />'),
+          $item = $('<li class="mp_no_results ' + options.noResultsClass + '" />'),
           formatNoResults;
 
       // Fire 'formatNoResults' callback.
@@ -752,7 +758,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_error" />'),
+          $item = $('<li class="mp_error ' + options.errorClass + '" />'),
           formatError;
 
       $list.empty();
@@ -787,7 +793,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_min_chars" />'),
+          $item = $('<li class="mp_min_chars ' + options.minCharsClass + '" />'),
           formatMinChars;
 
       // Don't display the minimum characters list when there are no
