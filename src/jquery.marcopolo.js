@@ -707,7 +707,7 @@
       // Mark all selectable items, based on the 'selectable' selector setting.
       $list
         .children(options.selectable)
-        .addClass('mp_selectable ' + options.selectableOptionClass);
+        .addClass('mp_selectable ' + (options.selectableOptionClass || ''));
 
       self._trigger('results', [data]);
 
