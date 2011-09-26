@@ -34,6 +34,8 @@
       // The number of milliseconds to delay before firing a request after a
       // change is made to the input value.
       delay: 250,
+      // The class to apply to the <li> when an error occurs.
+      errorClass: 'error',
       // Format the raw data that's returned from the ajax request. Useful for
       // further filtering the data or returning the array of results that's
       // embedded deeper in the object.
@@ -71,8 +73,17 @@
       // label is handled internally to provide a built-in solution to the
       // problem.
       label: null,
+      // Custom id and classes to add to the listbox. This makes it easy to
+      // detach your own styles and scripts from marcopolo, so you don't
+      // need to select off of '.mp_list'.
+      listboxClass: null,
+      listboxId: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
+      // The class to apply to the <li> when the minimum characters aren't reached.
+      minCharsClass: 'min_chars',
+      // The class to apply to the <li> when no results are returned for a query.
+      noResultsClass: 'no_results',
       // Called when the input value changes.
       onChange: null,
       // Called when the ajax request fails.
@@ -103,6 +114,10 @@
       required: false,
       // The list items to make selectable.
       selectable: '*',
+      // Custom classes to add to the selectable options. This makes it easy
+      // to decouple your own styles and scripts from marcopolo, so you don't
+      // need to select off of '.mp_selectable'.
+      selectableOptionClass: 'selectable',
       // Prime the input with a selected item.
       selected: null,
       // The URL to GET request for the results.
@@ -119,7 +134,8 @@
 
     // Initialize the plugin on an input.
     _create: function () {
-      var self = this;
+      var self = this,
+          options = self.options;
 
       // Create a more appropriately named alias for the input.
       self.$input = self.element.addClass('mp_input');
@@ -129,6 +145,15 @@
       self.$list = $('<ol class="mp_list" />')
                      .hide()
                      .insertAfter(self.$input);
+
+      // If there have been custom id or classes supplied, apply them.
+      if (options.listboxClass) {
+        self.$list.addClass(options.listboxClass);
+      }
+
+      if (options.listboxId) {
+        self.$list.attr('id', options.listboxId);
+      }
 
       // The current 'autocomplete' value is remembered for when 'destroy' is
       // called and the input is returned to its original state.
@@ -602,7 +627,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_no_results" />'),
+          $item = $('<li class="mp_no_results ' + options.noResultsClass + '" />'),
           formatNoResults;
 
       // Fire 'formatNoResults' callback.
@@ -688,7 +713,7 @@
       // Mark all selectable items, based on the 'selectable' selector setting.
       $list
         .children(options.selectable)
-        .addClass('mp_selectable');
+        .addClass('mp_selectable ' + options.selectableOptionClass);
 
       self._trigger('results', [data]);
 
@@ -733,7 +758,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_error" />'),
+          $item = $('<li class="mp_error ' + options.errorClass + '" />'),
           formatError;
 
       $list.empty();
@@ -768,7 +793,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_min_chars" />'),
+          $item = $('<li class="mp_min_chars ' + options.minCharsClass + '" />'),
           formatMinChars;
 
       // Don't display the minimum characters list when there are no

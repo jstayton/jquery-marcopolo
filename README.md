@@ -170,6 +170,13 @@ be used).
     _Default:_ 250
 
     ---------------------------------------------------------------------------
+*   **errorClass** _string_
+
+    The class to apply to the <li> when an error occurs.
+
+    _Default:_ 'error'
+
+    ---------------------------------------------------------------------------
 *   **hideOnSelect** _boolean_
 
     Whether to hide the results list when an item is selected. Interesting
@@ -192,6 +199,20 @@ be used).
     _Default:_ null
 
     ---------------------------------------------------------------------------
+*   **listboxClass** _string_
+
+    A custom class to apply to the listbox.
+
+    _Default:_ null
+
+    ---------------------------------------------------------------------------
+*   **listboxId** _string_
+
+    A custom id to apply to the listbox.
+
+    _Default:_ null
+
+    ---------------------------------------------------------------------------
 *   **minChars** _integer_
 
     The minimum number of characters required before a request is fired. See
@@ -199,6 +220,21 @@ be used).
     when this value is not reached.
 
     _Default:_ 1
+
+    ---------------------------------------------------------------------------
+*   **minCharsClass** _string_
+
+    The class to apply to the <li> when the user hasn't typed the minimum
+    amount of characters into the input.
+
+    _Default:_ 'min_chars'
+
+    ---------------------------------------------------------------------------
+*   **noResultsClass** _string_
+
+    The class to apply to the <li> when the query returned no results.
+
+    _Default:_ 'no_results'
 
     ---------------------------------------------------------------------------
 *   **param** _string_
@@ -226,6 +262,13 @@ be used).
     _mp\_selectable_.
 
     _Default:_ *
+
+    ---------------------------------------------------------------------------
+*   **selectableOptionClass** _string_
+
+    The class to apply to selectable options.
+
+    _Default:_ 'selectable'
 
     ---------------------------------------------------------------------------
 *   **selected** _object, null_
