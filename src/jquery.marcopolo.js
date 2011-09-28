@@ -1,5 +1,5 @@
 /**
- * Marco Polo v1.3.2
+ * Marco Polo v@VERSION
  *
  * A jQuery autocomplete plugin for the discerning developer.
  *
