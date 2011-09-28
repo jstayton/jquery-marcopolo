@@ -1,6 +1,7 @@
 var fs = require('fs'),
+    path = require('path'),
     JSHINT = require('./lib/jshint').JSHINT,
-    src = fs.readFileSync('../src/jquery.marcopolo.js', 'utf8'),
+    src = fs.readFileSync(path.normalize(__dirname + '/../src/jquery.marcopolo.js'), 'utf8'),
     options = {},
     passed = true,
     errors = {},

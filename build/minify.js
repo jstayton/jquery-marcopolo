@@ -1,8 +1,9 @@
-var http = require('http'),
+var fs = require('fs'),
+    http = require('http'),
+    path = require('path'),
     qs = require('querystring'),
-    fs = require('fs'),
     util = require('util'),
-    src = fs.readFileSync('../src/jquery.marcopolo.js', 'utf8'),
+    src = fs.readFileSync(path.normalize(__dirname + '/../src/jquery.marcopolo.js'), 'utf8'),
     body = {},
     options = {},
     request;
@@ -27,8 +28,8 @@ options = {
 console.log('Sending source code to Google Closure Compiler...');
 
 request = http.request(options, function (response) {
-  var widgetSrc = fs.readFileSync('../lib/jquery.ui.widget.min.js', 'utf8'),
-      minified = fs.createWriteStream('../jquery.marcopolo.min.js'),
+  var widgetSrc = fs.readFileSync(path.normalize(__dirname + '/../lib/jquery.ui.widget.min.js'), 'utf8'),
+      minified = fs.createWriteStream(path.normalize(__dirname + '/../jquery.marcopolo.min.js')),
       srcHeader = /^\/\*[\s\S]*?\*\//.exec(src);
 
   response.setEncoding('utf8');
