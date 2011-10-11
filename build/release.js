@@ -75,7 +75,7 @@ module.exports = function (callback) {
 
     minifiedSrc = minifiedSrc.replace('@VERSION', version);
 
-    fs.writeFileSync(minifiedPath, version);
+    fs.writeFileSync(minifiedPath, minifiedSrc);
 
     fs.writeFileSync(__dirname + '/version.txt', version);
 
@@ -108,20 +108,5 @@ module.exports = function (callback) {
     });
   };
 
-  var pullAndStatus = function () {
-    process.stdout.write('Checking for outstanding changes... ');
-
-    exec('git pull origin master && git status', function (error, stdout, stderr) {
-      if (/nothing to commit \(working directory clean\)/i.test(stdout)) {
-        process.stdout.write("All clean!\n");
-
-        promptForVersion();
-      }
-      else {
-        process.stdout.write("Outstanding changes! You must commit before continuing.\n");
-      }
-    });
-  };
-
-  pullAndStatus();
+  promptForVersion();
 };
