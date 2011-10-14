@@ -21,7 +21,10 @@
   $.widget('mp.marcoPolo', {
     // Default options.
     options: {
-      // Whether to cache query results.
+      // Cache results. The default functions caches results over all instances, keyed by the URL.  Possible values:
+      // true (default) - caches globally, keyed by URL
+      // false - disable caching
+      // object - functions: add, fetch called to add to or fetch from a results cache.
       cache: true,
       // Whether to compare the selected item against items displayed in the
       // results list. The selected item is highlighted if a match is found,
@@ -225,10 +228,28 @@
             }
 
             break;
+
+          case 'cache':
+            // if true, use the default cache functions, otherwise it's an object with user supplied caching functions
+            if (value === true) {
+              self.options.cache = { add: self._cacheAdd, fetch: self._cacheFetch };
+            }
         }
       });
 
       return self;
+    },
+
+    _cacheAdd: function(term, params, data, ui) {
+      var cacheKey = ui.options.url + (ui.options.url.indexOf('?') === -1 ? '?' : '&') + $.param(params);
+      cache[cacheKey] = data;
+    },
+
+    _cacheFetch: function(term, params, ui) {
+      // Build the request URL with query string data to use as the cache
+      // key.
+      var cacheKey = ui.options.url + (ui.options.url.indexOf('?') === -1 ? '?' : '&') + $.param(params);
+      return cache[cacheKey];
     },
 
     // Programmatically change the input value without triggering a search
@@ -843,7 +864,8 @@
       var self = this,
           $input = self.$input,
           $list = self.$list,
-          options = self.options;
+          options = self.options,
+          cachedData;
 
       self._cancelPendingRequest();
 
@@ -872,13 +894,9 @@
 
         params = $.extend({}, options.data, param);
 
-        // Build the request URL with query string data to use as the cache
-        // key.
-        cacheKey = options.url + (options.url.indexOf('?') === -1 ? '?' : '&') + $.param(params);
-
         // Check for and use cached results if enabled.
-        if (options.cache && cache[cacheKey]) {
-          self._buildSuccessList(q, cache[cacheKey]);
+        if (options.cache && (cachedData = options.cache.fetch(q, params, self)) ) {
+          self._buildSuccessList(q, cachedData);
         }
         // Otherwise, make an ajax request for the data.
         else {
@@ -898,7 +916,9 @@
                 self._buildSuccessList(q, data);
 
                 // Cache the data.
-                cache[cacheKey] = data;
+                if (options.cache) {
+                  options.cache.add(q, params, data, self);
+                }
               },
             error:
               function (jqXHR, textStatus, errorThrown) {
