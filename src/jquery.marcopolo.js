@@ -898,7 +898,9 @@
                 self._buildSuccessList(q, data);
 
                 // Cache the data.
-                cache[cacheKey] = data;
+                if (options.cache) {
+                  cache[cacheKey] = data;
+                }
               },
             error:
               function (jqXHR, textStatus, errorThrown) {
