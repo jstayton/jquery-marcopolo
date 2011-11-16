@@ -131,6 +131,16 @@ All options are optional, although _url_ is usually specified unless the input
 field is in a form by itself (in which case the form's _action_ attribute can
 be used).
 
+*   **allowFormSubmission** _boolean_
+
+    Whether to allow form submission. If this is set to _true_, the first item
+    in the results list will not be selected by default, and hitting return
+    immediately after entering a search term will submit the form; selecting
+    an autocomplete result item with the keyboard or mouse will still navigate
+    to that item rather than submitting the form.
+    
+    _Default_ true 
+
 *   **cache** _boolean_
 
     Whether to cache query results. The cache is shared by all instances, which
