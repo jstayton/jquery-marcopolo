@@ -21,6 +21,10 @@
   $.widget('mp.marcoPolo', {
     // Default options.
     options: {
+      // Whether to allow the search form to be submitted. If this is set to
+      // true, the first item in the results list will no longer be highlighted
+      // by default
+      allowFormSubmission: false,
       // Whether to cache query results.
       cache: true,
       // Whether to compare the selected item against items displayed in the
@@ -339,8 +343,9 @@
           }
         })
         .bind('keydown.marcoPolo', function (key) {
-          var $highlighted = $();
-
+          var $highlighted = $(),
+              options = self.options;
+          
           switch (key.which) {
             // Highlight the previous item.
             case self.keys.UP:
@@ -370,15 +375,20 @@
 
             // Select the currently highlighted item.
             case self.keys.ENTER:
-              // Prevent the form from submitting on enter.
-              key.preventDefault();
-
+              
+              $highlighted = self._highlighted();
+              
+              // Prevent the form from submitting on enter if form submission
+              // is not allowed, or if a result item is selected if form
+              // submission _is_ permitted
+              if(!options.allowFormSubmission || $highlighted.length){
+                  key.preventDefault();
+              }
+              
               // Prevent selection if the list isn't visible.
               if (!$list.is(':visible')) {
                 return;
               }
-
-              $highlighted = self._highlighted();
 
               if ($highlighted.length) {
                 self._select($highlighted.data('marcoPolo'), $highlighted);
@@ -696,7 +706,7 @@
 
       // Highlight the first item in the results list if the currently selected
       // item was not found and already highlighted.
-      if (!compareMatch) {
+      if (!compareMatch && !options.allowFormSubmission) {
         self._highlightFirst();
       }
 
