@@ -4,10 +4,11 @@
     <title>Marco Polo &mdash; Example 2</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.marcopolo.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="js/jquery.marcopolo.js"></script>
     <script type="text/javascript">
-      $(function() {
+      $(function () {
         $('#geolocationSearch').marcoPolo({
           compare: true,
           data: {
@@ -36,8 +37,8 @@
       <h1>Marco Polo</h1>
       <h2>Try it Out</h2>
       <form action="http://api.infochimps.com/geo/location/geonames/autocomplete/place_names" method="get">
-        <input type="text" name="geolocationSearch" id="geolocationSearch" />
-        <img src="img/busy.gif" />
+        <input type="text" name="geolocationSearch" id="geolocationSearch">
+        <img src="img/busy.gif">
       </form>
       <h2>How it Works</h2>
       <script src="https://gist.github.com/1014790.js"> </script>
