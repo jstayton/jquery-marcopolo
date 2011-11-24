@@ -9,7 +9,7 @@
  * Released under the MIT License
  * http://en.wikipedia.org/wiki/MIT_License
  */
-(function ($) {
+(function ($, undefined) {
   'use strict';
 
   // The cache spans all instances and is indexed by URL. This allows different
@@ -194,7 +194,7 @@
           options = {};
 
       // If no option is specified, initialize all options.
-      if (typeof option === 'undefined') {
+      if (option === undefined) {
         options = self.options;
       }
       // Otherwise, initialize only the specified option.
@@ -264,7 +264,7 @@
 
       // Change the input value if a new value is specified. Otherwise, use the
       // existing input value.
-      if (typeof q !== 'undefined') {
+      if (q !== undefined) {
         $input.val(q);
       }
 
