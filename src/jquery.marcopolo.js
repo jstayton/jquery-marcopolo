@@ -216,6 +216,8 @@
           case 'selected':
             self._select(value, null);
 
+            self._toggleLabel();
+
             break;
 
           case 'url':
