@@ -177,7 +177,9 @@
         ._bindList()
         ._bindDocument();
 
-      self._initOptions();
+      self
+        ._initOptions()
+        ._initSelected();
     },
 
     // Set an option.
@@ -308,6 +310,17 @@
 
         // Hide and empty the existing results to prevent future stale results.
         self._hideAndEmptyList();
+      }
+    },
+
+    // Initialize the input with a selected value from the 'data-selected'
+    // attribute.
+    _initSelected: function () {
+      var self = this,
+          data = self.$input.data('selected');
+
+      if (data) {
+        self.select(data, null);
       }
 
       return self;
