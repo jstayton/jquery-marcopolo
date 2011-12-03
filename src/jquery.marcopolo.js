@@ -282,16 +282,18 @@
       // Save the selection as the currently selected item.
       self.selected = data;
 
-      // Do nothing more if the currently selected item is simply being reset.
-      if (!data) {
-        return self;
-      }
-
       if (hideOnSelect) {
         self._hideList();
       }
 
-      self._trigger('select', [data, $item]);
+      if (data) {
+        self._trigger('select', [data, $item]);
+      }
+      // If there's no data, consider this a call to deselect (or reset) the
+      // current value.
+      else {
+        $input.val('');
+      }
 
       // It's common to update the input value with the selected item during
       // 'onSelect', so check if that has occurred and store the new value.
