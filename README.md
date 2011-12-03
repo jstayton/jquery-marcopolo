@@ -9,7 +9,7 @@ and antiquated coding patterns. Surely something as fundamental as autocomplete
 could — really, _should_ — be done better. And now it has. Meet Marco Polo. For
 the discerning developer.
 
-Developed by [Justin Stayton](http://twitter.com/jstayton) at
+Developed by [Justin Stayton](http://twitter.com/jstayton) while at
 [Monk Development](http://monkdev.com) for the
 [Ekklesia 360](http://ekklesia360.com) CMS.
 
@@ -623,3 +623,16 @@ Methods
     _Parameters:_
 
     *   **q** _string_ Optional new input value to search on.
+
+*   **select**
+
+    Set the currently selected data, just as if the user clicked or keyboard
+    selected an item from the results list. The _onSelect_ callback is fired.
+
+    _Example:_
+
+        $('#userSearch').marcoPolo('select', { first_name: 'Lindsay', … });
+
+    _Parameters:_
+
+    *   **data** _object_ Data of the selected item.
