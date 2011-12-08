@@ -4,7 +4,7 @@
     <title>Marco Polo &mdash; Example 1</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.ui.widget.min.js"></script>
     <script type="text/javascript" src="js/jquery.marcopolo.js"></script>
     <script type="text/javascript">
@@ -19,10 +19,19 @@
           formatItem: function (data, $item) {
             return data.screen_name;
           },
+          label: '#twitterUserSearchLabel',
           onSelect: function (data, $item) {
             this.val(data.screen_name);
           }
         });
+
+        // setTimeout(function () {
+        //   $('#twitterUserSearch').marcoPolo('option', 'selected', { screen_name: 'jstayton' });
+        //
+        //   setTimeout(function () {
+        //     $('#twitterUserSearch').marcoPolo('select', null);
+        //   }, 2000);
+        // }, 2000);
       });
     </script>
   </head>
@@ -31,7 +40,8 @@
       <h1>Marco Polo</h1>
       <h2>Try it Out</h2>
       <form action="http://api.infochimps.com/social/network/tw/search/people_search" method="get">
-        <input type="text" name="twitterUserSearch" id="twitterUserSearch">
+        <label for="twitterUserSearch" id="twitterUserSearchLabel">This is the label</label>
+        <input type="text" name="twitterUserSearch" id="twitterUserSearch" data-selected="{ &quot;screen_name&quot;: &quot;jstayton&quot; }">
         <img src="img/busy.gif">
       </form>
       <h2>How it Works</h2>

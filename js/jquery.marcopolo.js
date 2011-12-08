@@ -177,7 +177,9 @@
         ._bindList()
         ._bindDocument();
 
-      self._initOptions();
+      self
+        ._initOptions()
+        ._initSelected();
     },
 
     // Set an option.
@@ -214,7 +216,7 @@
             break;
 
           case 'selected':
-            self._select(value, null);
+            self.select(value, null);
 
             break;
 
@@ -271,6 +273,57 @@
       // Focus on the input to start the request and enable keyboard
       // navigation (only available when the input has focus).
       $input.focus();
+    },
+
+    // Select an item from the results list.
+    select: function (data, $item) {
+      var self = this,
+          $input = self.$input,
+          hideOnSelect = self.options.hideOnSelect;
+
+      // Save the selection as the currently selected item.
+      self.selected = data;
+
+      if (hideOnSelect) {
+        self._hideList();
+      }
+
+      if (data) {
+        self._trigger('select', [data, $item]);
+      }
+      // If there's no data, consider this a call to deselect (or reset) the
+      // current value.
+      else {
+        $input.val('');
+      }
+
+      // It's common to update the input value with the selected item during
+      // 'onSelect', so check if that has occurred and store the new value.
+      if ($input.val() !== self.value) {
+        self.value = $input.val();
+
+        // Check if the label needs to be toggled when this method is called
+        // programmatically (usually meaning the input doesn't have focus).
+        if (!self.focusPseudo) {
+          self._toggleLabel();
+        }
+
+        // Hide and empty the existing results to prevent future stale results.
+        self._hideAndEmptyList();
+      }
+    },
+
+    // Initialize the input with a selected value from the 'data-selected'
+    // attribute.
+    _initSelected: function () {
+      var self = this,
+          data = self.$input.data('selected');
+
+      if (data) {
+        self.select(data, null);
+      }
+
+      return self;
     },
 
     // Remove the autocomplete functionality and return the selected input
@@ -381,7 +434,7 @@
               $highlighted = self._highlighted();
 
               if ($highlighted.length) {
-                self._select($highlighted.data('marcoPolo'), $highlighted);
+                self.select($highlighted.data('marcoPolo'), $highlighted);
               }
 
               break;
@@ -441,7 +494,7 @@
         .delegate('li.mp_selectable', 'mouseup', function () {
           var $item = $(this);
 
-          self._select($item.data('marcoPolo'), $item);
+          self.select($item.data('marcoPolo'), $item);
 
           // This event is tracked so that when 'focus' is called on the input
           // (below), a new request isn't fired.
@@ -925,38 +978,6 @@
           });
         }
       }, options.delay);
-
-      return self;
-    },
-
-    // Select an item from the results list.
-    _select: function (data, $item) {
-      var self = this,
-          $input = self.$input,
-          hideOnSelect = self.options.hideOnSelect;
-
-      // Save the selection as the currently selected item.
-      self.selected = data;
-
-      // Do nothing more if the currently selected item is simply being reset.
-      if (!data) {
-        return self;
-      }
-
-      if (hideOnSelect) {
-        self._hideList();
-      }
-
-      self._trigger('select', [data, $item]);
-
-      // It's common to update the input value with the selected item during
-      // 'onSelect', so check if that has occurred and store the new value.
-      if ($input.val() !== self.value) {
-        self.value = $input.val();
-
-        // Hide and empty the existing results to prevent future stale results.
-        self._hideAndEmptyList();
-      }
 
       return self;
     },
