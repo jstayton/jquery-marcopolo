@@ -19,19 +19,10 @@
           formatItem: function (data, $item) {
             return data.screen_name;
           },
-          label: '#twitterUserSearchLabel',
           onSelect: function (data, $item) {
             this.val(data.screen_name);
           }
         });
-
-        // setTimeout(function () {
-        //   $('#twitterUserSearch').marcoPolo('option', 'selected', { screen_name: 'jstayton' });
-        //
-        //   setTimeout(function () {
-        //     $('#twitterUserSearch').marcoPolo('select', null);
-        //   }, 2000);
-        // }, 2000);
       });
     </script>
   </head>
@@ -40,8 +31,7 @@
       <h1>Marco Polo</h1>
       <h2>Try it Out</h2>
       <form action="http://api.infochimps.com/social/network/tw/search/people_search" method="get">
-        <label for="twitterUserSearch" id="twitterUserSearchLabel">This is the label</label>
-        <input type="text" name="twitterUserSearch" id="twitterUserSearch" data-selected="{ &quot;screen_name&quot;: &quot;jstayton&quot; }">
+        <input type="text" name="twitterUserSearch" id="twitterUserSearch">
         <img src="img/busy.gif">
       </form>
       <h2>How it Works</h2>
