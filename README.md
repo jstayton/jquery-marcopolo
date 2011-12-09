@@ -260,7 +260,7 @@ be used).
 
     _Parameters:_
 
-    *   **data** _object_ Data returned from the request.
+    *   **data** _array, object_ Data returned from the request.
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
@@ -311,7 +311,7 @@ be used).
 
     _Parameters:_
 
-    *   **data** _object_ Data returned from the request.
+    *   **data** _string, object_ Data returned from the request.
     *   **$item** _jQuery object_ List item to display the result.
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
@@ -511,7 +511,7 @@ be used).
 
     _Parameters:_
 
-    *   **data** _object_ Data returned from the request.
+    *   **data** _array_ Data returned from the request.
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
@@ -532,7 +532,7 @@ be used).
 
     _Parameters:_
 
-    *   **data** _object_ Data returned from the request.
+    *   **data** _string, object_ Data returned from the request.
     *   **$item** _jQuery object, null_ Selected results list item. _null_ if
                                         _selected_ option used.
 
@@ -636,4 +636,4 @@ Methods
 
     _Parameters:_
 
-    *   **data** _object_ Data of the selected item.
+    *   **data** _string, object_ Data of the selected item.
