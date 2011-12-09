@@ -193,10 +193,11 @@
     // Initialize options that require a little extra work.
     _initOptions: function (option, value) {
       var self = this,
+          allOptions = option === undefined,
           options = {};
 
       // If no option is specified, initialize all options.
-      if (option === undefined) {
+      if (allOptions) {
         options = self.options;
       }
       // Otherwise, initialize only the specified option.
@@ -216,7 +217,13 @@
             break;
 
           case 'selected':
-            self.select(value, null);
+            // During initial creation (when all options are initialized), only
+            // initialize the 'selected' value if there is one. The
+            // '_initSelected' method parses the input's attributes for a
+            // selected value.
+            if (allOptions && value) {
+              self.select(value, null);
+            }
 
             break;
 
@@ -313,14 +320,19 @@
       }
     },
 
-    // Initialize the input with a selected value from the 'data-selected'
-    // attribute.
+    // Initialize the input with a selected value from the 'data-selected' 
+    // attribute (JSON) or standard 'value' attribute (string).
     _initSelected: function () {
       var self = this,
-          data = self.$input.data('selected');
+          $input = self.$input,
+          data = $input.data('selected'),
+          value = $input.val();
 
       if (data) {
         self.select(data, null);
+      }
+      else if (value) {
+        self.select(value, null);
       }
 
       return self;
