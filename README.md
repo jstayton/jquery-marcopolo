@@ -61,12 +61,12 @@ Let's say you want to create a user search field that redirects to the user's
 profile when a result is selected. To start, make sure both jQuery and Marco
 Polo are included in your HTML:
 
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.marcopolo.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.marcopolo.min.js"></script>
 
 Next, add a text input, if you haven't already:
 
-    <input type="text" name="userSearch" id="userSearch" />
+    <input type="text" name="userSearch" id="userSearch">
 
 Then attach Marco Polo to the text input in your JavaScript:
 
@@ -80,11 +80,11 @@ Then attach Marco Polo to the text input in your JavaScript:
       }
     });
 
-When a search happens, a GET request is made to the _url_ with _q_
+When a search happens, a GET request is made to the `url` with `q`
 (the search value) added to the query string. (Additional data can be included
-using the _data_ option.) Let's say a search is made for _Butler_. A GET
-request is made to _/users/search?q=Butler_. Your backend code must then use
-the _q_ parameter to find and return the matching users in JSON format:
+using the `data` option.) Let's say a search is made for _Butler_. A GET
+request is made to `/users/search?q=Butler`. Your backend code must then use
+the `q` parameter to find and return the matching users in JSON format:
 
     [
       {
@@ -102,9 +102,9 @@ the _q_ parameter to find and return the matching users in JSON format:
       …
     ]
 
-Each JSON user object is passed to the _formatItem_ callback option for display
+Each JSON user object is passed to the `formatItem` callback option for display
 in the results list. And when a user is selected from the results list, their
-JSON object is then passed to the _onSelect_ callback option to complete the
+JSON object is then passed to the `onSelect` callback option to complete the
 browser redirect.
 
 You should now have enough understanding of Marco Polo to start configuring it
