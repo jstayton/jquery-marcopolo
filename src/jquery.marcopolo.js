@@ -713,7 +713,7 @@
           formatItem;
 
       // Loop through each result and add it to the list.
-      for (var i = 0; data[i]; i++) {
+      for (var i = 0, length = data.length; i < length; i++) {
         datum = data[i];
         $item = $('<li class="mp_item" />');
         formatItem = options.formatItem.call($input, datum, $item);
