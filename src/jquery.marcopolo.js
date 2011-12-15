@@ -82,6 +82,10 @@
       label: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
+      // Called when the user is finished interacting with the autocomplete
+      // interface, not just the text input, which loses and gains focus on a
+      // results list mouse click.
+      onBlur: null,
       // Called when the input value changes.
       onChange: null,
       // Called when the ajax request fails.
