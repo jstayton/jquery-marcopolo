@@ -9,7 +9,16 @@
  * Released under the MIT License
  * http://en.wikipedia.org/wiki/MIT_License
  */
-(function ($, undefined) {
+(function (factory) {
+  // Register as an AMD module, compatible with script loaders like RequireJS.
+  // Source: https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  }
+  else {
+    factory(jQuery);
+  }
+}(function ($, undefined) {
   'use strict';
 
   // The cache spans all instances and is indexed by URL. This allows different
@@ -73,6 +82,10 @@
       label: null,
       // The minimum number of characters required before a request is fired.
       minChars: 1,
+      // Called when the user is finished interacting with the autocomplete
+      // interface, not just the text input, which loses and gains focus on a
+      // results list mouse click.
+      onBlur: null,
       // Called when the input value changes.
       onChange: null,
       // Called when the ajax request fails.
@@ -478,8 +491,6 @@
             // If the $list 'mousedown' event has fired without a 'mouseup'
             // event, wait for that before dismissing everything.
             if (!self.mousedown) {
-              self.focusPseudo = false;
-
               self._dismiss();
             }
           }, 1);
@@ -535,8 +546,6 @@
         // is clicked. (A click on a selectable list item is handled above,
         // before this code fires.)
         if (!self.focusReal && self.$list.is(':visible')) {
-          self.focusPseudo = false;
-
           self._dismiss();
         }
       });
@@ -1001,6 +1010,8 @@
           $list = self.$list,
           options = self.options;
 
+      self.focusPseudo = false;
+
       self
         ._cancelPendingRequest()
         ._hideAndEmptyList();
@@ -1012,7 +1023,9 @@
         self._change('');
       }
 
-      self._toggleLabel();
+      self
+        ._toggleLabel()
+        ._trigger('blur');
 
       return self;
     },
@@ -1029,4 +1042,4 @@
       return callback && callback.apply(self.element, args);
     }
   });
-})(jQuery);
+}));
