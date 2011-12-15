@@ -478,8 +478,6 @@
             // If the $list 'mousedown' event has fired without a 'mouseup'
             // event, wait for that before dismissing everything.
             if (!self.mousedown) {
-              self.focusPseudo = false;
-
               self._dismiss();
             }
           }, 1);
@@ -535,8 +533,6 @@
         // is clicked. (A click on a selectable list item is handled above,
         // before this code fires.)
         if (!self.focusReal && self.$list.is(':visible')) {
-          self.focusPseudo = false;
-
           self._dismiss();
         }
       });
@@ -1001,6 +997,8 @@
           $list = self.$list,
           options = self.options;
 
+      self.focusPseudo = false;
+
       self
         ._cancelPendingRequest()
         ._hideAndEmptyList();
@@ -1012,7 +1010,9 @@
         self._change('');
       }
 
-      self._toggleLabel();
+      self
+        ._toggleLabel()
+        ._trigger('blur');
 
       return self;
     },
