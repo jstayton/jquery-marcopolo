@@ -378,6 +378,23 @@ be used).
 
 #### Events
 
+*   **onBlur** () _function, null_
+
+    Called when the user is finished interacting with the autocomplete
+    interface, not just the text input, which loses and gains focus on a
+    results list mouse click.
+
+    _Default:_ null
+
+    _Parameters:_ none
+
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
+
+    _Bind:_ You can also bind to the _marcopoloblur_ event:
+
+        $(selector).bind('marcopoloblur', function (event) { … });
+
+    ---------------------------------------------------------------------------
 *   **onChange** (q) _function, null_
 
     Called when the input value changes.
@@ -418,7 +435,10 @@ be used).
     ---------------------------------------------------------------------------
 *   **onFocus** () _function, null_
 
-    Called when the text input receives focus.
+    Called when the text input receives focus. This is different than the
+    standard _focus_ event on the text input, however, as this callback does
+    not fire when a results list item is selected via mouse click, which causes
+    the text input to _blur_ and immediately gain _focus_ again.
 
     _Default:_ null
 
