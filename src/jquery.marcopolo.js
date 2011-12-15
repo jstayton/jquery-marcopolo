@@ -9,7 +9,16 @@
  * Released under the MIT License
  * http://en.wikipedia.org/wiki/MIT_License
  */
-(function ($, undefined) {
+(function (factory) {
+  // Register as an AMD module, compatible with script loaders like RequireJS.
+  // Source: https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  }
+  else {
+    factory(jQuery);
+  }
+}(function ($, undefined) {
   'use strict';
 
   // The cache spans all instances and is indexed by URL. This allows different
@@ -1029,4 +1038,4 @@
       return callback && callback.apply(self.element, args);
     }
   });
-})(jQuery);
+}));
