@@ -119,7 +119,13 @@
       // Prime the input with a selected item.
       selected: null,
       // The URL to GET request for the results.
-      url: null
+      url: null,
+      // Allow custom
+      allowCustom: false,
+      // Custom data format
+      customData: function ($input) {
+        return { value: $input.val() };
+      }
     },
 
     // Key code to key name mapping for easy reference.
@@ -460,6 +466,8 @@
 
               if ($highlighted.length) {
                 self.select($highlighted.data('marcoPolo'), $highlighted);
+              } else if (self.options.allowCustom) {
+                self.select(self.options.customData(self.$input));
               }
 
               break;
