@@ -1039,7 +1039,7 @@
 
       self.element.trigger(triggerName, args);
 
-      return callback && callback.apply(self.element, args);
+      return callback && callback.apply(self.element, args || []);
     }
   });
 }));
