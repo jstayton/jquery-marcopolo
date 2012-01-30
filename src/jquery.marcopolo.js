@@ -1035,11 +1035,12 @@
       var self = this,
           callbackName = 'on' + name.charAt(0).toUpperCase() + name.slice(1),
           triggerName = self.widgetEventPrefix.toLowerCase() + name.toLowerCase(),
+          triggerArgs = $.isArray(args) ? args : [],
           callback = self.options[callbackName];
 
-      self.element.trigger(triggerName, args);
+      self.element.trigger(triggerName, triggerArgs);
 
-      return callback && callback.apply(self.element, args || []);
+      return callback && callback.apply(self.element, triggerArgs);
     }
   });
 }));
