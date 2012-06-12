@@ -579,6 +579,7 @@ Methods
 
     *   **q** _string_ New input value.
 
+    ---------------------------------------------------------------------------
 *   **destroy**
 
     Remove the autocomplete functionality and return the selected input
@@ -588,6 +589,7 @@ Methods
 
         $('#userSearch').marcoPolo('destroy');
 
+    ---------------------------------------------------------------------------
 *   **list**
 
     Get the results list element.
@@ -596,6 +598,7 @@ Methods
 
         $('#userSearch').marcoPolo('list');
 
+    ---------------------------------------------------------------------------
 *   **option**
 
     Get or set one or more options.
@@ -626,6 +629,7 @@ Methods
     *   **nameOrValues** _string, object_ Optional options to get or set.
     *   **value** _mixed_ Optional option value to set.
 
+    ---------------------------------------------------------------------------
 *   **search**
 
     Programmatically trigger a search request using the existing input value
@@ -645,6 +649,7 @@ Methods
 
     *   **q** _string_ Optional new input value to search on.
 
+    ---------------------------------------------------------------------------
 *   **select**
 
     Set the currently selected data, just as if the user clicked or keyboard
@@ -658,6 +663,7 @@ Methods
 
     *   **data** _string, object_ Data of the selected item.
 
+    ---------------------------------------------------------------------------
 *   **selected**
 
     Get the currently selected data (_string_, _object_, or _null_ if not set).
