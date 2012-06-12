@@ -657,3 +657,11 @@ Methods
     _Parameters:_
 
     *   **data** _string, object_ Data of the selected item.
+
+*   **selected**
+
+    Get the currently selected data (_string_, _object_, or _null_ if not set).
+
+    _Example:_
+
+        $('#userSearch').marcoPolo('selected');
