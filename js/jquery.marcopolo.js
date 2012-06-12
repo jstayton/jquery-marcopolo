@@ -171,8 +171,8 @@
       // Whether a mousedown event is triggered on a list item.
       self.mousedown = false;
 
-      // The currently selected item.
-      self.selected = null;
+      // The currently selected data.
+      self.selectedData = null;
 
       // Whether the last selection was by mouseup.
       self.selectedMouseup = false;
@@ -301,8 +301,8 @@
           $input = self.$input,
           hideOnSelect = self.options.hideOnSelect;
 
-      // Save the selection as the currently selected item.
-      self.selected = data;
+      // Save the selected data for later reference.
+      self.selectedData = data;
 
       if (hideOnSelect) {
         self._hideList();
@@ -349,6 +349,11 @@
       }
 
       return self;
+    },
+
+    // Get the currently selected data.
+    selected: function () {
+      return this.selectedData;
     },
 
     // Remove the autocomplete functionality and return the selected input
@@ -708,8 +713,8 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          // The currently selected item data for use in comparison.
-          selected = self.selected,
+          // The currently selected data for use in comparison.
+          selected = self.selectedData,
           // Whether to compare the currently selected item with the results. A
           // 'compare' setting key has to be specified, and there must be a
           // currently selected item.
@@ -901,8 +906,8 @@
     _change: function (q) {
       var self = this;
 
-      // Reset the currently selected item.
-      self.selected = null;
+      // Reset the currently selected data.
+      self.selectedData = null;
 
       // Keep track of the new input value for later comparison.
       self.value = q;
@@ -1018,7 +1023,7 @@
 
       // Empty the input value if the 'required' setting is enabled and nothing
       // is selected.
-      if (options.required && !self.selected) {
+      if (options.required && !self.selectedData) {
         $input.val('');
         self._change('');
       }
