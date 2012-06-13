@@ -118,6 +118,10 @@
       selectable: '*',
       // Prime the input with a selected item.
       selected: null,
+      // A class that is applied to options that have focus. This allows
+      // you to customize the class so that you have control over what
+      // class you key off of.
+      selectedOptionClass: 'selected',
       // The URL to GET request for the results.
       url: null
     },
@@ -127,7 +131,11 @@
       DOWN: 40,
       ENTER: 13,
       ESC: 27,
-      UP: 38
+      UP: 38,
+      END: 35,
+      HOME: 36,
+      TAB: 9,
+      SHIFT: 16
     },
 
     // Initialize the plugin on an input.
@@ -135,13 +143,19 @@
       var self = this;
 
       // Create a more appropriately named alias for the input.
-      self.$input = self.element.addClass('mp_input');
+      self.$input = self.element.addClass('mp_input').attr({
+          'aria-autocomplete' : 'list'
+        });
 
       // Create an empty list for displaying future results. Insert it directly
       // after the input element.
-      self.$list = $('<ol class="mp_list" />')
+      self.$list = $('<ol class="mp_list" role="listbox"/>')
                      .hide()
                      .insertAfter(self.$input);
+
+      // Add an accessible required attribute if a list value is required.
+      if (self.options.required === true)
+        self.$list.attr('aria-required', 'true');
 
       // The current 'autocomplete' value is remembered for when 'destroy' is
       // called and the input is returned to its original state.
@@ -161,7 +175,7 @@
       // generic (document).
       self.documentMouseup = null;
 
-      // "Pseudo" focus includes any interaction with the pluggin, even if the
+      // "Pseudo" focus includes any interaction with the plugin, even if the
       // input has blurred.
       self.focusPseudo = false;
 
@@ -370,7 +384,7 @@
         self.$input.removeAttr('autocomplete');
       }
 
-      self.$input.removeClass('mp_input');
+      self.$input.removeClass('mp_input').removeAttr('aria-autocomplete');
 
       if (options.label) {
         options.label.removeClass('mp_label');
@@ -425,6 +439,7 @@
           var $highlighted = $();
 
           switch (key.which) {
+
             // Highlight the previous item.
             case self.keys.UP:
               // The default moves the cursor to the beginning or end of the
@@ -451,6 +466,32 @@
 
               break;
 
+            // Highlight the first item.
+            case self.keys.HOME:
+              // The default moves the cursor to the beginning or end of the
+              // input value. Keep it in its current place.
+              key.preventDefault();
+
+              // Show the list if it has been hidden by ESC.
+              self
+                ._showList()
+                ._highlightFirst();
+
+              break;
+
+            // Highlight the last item.
+            case self.keys.END:
+              // The default moves the cursor to the beginning or end of the
+              // input value. Keep it in its current place.
+              key.preventDefault();
+
+              // Show the list if it has been hidden by ESC.
+              self
+                ._showList()
+                ._highlightLast();
+
+              break;
+
             // Select the currently highlighted item.
             case self.keys.ENTER:
               // Prevent the form from submitting on enter.
@@ -465,6 +506,21 @@
 
               if ($highlighted.length) {
                 self.select($highlighted.data('marcoPolo'), $highlighted);
+              }
+
+              break;
+
+            // Select the currently highlighted item and allow the
+            // focus to change to the next focusable item on the page.
+            case self.keys.TAB:
+
+              // Prevent selection if the list isn't visible.
+              if ($list.is(':visible')) {
+                $highlighted = self._highlighted();
+
+                if ($highlighted.length) {
+                  self._select($highlighted.data('marcoPolo'), $highlighted);
+                }
               }
 
               break;
@@ -593,7 +649,9 @@
 
     // Remove the highlight class from the specified item.
     _removeHighlight: function ($item) {
-      $item.removeClass('mp_highlighted');
+      $item
+        .removeClass('mp_highlighted ' + this.options.selectedOptionClass)
+        .removeAttr('aria-selected');
 
       return this;
     },
@@ -604,7 +662,9 @@
       // highlighted at a time.
       this._removeHighlight(this._highlighted());
 
-      $item.addClass('mp_highlighted');
+      $item
+        .addClass('mp_highlighted ' + this.options.selectedOptionClass)
+        .attr('aria-selected', 'true');
 
       return this;
     },
@@ -612,6 +672,13 @@
     // Highlight the first selectable item in the results list.
     _highlightFirst: function () {
       this._addHighlight(this._firstSelectableItem());
+
+      return this;
+    },
+
+    // Highlight the last selectable item in the results list.
+    _highlightLast: function () {
+      this._addHighlight(this._lastSelectableItem());
 
       return this;
     },
@@ -654,6 +721,9 @@
       // But only if there are results to be shown.
       if ($list.children().length) {
         $list.show();
+
+        // Make this event reflected in ARIA attributes.
+        this.$list.attr('aria-expanded', 'true');
       }
 
       return this;
@@ -662,6 +732,9 @@
     // Hide the results list.
     _hideList: function () {
       this.$list.hide();
+
+      // Make this event reflected in ARIA attributes.
+      this.$list.attr('aria-expanded', 'false');
 
       return this;
     },
@@ -672,6 +745,9 @@
         .hide()
         .empty();
 
+      // Make this event reflected in ARIA attributes.
+      this.$list.attr('aria-expanded', 'false');
+
       return this;
     },
 
@@ -681,7 +757,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_no_results" />'),
+          $item = $('<li class="mp_no_results" role="alert" />'),
           formatNoResults;
 
       // Fire 'formatNoResults' callback.
@@ -767,7 +843,8 @@
       // Mark all selectable items, based on the 'selectable' selector setting.
       $list
         .children(options.selectable)
-        .addClass('mp_selectable');
+        .addClass('mp_selectable')
+        .attr('role', 'option');
 
       self._trigger('results', [data]);
 
@@ -812,7 +889,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_error" />'),
+          $item = $('<li class="mp_error" role="alert" />'),
           formatError;
 
       $list.empty();
@@ -847,7 +924,7 @@
           $input = self.$input,
           $list = self.$list,
           options = self.options,
-          $item = $('<li class="mp_min_chars" />'),
+          $item = $('<li class="mp_min_chars" role="alert" />'),
           formatMinChars;
 
       // Don't display the minimum characters list when there are no
@@ -965,7 +1042,7 @@
 
           // Add a class to the input's parent that can be hooked-into by the
           // CSS to show a busy indicator.
-          $inputParent = $input.parent().addClass('mp_busy');
+          $inputParent = $input.parent().addClass('mp_busy').attr('aria-busy', 'true');
 
           // The ajax request is stored in case it needs to be aborted.
           self.ajax = $.ajax({
@@ -997,7 +1074,7 @@
                 self.ajaxAborted = false;
 
                 // Remove the "busy" indicator class on the input's parent.
-                $inputParent.removeClass('mp_busy');
+                $inputParent.removeClass('mp_busy').removeAttr('aria-busy');
 
                 self._trigger('requestAfter', [jqXHR, textStatus]);
               }

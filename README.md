@@ -46,6 +46,9 @@ Features
     This manifests itself not only in clear and thorough developer
     documentation (below), but also verbose documentation within the code
     itself.
+*   **ARIA Support (in progress).** Support for
+    [WAI-ARIA](http://www.w3.org/TR/wai-aria/) to provide make the plugin
+    as accessible as possible.
 
 Requirements
 ------------
@@ -235,6 +238,15 @@ be used).
     item were selected from the results list.
 
     _Default:_ null
+
+    ---------------------------------------------------------------------------
+*   **selectedOptionClass** _string, 'selected'_
+
+    The public-facing class to apply to selected items in the list. You are
+    encouraged to style and script off this class, rather than the
+    internal _mp_highlighted_ class.
+
+    _Default:_ 'selected'
 
     ---------------------------------------------------------------------------
 *   **url** _string, null_
