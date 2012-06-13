@@ -5,7 +5,7 @@
  *
  * https://github.com/jstayton/jquery-marcopolo
  *
- * Copyright 2011 by Justin Stayton
+ * Copyright 2011-2012 by Justin Stayton
  * Released under the MIT License
  * http://en.wikipedia.org/wiki/MIT_License
  */
