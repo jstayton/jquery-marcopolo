@@ -51,7 +51,7 @@ Requirements
 ------------
 
 *   jQuery 1.4.2 or newer.
-*   jQuery UI Widget 1.8.14. Included in the minified version.
+*   jQuery UI Widget 1.8.21. Included in the minified version.
 *   All modern browsers are supported, as well as IE 6 and newer.
 
 Getting Started
