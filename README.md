@@ -46,11 +46,13 @@ Features
     This manifests itself not only in clear and thorough developer
     documentation (below), but also verbose documentation within the code
     itself.
+*   **WAI-ARIA support.** Assistive technology users can fully understand and
+    navigate Marco Polo.
 
 Requirements
 ------------
 
-*   jQuery 1.4.2 or newer.
+*   jQuery 1.4.3 or newer.
 *   jQuery UI Widget 1.8.21. Included in the minified version.
 *   All modern browsers are supported, as well as IE 6 and newer.
 
