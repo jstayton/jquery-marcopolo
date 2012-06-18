@@ -300,15 +300,25 @@
     // Programmatically change the input value without triggering a search
     // request (use the 'search' method for that). If the value is different
     // than the current input value, the 'onChange' callback is fired.
-    change: function (q) {
+    change: function (q, onlyValue) {
       var self = this;
 
       // Change the input value if a new value is specified.
-      if (q !== self.value) {
-        self.$input.val(q);
+      if (q === self.value) {
+        return;
+      }
 
-        self._change(q);
+      self.$input.val(q);
 
+      // Reset the currently selected data.
+      self.selectedData = null;
+
+      // Keep track of the new input value for later comparison.
+      self.value = q;
+
+      self._trigger('change', [q]);
+
+      if (onlyValue !== true) {
         if (self.focusPseudo) {
           // Clear out the existing results to prevent future stale results
           // in case the change is made while the input has focus.
@@ -1021,21 +1031,6 @@
       return self;
     },
 
-    // Mark the input as changed due to a different value.
-    _change: function (q) {
-      var self = this;
-
-      // Reset the currently selected data.
-      self.selectedData = null;
-
-      // Keep track of the new input value for later comparison.
-      self.value = q;
-
-      self._trigger('change', [q]);
-
-      return self;
-    },
-
     // Make a request for the specified query and build the results list.
     _request: function (q) {
       var self = this,
@@ -1046,9 +1041,7 @@
       self._cancelPendingRequest();
 
       // Check if the input value has changed.
-      if (q !== self.value) {
-        self._change(q);
-      }
+      self.change(q, true);
 
       // Requests are buffered the number of ms specified by the 'delay'
       // setting. This helps prevent an ajax request for every keystroke.
@@ -1145,8 +1138,7 @@
       // Empty the input value if the 'required' setting is enabled and nothing
       // is selected.
       if (options.required && !self.selectedData) {
-        $input.val('');
-        self._change('');
+        self.change('', true);
       }
 
       self
