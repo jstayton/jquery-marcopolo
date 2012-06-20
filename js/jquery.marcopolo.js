@@ -138,7 +138,7 @@
           $input;
 
       // Create a more appropriately named alias for the input.
-      self.$input = $input = self.element.addClass('mp_input')
+      self.$input = $input = self.element.addClass('mp_input');
 
       // The existing input name or a created one. Used for building the ID of
       // other elements.
