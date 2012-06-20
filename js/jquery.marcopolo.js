@@ -142,7 +142,7 @@
 
       // The existing input name or a created one. Used for building the ID of
       // other elements.
-      self.inputName = $input.attr('name') || 'mp_' + $.now();
+      self.inputName = 'mp_' + ($input.attr('name') || $.now());
 
       // Create an empty list for displaying future results. Insert it directly
       // after the input element.
