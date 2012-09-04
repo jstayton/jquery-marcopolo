@@ -136,6 +136,7 @@
       ENTER: 13,
       ESC: 27,
       HOME: 36,
+      TAB: 9,
       UP: 38
     },
 
@@ -547,7 +548,7 @@
 
               break;
 
-            // Select the currently highlighted item.
+            // Select the currently highlighted item. Input keeps focus.
             case self.keys.ENTER:
               // Prevent selection if the list isn't visible.
               if (!$list.is(':visible')) {
@@ -569,6 +570,21 @@
               // disabled or if there's a highlighted item.
               if (!self.options.submitOnEnter || $highlighted.length) {
                 key.preventDefault();
+              }
+
+              break;
+
+            // Select the currently highlighted item. Input loses focus.
+            case self.keys.TAB:
+              // Prevent selection if the list isn't visible.
+              if (!$list.is(':visible')) {
+                return;
+              }
+
+              $highlighted = self._highlighted();
+
+              if ($highlighted.length) {
+                self.select($highlighted.data('marcoPolo'), $highlighted);
               }
 
               break;
