@@ -147,9 +147,9 @@ be used).
 
     Whether to compare the selected item against items displayed in the results
     list. The selected item is highlighted if a match is found, instead of the
-    first item in the list (by default). Set this option to _true_ if the data
-    is a string; otherwise, specify the data object attribute name to compare
-    on.
+    first item in the list (_highlight_ option must be enabled). Set this
+    option to _true_ if the data is a string; otherwise, specify the data
+    object attribute name to compare on.
 
     _Default:_ false
 
@@ -179,6 +179,15 @@ be used).
     things can be done when this is set to _false_, such as hiding and showing
     certain items when other items are selected. The results list is still
     hidden when the input is blurred for any other reason.
+
+    _Default:_ true
+
+    ---------------------------------------------------------------------------
+*   **highlight** _boolean_
+
+    Whether to automatically highlight an item when the results list is
+    displayed. Usually it's the first item, but it could be the previously
+    selected item if _compare_ is specified.
 
     _Default:_ true
 
@@ -237,6 +246,14 @@ be used).
     item were selected from the results list.
 
     _Default:_ null
+
+    ---------------------------------------------------------------------------
+*   **submitOnEnter** _boolean_
+
+    Whether to allow the browser's default behavior of submitting the form on
+    ENTER.
+
+    _Default:_ false
 
     ---------------------------------------------------------------------------
 *   **url** _string, null_

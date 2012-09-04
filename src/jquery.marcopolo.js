@@ -34,9 +34,9 @@
       cache: true,
       // Whether to compare the selected item against items displayed in the
       // results list. The selected item is highlighted if a match is found,
-      // instead of the first item in the list (by default). Set this option to
-      // 'true' if the data is a string; otherwise, specify the data object
-      // attribute name to compare on.
+      // instead of the first item in the list ('highlight' option must be
+      // enabled). Set this option to 'true' if the data is a string;
+      // otherwise, specify the data object attribute name to compare on.
       compare: false,
       // Additional data to be sent in the request query string.
       data: {},
@@ -73,6 +73,10 @@
       // Whether to hide the results list when an item is selected. The results
       // list is still hidden when the input is blurred for any other reason.
       hideOnSelect: true,
+      // Whether to automatically highlight an item when the results list is
+      // displayed. Usually it's the first item, but it could be the previously
+      // selected item if 'compare' is specified.
+      highlight: true,
       // Positioning a label over an input is a common design pattern
       // (sometimes referred to as 'overlabel') that unfortunately doesn't
       // work so well with all of the input focus/blur events that occur with
@@ -118,6 +122,9 @@
       selectable: '*',
       // Prime the input with a selected item.
       selected: null,
+      // Whether to allow the browser's default behavior of submitting the form
+      // on ENTER.
+      submitOnEnter: false,
       // The URL to GET request for the results.
       url: null
     },
@@ -542,11 +549,13 @@
 
             // Select the currently highlighted item.
             case self.keys.ENTER:
-              // Prevent the form from submitting on enter.
-              key.preventDefault();
-
               // Prevent selection if the list isn't visible.
               if (!$list.is(':visible')) {
+                // Prevent the form from submitting.
+                if (!self.options.submitOnEnter) {
+                  key.preventDefault();
+                }
+
                 return;
               }
 
@@ -554,6 +563,12 @@
 
               if ($highlighted.length) {
                 self.select($highlighted.data('marcoPolo'), $highlighted);
+              }
+
+              // Prevent the form from submitting if 'submitOnEnter' is
+              // disabled or if there's a highlighted item.
+              if (!self.options.submitOnEnter || $highlighted.length) {
+                key.preventDefault();
               }
 
               break;
@@ -864,7 +879,7 @@
           .html(formatItem)
           .appendTo($list);
 
-        if (compare) {
+        if (compare && options.highlight) {
           // If the 'compare' setting is set to boolean 'true', assume the data
           // is a string and compare directly.
           if (options.compare === true) {
@@ -903,8 +918,9 @@
       self._showList();
 
       // Highlight the first item in the results list if the currently selected
-      // item was not found and already highlighted.
-      if (!compareMatch) {
+      // item was not found and already highlighted, and the option to auto-
+      // highlight is enabled.
+      if (!compareMatch && options.highlight) {
         self._highlightFirst();
       }
 
