@@ -226,8 +226,8 @@
         ._bindDocument();
 
       self
-        ._initOptions()
-        ._initSelected();
+        ._initSelected()
+        ._initOptions();
     },
 
     // Set an option.
@@ -684,7 +684,7 @@
       var self = this,
           $label = self.options.label;
 
-      if ($label.length) {
+      if ($label && $label.length) {
         if (self.focusPseudo || self.$input.val()) {
           $label.hide();
         }
