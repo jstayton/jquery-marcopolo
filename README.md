@@ -559,11 +559,12 @@ be used).
         $(selector).bind('marcopoloresults', function (event, data) { … });
 
     ---------------------------------------------------------------------------
-*   **onSelect** (data, $item) _function, null_
+*   **onSelect** (data, $item, initial) _function, null_
 
-    Called when an item is selected from the results list or passed in through
-    the _selected_ option. By default, the _title_ or _name_ value of the data
-    object is used to populate the input value.
+    Called when an item is selected from the results list or an initial value
+    (see [Setting an Initial Value](https://github.com/jstayton/jquery-marcopolo/wiki/Setting-an-Initial-Value)).
+    By default, the _title_ or _name_ value of the data object is used to
+    populate the input value.
 
     _Default:_
 
@@ -574,6 +575,7 @@ be used).
     *   **data** _string, object_ Data returned from the request.
     *   **$item** _jQuery object, null_ Selected results list item. _null_ if
                                         _selected_ option used.
+    *   **initial** _boolean_ Whether this is an initial value.
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 

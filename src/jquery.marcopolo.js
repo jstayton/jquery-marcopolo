@@ -287,7 +287,7 @@
             // '_initSelected' method parses the input's attributes for a
             // selected value.
             if (allOptions && value) {
-              self.select(value, null);
+              self.select(value, null, true);
             }
 
             break;
@@ -358,26 +358,25 @@
     },
 
     // Select an item from the results list.
-    select: function (data, $item) {
+    select: function (data, $item, initial) {
       var self = this,
           $input = self.$input,
           hideOnSelect = self.options.hideOnSelect;
-
-      // Save the selected data for later reference.
-      self.selectedData = data;
 
       if (hideOnSelect) {
         self._hideList();
       }
 
-      if (data) {
-        self._trigger('select', [data, $item]);
-      }
       // If there's no data, consider this a call to deselect (or reset) the
       // current value.
-      else {
-        $input.val('');
+      if (!data) {
+        return self.change('');
       }
+
+      // Save the selected data for later reference.
+      self.selectedData = data;
+
+      self._trigger('select', [data, $item, !!initial]);
 
       // It's common to update the input value with the selected item during
       // 'onSelect', so check if that has occurred and store the new value.
@@ -404,10 +403,10 @@
           value = $input.val();
 
       if (data) {
-        self.select(data, null);
+        self.select(data, null, true);
       }
       else if (value) {
-        self.select(value, null);
+        self.select(value, null, true);
       }
 
       return self;
