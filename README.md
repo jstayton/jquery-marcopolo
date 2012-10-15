@@ -581,7 +581,7 @@ be used).
 
     _Bind:_ You can also bind to the _marcopoloselect_ event:
 
-        $(selector).bind('marcopoloselect', function (event, data, $item) { … });
+        $(selector).bind('marcopoloselect', function (event, data, $item, initial) { … });
 
 Methods
 -------
