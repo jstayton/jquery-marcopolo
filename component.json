@@ -1,0 +1,8 @@
+{
+  "name": "jquery-marcopolo",
+  "version": "1.7.2",
+  "main": "./jquery.marcopolo.min.js",
+  "dependencies": {
+    "jquery": ">=1.4.3"
+  }
+}
