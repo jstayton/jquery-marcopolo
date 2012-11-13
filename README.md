@@ -52,21 +52,49 @@ Features
 Requirements
 ------------
 
-*   jQuery 1.4.3 or newer.
-*   jQuery UI Widget 1.8.21. Included in the minified version.
-*   All modern browsers are supported, as well as IE 6 and newer.
+*   jQuery >= 1.4.3
+*   jQuery UI Widget >= 1.8.21 (included in minified build)
+*   All modern browsers, including IE >= 6
+
+Installation
+------------
+
+### Download
+
+#### Bower
+
+[Bower](http://twitter.github.com/bower) is a package manager for the web. Once
+installed, Bower can install Marco Polo with a single command:
+
+    bower install jquery-marcopolo
+
+#### Manually
+
+Copy the desired files from the `build` directory to your codebase.
+
+### Include
+
+Include both jQuery and Marco Polo in your HTML:
+
+    <script src="jquery.min.js"></script>
+    <script src="jquery.marcopolo.min.js"></script>
+
+In most cases, `jquery.marcopolo.min.js` is the best file to include, as it
+contains the required libraries and source code in a single minified package.
+
+The `build` directory contains a number of other files as well:
+
+*   `jquery.marcopolo.js` contains the required libraries and source code in a
+    single unmifified package.
+*   `build/parts` contains each individual library and source file in both
+    minified and unminified varieties.
 
 Getting Started
 ---------------
 
 Let's say you want to create a user search field that redirects to the user's
-profile when a result is selected. To start, make sure both jQuery and Marco
-Polo are included in your HTML:
-
-    <script src="jquery.min.js"></script>
-    <script src="jquery.marcopolo.min.js"></script>
-
-Next, add a text input, if you haven't already:
+profile when a result is selected. To start, add a text input, if you haven't
+already:
 
     <input type="text" name="userSearch" id="userSearch">
 
@@ -142,7 +170,7 @@ be used).
 
     _Default:_ true
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **compare** _boolean, string_
 
     Whether to compare the selected item against items displayed in the results
@@ -153,7 +181,7 @@ be used).
 
     _Default:_ false
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **data** _object, string_
 
     Additional data to be sent in the request query string. (Note: The query
@@ -163,7 +191,7 @@ be used).
 
     _Default:_ {}
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **delay** _integer_
 
     The number of milliseconds to delay before firing a request after a change
@@ -172,7 +200,7 @@ be used).
 
     _Default:_ 250
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **hideOnSelect** _boolean_
 
     Whether to hide the results list when an item is selected. Interesting
@@ -182,7 +210,7 @@ be used).
 
     _Default:_ true
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **highlight** _boolean_
 
     Whether to automatically highlight an item when the results list is
@@ -191,7 +219,7 @@ be used).
 
     _Default:_ true
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **label** _selector, jQuery object, DOM element, null_
 
     Positioning a label over an input is a common design pattern (sometimes
@@ -203,7 +231,7 @@ be used).
 
     _Default:_ null
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **minChars** _integer_
 
     The minimum number of characters required before a request is fired. See
@@ -212,14 +240,14 @@ be used).
 
     _Default:_ 1
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **param** _string_
 
     The name of the query string parameter that is set with the input value.
 
     _Default:_ q
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **required** _boolean_
 
     Whether to clear the input value when no selection is made from the results
@@ -228,7 +256,7 @@ be used).
 
     _Default:_ false
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **selectable** _selector_
 
     The list items to make selectable. For example, say you add the class
@@ -239,7 +267,7 @@ be used).
 
     _Default:_ *
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **selected** _object, null_
 
     Prime the input with a selected item. _onSelect_ is called just as if the
@@ -247,7 +275,7 @@ be used).
 
     _Default:_ null
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **submitOnEnter** _boolean_
 
     Whether to allow the browser's default behavior of submitting the form on
@@ -255,7 +283,7 @@ be used).
 
     _Default:_ false
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **url** _string, null_
 
     The URL to GET request for the results, which must be an array of strings
@@ -285,7 +313,7 @@ be used).
 
     _Return:_ _array_ of _objects_ to use as the data.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **formatError** ($item, jqXHR, textStatus, errorThrown)
     _function, null_
 
@@ -315,7 +343,7 @@ be used).
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               message.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **formatItem** (data, $item) _function_
 
     Format the display of each item in the results list. By default, the
@@ -338,7 +366,7 @@ be used).
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               display.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **formatMinChars** (minChars, $item) _function, null_
 
     Format the text that's displayed when the minimum number of characters
@@ -367,7 +395,7 @@ be used).
     _Return:_ _string_, _DOM element_, or _jQuery object_ to use as the
               message.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **formatNoResults** (q, $item) _function, null_
 
     Format the text that's displayed when there are no results returned for the
@@ -409,11 +437,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopoloblur_ event:
+    _Event:_ You can also bind to the _marcopoloblur_ event:
 
-        $(selector).bind('marcopoloblur', function (event) { … });
+        $(selector).on('marcopoloblur', function (event) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onChange** (q) _function, null_
 
     Called when the input value changes.
@@ -426,11 +454,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopolochange_ event:
+    _Event:_ You can also bind to the _marcopolochange_ event:
 
-        $(selector).bind('marcopolochange', function (event, q) { … });
+        $(selector).on('marcopolochange', function (event, q) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onError** ($item, jqXHR, textStatus, errorThrown)
     _function, null_
 
@@ -447,11 +475,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopoloerror_ event:
+    _Event:_ You can also bind to the _marcopoloerror_ event:
 
-        $(selector).bind('marcopoloerror', function (event, $item, jqXHR, textStatus, errorThrown) { … });
+        $(selector).on('marcopoloerror', function (event, $item, jqXHR, textStatus, errorThrown) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onFocus** () _function, null_
 
     Called when the text input receives focus. This is different than the
@@ -465,11 +493,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopolofocus_ event:
+    _Event:_ You can also bind to the _marcopolofocus_ event:
 
-        $(selector).bind('marcopolofocus', function (event) { … });
+        $(selector).on('marcopolofocus', function (event) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onMinChars** (minChars, $item) _function, null_
 
     Called when the minimum number of characters (specified with the _minChars_
@@ -484,11 +512,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopolominchars_ event:
+    _Event:_ You can also bind to the _marcopolominchars_ event:
 
-        $(selector).bind('marcopolominchars', function (event, minChars, $item) { … });
+        $(selector).on('marcopolominchars', function (event, minChars, $item) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onNoResults** (q, $item) _function, null_
 
     Called when there are no results returned for the request.
@@ -502,11 +530,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopolonoresults_ event:
+    _Event:_ You can also bind to the _marcopolonoresults_ event:
 
-        $(selector).bind('marcopolonoresults', function (event, q, $item) { … });
+        $(selector).on('marcopolonoresults', function (event, q, $item) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onRequestBefore** () _function, null_
 
     Called before the ajax request is made. Useful for showing a loading
@@ -518,11 +546,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopolorequestbefore_ event:
+    _Event:_ You can also bind to the _marcopolorequestbefore_ event:
 
-        $(selector).bind('marcopolorequestbefore', function (event) { … });
+        $(selector).on('marcopolorequestbefore', function (event) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onRequestAfter** (jqXHR, textStatus) _function, null_
 
     Called after the ajax request completes (success or error). Useful for
@@ -537,11 +565,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopolorequestafter_ event:
+    _Event:_ You can also bind to the _marcopolorequestafter_ event:
 
-        $(selector).bind('marcopolorequestafter', function (event, jqXHR, textStatus) { … });
+        $(selector).on('marcopolorequestafter', function (event, jqXHR, textStatus) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onResults** (data) _function, null_
 
     Called when there are results to be displayed.
@@ -554,11 +582,11 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopoloresults_ event:
+    _Event:_ You can also bind to the _marcopoloresults_ event:
 
-        $(selector).bind('marcopoloresults', function (event, data) { … });
+        $(selector).on('marcopoloresults', function (event, data) { … });
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **onSelect** (data, $item, initial) _function, null_
 
     Called when an item is selected from the results list or an initial value
@@ -579,9 +607,9 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Bind:_ You can also bind to the _marcopoloselect_ event:
+    _Event:_ You can also bind to the _marcopoloselect_ event:
 
-        $(selector).bind('marcopoloselect', function (event, data, $item, initial) { … });
+        $(selector).on('marcopoloselect', function (event, data, $item, initial) { … });
 
 Methods
 -------
@@ -600,7 +628,7 @@ Methods
 
     *   **q** _string_ New input value.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **destroy**
 
     Remove the autocomplete functionality and return the selected input
@@ -610,7 +638,7 @@ Methods
 
         $('#userSearch').marcoPolo('destroy');
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **list**
 
     Get the results list element.
@@ -619,7 +647,7 @@ Methods
 
         $('#userSearch').marcoPolo('list');
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **option**
 
     Get or set one or more options.
@@ -650,7 +678,7 @@ Methods
     *   **nameOrValues** _string, object_ Optional options to get or set.
     *   **value** _mixed_ Optional option value to set.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **search**
 
     Programmatically trigger a search request using the existing input value
@@ -670,7 +698,7 @@ Methods
 
     *   **q** _string_ Optional new input value to search on.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **select**
 
     Set the currently selected data, just as if the user clicked or keyboard
@@ -684,7 +712,7 @@ Methods
 
     *   **data** _string, object_ Data of the selected item.
 
-    ---------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
 *   **selected**
 
     Get the currently selected data (_string_, _object_, or _null_ if not set).

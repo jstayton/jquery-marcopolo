@@ -1,12 +1,12 @@
 /*!
- * <%= pkg.title %> v<%= pkg.version %>
+ * Marco Polo v1.7.3
  *
- * <%= pkg.description %>
+ * A jQuery autocomplete plugin for the discerning developer.
  *
- * <%= pkg.homepage %>
+ * https://github.com/jstayton/jquery-marcopolo
  *
- * Copyright <%= grunt.template.today('yyyy') %> by <%= pkg.author.name %>
- * Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %>
+ * Copyright 2012 by Justin Stayton
+ * Licensed MIT
  */
 (function (factory) {
   // Register as an AMD module, compatible with script loaders like RequireJS.
