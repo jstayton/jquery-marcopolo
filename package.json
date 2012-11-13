@@ -22,7 +22,7 @@
       "url": "https://github.com/jstayton/jquery-marcopolo/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "./dist/jquery.marcopolo.min.js",
+  "main": "./build/jquery.marcopolo.min.js",
   "dependencies": {
     "jquery": ">=1.4.3"
   },
