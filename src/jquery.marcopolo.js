@@ -9,6 +9,8 @@
  * Licensed <%= _.pluck(pkg.licenses, 'type').join(', ') %>
  */
 (function (factory) {
+  'use strict';
+
   // Register as an AMD module, compatible with script loaders like RequireJS.
   // Source: https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
   if (typeof define === 'function' && define.amd) {
@@ -49,24 +51,24 @@
       // Format the text that's displayed when the ajax request fails. Setting
       // this option to 'null' or returning 'false' suppresses the message from
       // being displayed.
-      formatError: function ($item, jqXHR, textStatus, errorThrown) {
+      formatError: function () {
         return '<em>Your search could not be completed at this time.</em>';
       },
       // Format the display of each item in the results list.
-      formatItem: function (data, $item) {
+      formatItem: function (data) {
         return data.title || data.name;
       },
       // Format the text that's displayed when the minimum number of characters
       // (specified with the 'minChars' option) hasn't been reached. Setting
       // this option to 'null' or returning 'false' suppresses the message from
       // being displayed.
-      formatMinChars: function (minChars, $item) {
+      formatMinChars: function (minChars) {
         return '<em>Your search must be at least <strong>' + minChars + '</strong> characters.</em>';
       },
       // Format the text that's displayed when there are no results returned
       // for the requested input value. Setting this option to 'null' or
       // returning 'false' suppresses the message from being displayed.
-      formatNoResults: function (q, $item) {
+      formatNoResults: function (q) {
         return '<em>No results for <strong>' + q + '</strong>.</em>';
       },
       // Whether to hide the results list when an item is selected. The results
@@ -108,7 +110,7 @@
       onResults: null,
       // Called when an item is selected from the results list or passed in
       // through the 'selected' option.
-      onSelect: function (data, $item) {
+      onSelect: function (data) {
         this.val(data.title || data.name);
       },
       // The name of the query string parameter that is set with the input
@@ -393,7 +395,7 @@
       }
     },
 
-    // Initialize the input with a selected value from the 'data-selected' 
+    // Initialize the input with a selected value from the 'data-selected'
     // attribute (JSON) or standard 'value' attribute (string).
     _initSelected: function () {
       var self = this,
@@ -596,7 +598,7 @@
               break;
           }
         })
-        .bind('keyup.marcoPolo', function (key) {
+        .bind('keyup.marcoPolo', function () {
           // Check if the input value has changed. This prevents keys like CTRL
           // and SHIFT from firing a new request.
           if ($input.val() !== self.value) {
@@ -945,7 +947,6 @@
     _buildSuccessList: function (q, data) {
       var self = this,
           $input = self.$input,
-          $list = self.$list,
           options = self.options;
 
       self._emptyList();
@@ -1155,8 +1156,6 @@
     // Dismiss the results list and cancel any pending activity.
     _dismiss: function () {
       var self = this,
-          $input = self.$input,
-          $list = self.$list,
           options = self.options;
 
       self.focusPseudo = false;

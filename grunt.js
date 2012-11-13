@@ -66,9 +66,9 @@ module.exports = function (grunt) {
         quotmark: 'single',
         regexp: true,
         undef: true,
-        // unused: true,
-        // strict: true,
-        // trailing: true,
+        unused: true,
+        strict: true,
+        trailing: true,
         maxlen: 120,
         // Relaxing
         boss: true,
