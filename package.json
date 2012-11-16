@@ -1,21 +1,28 @@
 {
   "name": "jquery-marcopolo",
+  "version": "1.7.4",
   "title": "Marco Polo",
   "description": "A jQuery autocomplete plugin for the discerning developer.",
-  "version": "1.7.4",
+  "keywords": [
+    "jquery",
+    "plugin",
+    "autocomplete",
+    "autosuggest",
+    "search",
+    "ajax",
+    "input",
+    "select"
+  ],
   "homepage": "https://github.com/jstayton/jquery-marcopolo",
   "author": {
     "name": "Justin Stayton",
-    "email": "justin.stayton@gmail.com",
     "url": "http://justinstayton.com"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/jstayton/jquery-marcopolo.git"
   },
-  "bugs": {
-    "url": "https://github.com/jstayton/jquery-marcopolo/issues"
-  },
+  "bugs": "https://github.com/jstayton/jquery-marcopolo/issues",
   "licenses": [
     {
       "type": "MIT",
@@ -26,5 +33,9 @@
   "dependencies": {
     "jquery": ">=1.4.3"
   },
-  "keywords": ["jquery", "plugin", "autocomplete", "autosuggest", "search", "ajax", "input", "select"]
+  "devDependencies": {
+    "grunt": "~0.3.17",
+    "grunt-bump": "~0.0.1",
+    "grunt-pkg-to-component": "~1.0.0"
+  }
 }

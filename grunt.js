@@ -4,6 +4,9 @@ module.exports = function (grunt) {
 
   var bannerRegex = /\/\*[\s\S]*?\*\//;
 
+  grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('grunt-pkg-to-component');
+
   grunt.initConfig({
     pkg: '<json:package.json>',
     meta: {
@@ -82,8 +85,9 @@ module.exports = function (grunt) {
         define: true
       }
     },
-    uglify: {}
+    uglify: {},
+    component: {}
   });
 
-  grunt.registerTask('default', 'lint min concat');
+  grunt.registerTask('default', 'lint min concat component');
 };
