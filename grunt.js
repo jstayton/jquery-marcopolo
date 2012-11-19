@@ -49,7 +49,12 @@ module.exports = function (grunt) {
       files: '<config:lint.files>',
       tasks: 'lint'
     },
-    component: {},
+    component: {
+      main: './build/jquery.marcopolo.min.js',
+      dependencies: {
+        'jquery': '>=1.4.3'
+      }
+    },
     jasmine: {
       all: 'test/runner.html'
     },

@@ -29,10 +29,7 @@
       "url": "https://github.com/jstayton/jquery-marcopolo/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "./build/jquery.marcopolo.min.js",
-  "dependencies": {
-    "jquery": ">=1.4.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.3.17",
     "grunt-bump": "~0.0.1",
