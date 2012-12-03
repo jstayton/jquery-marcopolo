@@ -16,6 +16,8 @@ Developed by [Justin Stayton](http://twitter.com/jstayton) while at
 *   [Examples](http://jstayton.github.com/jquery-marcopolo)
 *   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
 
+[![Build Status](https://secure.travis-ci.org/jstayton/jquery-marcopolo.png?branch=master)](https://travis-ci.org/jstayton/jquery-marcopolo)
+
 Features
 --------
 
