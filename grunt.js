@@ -94,7 +94,8 @@ module.exports = function (grunt) {
     uglify: {}
   });
 
-  grunt.registerTask('default', 'lint jasmine min concat component');
+  grunt.registerTask('test', 'lint jasmine');
+  grunt.registerTask('default', 'test min concat component');
 
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-jasmine-task');
