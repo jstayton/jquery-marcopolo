@@ -100,9 +100,69 @@ module.exports = function (grunt) {
         testname: 'jquery-marcopolo',
         tags: ['master'],
         urls: ['<config:jasmine.all>'],
-        browsers: [{
-          browserName: 'internet explorer'
-        }]
+        browsers: (function () {
+          var compact = {
+                'chrome': {
+                  '*': ['Windows 2008', 'Mac 10.8', 'Linux']
+                },
+                'firefox': {
+                  '3.6': 'Windows 2012',
+                  '*': ['Windows 2012', 'Mac 10.6', 'Linux']
+                },
+                'internet explorer': {
+                  '6': 'Windows 2003',
+                  '7': 'Windows 2003',
+                  '8': 'Windows 2003',
+                  '9': 'Windows 2008',
+                  '10': 'Windows 2012'
+                },
+                'ipad': {
+                  '5.1': 'Mac 10.8',
+                  '6': 'Mac 10.8'
+                },
+                'iphone': {
+                  '5.1': 'Mac 10.8',
+                  '6': 'Mac 10.8'
+                },
+                'opera': {
+                  '11': 'Windows 2008',
+                  '12': ['Windows 2008', 'Linux']
+                },
+                'safari': {
+                  '5': ['Windows 2008', 'Mac 10.6'],
+                  '6': 'Mac 10.8'
+                }
+              },
+              expanded = [];
+
+          Object.keys(compact).forEach(function (browserName) {
+            Object.keys(compact[browserName]).forEach(function (version) {
+              var platforms = compact[browserName][version];
+
+              if (!Array.isArray(platforms)) {
+                platforms = [platforms];
+              }
+
+              platforms.forEach(function (platform) {
+                var options = {
+                      browserName: browserName
+                    };
+
+                if (version !== '*') {
+                  options.version = version;
+                }
+
+                if (platform) {
+                  options.platform = platform;
+                }
+
+                expanded.push(options);
+              });
+            });
+          });
+
+          return expanded;
+        })()
       }
     },
     server: {
@@ -115,6 +175,8 @@ module.exports = function (grunt) {
   var testTasks = ['lint', 'server', 'jasmine'];
 
   if (sauceLabsKey) {
+    grunt.loadNpmTasks('grunt-saucelabs');
+
     testTasks.push('saucelabs-jasmine');
   }
 
@@ -124,5 +186,4 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-pkg-to-component');
-  grunt.loadNpmTasks('grunt-saucelabs');
 };
