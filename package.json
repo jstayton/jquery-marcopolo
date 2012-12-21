@@ -34,7 +34,8 @@
     "grunt": "~0.3.17",
     "grunt-bump": "~0.0.1",
     "grunt-jasmine-task": "~0.2.3",
-    "grunt-pkg-to-component": "~1.0.0"
+    "grunt-pkg-to-component": "~1.0.0",
+    "grunt-saucelabs": "~1.2.1"
   },
   "scripts": {
     "test": "grunt test"

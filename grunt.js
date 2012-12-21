@@ -2,7 +2,8 @@
 module.exports = function (grunt) {
   'use strict';
 
-  var bannerRegex = /\/\*[\s\S]*?\*\//;
+  var bannerRegex = /\/\*[\s\S]*?\*\//,
+      sauceLabsKey = process.env.SAUCE_LABS_KEY;
 
   grunt.initConfig({
     pkg: '<json:package.json>',
@@ -56,7 +57,7 @@ module.exports = function (grunt) {
       }
     },
     jasmine: {
-      all: 'test/runner.html'
+      all: 'http://localhost:8000/test/runner.html'
     },
     jshint: {
       options: {
@@ -88,16 +89,40 @@ module.exports = function (grunt) {
         jquery: true
       },
       globals: {
-        define: true
+        define: true,
+        process: true
       }
+    },
+    'saucelabs-jasmine': {
+      all: {
+        username: 'justinstayton',
+        key: sauceLabsKey,
+        testname: 'jquery-marcopolo',
+        tags: ['master'],
+        urls: ['<config:jasmine.all>'],
+        browsers: [{
+          browserName: 'internet explorer'
+        }]
+      }
+    },
+    server: {
+      port: 8000,
+      base: '.'
     },
     uglify: {}
   });
 
-  grunt.registerTask('test', 'lint jasmine');
+  var testTasks = ['lint', 'server', 'jasmine'];
+
+  if (sauceLabsKey) {
+    testTasks.push('saucelabs-jasmine');
+  }
+
+  grunt.registerTask('test', testTasks.join(' '));
   grunt.registerTask('default', 'test min concat component');
 
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-pkg-to-component');
+  grunt.loadNpmTasks('grunt-saucelabs');
 };
