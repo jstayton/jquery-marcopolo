@@ -97,6 +97,7 @@ module.exports = function (grunt) {
         testname: 'jquery-marcopolo',
         tags: ['master'],
         urls: ['<config:jasmine.all>'],
+        concurrency: 3,
         browsers: (function () {
           var compact = {
                 'chrome': {
@@ -159,8 +160,7 @@ module.exports = function (grunt) {
           });
 
           return expanded;
-        })(),
-        onTestComplete: function () { }
+        })()
       }
     },
     server: {
