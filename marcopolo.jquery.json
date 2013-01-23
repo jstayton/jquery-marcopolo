@@ -1,0 +1,33 @@
+{
+  "name": "marcopolo",
+  "version": "1.7.4",
+  "title": "Marco Polo",
+  "description": "A jQuery autocomplete plugin for the discerning developer.",
+  "keywords": [
+    "jquery",
+    "plugin",
+    "autocomplete",
+    "autosuggest",
+    "search",
+    "ajax",
+    "input",
+    "select"
+  ],
+  "homepage": "https://github.com/jstayton/jquery-marcopolo",
+  "author": {
+    "name": "Justin Stayton",
+    "url": "http://justinstayton.com"
+  },
+  "docs": "https://github.com/jstayton/jquery-marcopolo/blob/master/README.md",
+  "demo": "http://jstayton.github.com/jquery-marcopolo",
+  "bugs": "https://github.com/jstayton/jquery-marcopolo/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jstayton/jquery-marcopolo/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.4.3"
+  }
+}
