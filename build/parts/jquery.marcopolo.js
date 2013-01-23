@@ -1,11 +1,11 @@
 /*!
- * Marco Polo v1.7.4
+ * Marco Polo v1.7.5
  *
  * A jQuery autocomplete plugin for the discerning developer.
  *
  * https://github.com/jstayton/jquery-marcopolo
  *
- * Copyright 2012 by Justin Stayton
+ * Copyright 2013 by Justin Stayton
  * Licensed MIT
  */
 (function (factory) {
