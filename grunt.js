@@ -52,7 +52,7 @@ module.exports = function (grunt) {
     component: {
       main: './build/jquery.marcopolo.min.js',
       dependencies: {
-        'jquery': '>=1.4.3'
+        jquery: '>=1.4.3'
       }
     },
     jasmine: {
@@ -91,6 +91,13 @@ module.exports = function (grunt) {
         define: true,
         process: true
       }
+    },
+    jqueryjson: {
+      dependencies: {
+        jquery: '>=1.4.3'
+      },
+      docs: 'https://github.com/jstayton/jquery-marcopolo/blob/master/README.md',
+      demo: 'http://jstayton.github.com/jquery-marcopolo'
     },
     'saucelabs-jasmine': {
       all: {
@@ -179,9 +186,10 @@ module.exports = function (grunt) {
   }
 
   grunt.registerTask('test', testTasks.join(' '));
-  grunt.registerTask('default', 'test min concat component');
+  grunt.registerTask('default', 'test min concat component jquery-json');
 
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-jasmine-task');
+  grunt.loadNpmTasks('grunt-jquery-json');
   grunt.loadNpmTasks('grunt-pkg-to-component');
 };

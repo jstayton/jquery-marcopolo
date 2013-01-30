@@ -18,8 +18,6 @@
     "name": "Justin Stayton",
     "url": "http://justinstayton.com"
   },
-  "docs": "https://github.com/jstayton/jquery-marcopolo/blob/master/README.md",
-  "demo": "http://jstayton.github.com/jquery-marcopolo",
   "bugs": "https://github.com/jstayton/jquery-marcopolo/issues",
   "licenses": [
     {
@@ -29,5 +27,7 @@
   ],
   "dependencies": {
     "jquery": ">=1.4.3"
-  }
+  },
+  "docs": "https://github.com/jstayton/jquery-marcopolo/blob/master/README.md",
+  "demo": "http://jstayton.github.com/jquery-marcopolo"
 }
