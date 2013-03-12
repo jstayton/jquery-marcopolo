@@ -31,7 +31,7 @@
   ],
   "devDependencies": {
     "grunt": "~0.3.17",
-    "grunt-bump": "~0.0.1",
+    "grunt-bump": "0.0.1",
     "grunt-jasmine-task": "~0.2.3",
     "grunt-jquery-json": "~0.2.1",
     "grunt-pkg-to-component": "~1.0.1",
