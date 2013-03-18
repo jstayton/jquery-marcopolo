@@ -73,7 +73,8 @@ installed, Bower can install Marco Polo with a single command:
 
 #### Manually
 
-Copy the desired files from the `build` directory to your codebase.
+*   [Minified without comments](https://raw.github.com/jstayton/jquery-marcopolo/master/build/jquery.marcopolo.min.js)
+*   [Full source with comments](https://raw.github.com/jstayton/jquery-marcopolo/master/build/jquery.marcopolo.js)
 
 ### Include
 
