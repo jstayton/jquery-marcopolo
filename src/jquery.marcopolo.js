@@ -956,7 +956,7 @@
         data = options.formatData.call($input, data);
       }
 
-      if ($.isEmptyObject(data)) {
+      if ($.isEmptyObject(data) || data.length === 0) {
         self._buildNoResultsList(q);
       }
       else {
