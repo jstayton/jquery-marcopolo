@@ -16,7 +16,7 @@ Developed by [Justin Stayton](http://twitter.com/jstayton) while at
 [Monk Development](http://monkdev.com) for the
 [Ekklesia 360](http://ekklesia360.com) CMS.
 
-*   [Examples](http://jstayton.github.com/jquery-marcopolo)
+*   [Examples](http://jstayton.github.io/jquery-marcopolo)
 *   [Release Notes](https://github.com/jstayton/jquery-marcopolo/wiki/Release-Notes)
 
 Features
@@ -66,8 +66,8 @@ Installation
 
 #### Bower
 
-[Bower](http://twitter.github.com/bower) is a package manager for the web. Once
-installed, Bower can install Marco Polo with a single command:
+[Bower](http://bower.io) is a package manager for the web. Once installed, Bower
+can install Marco Polo with a single command:
 
     bower install jquery-marcopolo
 
