@@ -1079,9 +1079,9 @@
       // Requests are buffered the number of ms specified by the 'delay'
       // setting. This helps prevent an ajax request for every keystroke.
       self.timer = setTimeout(function () {
-        var param = {},
+        var data = {},
+            param = {},
             params = {},
-            otherParams = {},
             cacheKey,
             $inputParent = $();
 
@@ -1092,14 +1092,14 @@
           return self;
         }
 
-        // Add the query to the additional data to be sent with the request.
+        // Get the additional data to send with the request.
+        data = $.isFunction(options.data) ? options.data.call(self.$input, q) : options.data;
+
+        // Add the query to be sent with the request.
         param[options.param] = q;
 
-        // Extract additional params from options.data, if possible as function.
-        otherParams = $.isFunction(options.data) ? options.data.call($input, q) : options.data;
-
-        // Merge all parameters together
-        params = $.extend({}, otherParams, param);
+        // Merge all parameters together.
+        params = $.extend({}, data, param);
 
         // Build the request URL with query string data to use as the cache
         // key.

@@ -188,9 +188,8 @@ be used).
 
     _Default:_ {}
 
-    When a function is provided it is evaluated for every request, thus allows
-    to provide dynamic additional query arguments. The provided function must
-    return an _object_.
+    When a function is used, it's called for every request, allowing the data to
+    be dynamic. An _object_ must be returned.
 
     _Parameters:_
 
@@ -198,7 +197,7 @@ be used).
 
     _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
 
-    _Return:_ _object_ to use as the additional data to be sent in the query.
+    _Return:_ _object_ of additional data.
 
     ----------------------------------------------------------------------------
 *   **delay** _integer_
