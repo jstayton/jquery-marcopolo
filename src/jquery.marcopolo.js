@@ -317,7 +317,9 @@
         return;
       }
 
-      self.$input.val(q);
+      if (q !== self.$input.val()) {
+        self.$input.val(q);
+      }
 
       // Reset the currently selected data.
       self.selectedData = null;
