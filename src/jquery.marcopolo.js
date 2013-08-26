@@ -1081,6 +1081,7 @@
       self.timer = setTimeout(function () {
         var param = {},
             params = {},
+            otherParams = {},
             cacheKey,
             $inputParent = $();
 
@@ -1094,7 +1095,11 @@
         // Add the query to the additional data to be sent with the request.
         param[options.param] = q;
 
-        params = $.extend({}, options.data, param);
+        // Extract additional params from options.data, if possible as function.
+        otherParams = $.isFunction(options.data) ? options.data.call($input, q) : options.data;
+
+        // Merge all parameters together
+        params = $.extend({}, otherParams, param);
 
         // Build the request URL with query string data to use as the cache
         // key.

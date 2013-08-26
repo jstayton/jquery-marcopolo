@@ -179,7 +179,7 @@ be used).
     _Default:_ false
 
     ----------------------------------------------------------------------------
-*   **data** _object, string_
+*   **data** _object, string, function_
 
     Additional data to be sent in the request query string. (Note: The query
     string parameter that is set with the input value (_param_ option) will
@@ -187,6 +187,18 @@ be used).
     exists.)
 
     _Default:_ {}
+
+    When a function is provided it is evaluated for every request, thus allows
+    to provide dynamic additional query arguments. The provided function must
+    return an _object_.
+
+    _Parameters:_
+
+    *   **q** _string_ Requested input value.
+
+    _this:_ _jQuery object_ Text input (no need to wrap like _$(this)_).
+
+    _Return:_ _object_ to use as the additional data to be sent in the query.
 
     ----------------------------------------------------------------------------
 *   **delay** _integer_
