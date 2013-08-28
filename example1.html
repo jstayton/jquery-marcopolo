@@ -4,24 +4,28 @@
     <title>Marco Polo &mdash; Example 1</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="js/jquery.ui.widget.min.js"></script>
     <script src="js/jquery.marcopolo.js"></script>
     <script>
       $(function () {
         $('#location').marcoPolo({
           data: {
-            max_results: '20'
+            client_id: 'EDCKXTNEIH2UJLGHEXUUAKPLNRHCNS0URQZNCLH10YZQLBES',
+            client_secret: 'XUBZENVXNNK1ORU4GDDO22B0TBZZWW2QXW3H3O5CYC0JQ0RU',
+            intent: 'global',
+            limit: 20,
+            v: '20130826'
           },
           formatData: function (data) {
-            return data.result.places;
+            return data.response.venues;
           },
           formatItem: function (data, $item) {
-            return data.full_name;
+            return data.name;
           },
           minChars: 3,
           onSelect: function (data, $item) {
-            this.val(data.full_name);
+            this.val(data.name);
           },
           param: 'query',
           required: true
@@ -33,7 +37,7 @@
     <div id="container">
       <h1>Marco Polo</h1>
       <h2>Try it Out</h2>
-      <form action="https://api.twitter.com/1/geo/search.json?callback=?" method="get">
+      <form action="https://api.foursquare.com/v2/venues/search?callback=?" method="get">
         <input type="text" name="location" id="location">
         <img src="img/busy.gif">
       </form>

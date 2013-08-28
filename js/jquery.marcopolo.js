@@ -317,7 +317,9 @@
         return;
       }
 
-      self.$input.val(q);
+      if (q !== self.$input.val()) {
+        self.$input.val(q);
+      }
 
       // Reset the currently selected data.
       self.selectedData = null;
@@ -956,7 +958,7 @@
         data = options.formatData.call($input, data);
       }
 
-      if ($.isEmptyObject(data)) {
+      if (!data || data.length === 0 || $.isEmptyObject(data)) {
         self._buildNoResultsList(q);
       }
       else {
@@ -1077,7 +1079,8 @@
       // Requests are buffered the number of ms specified by the 'delay'
       // setting. This helps prevent an ajax request for every keystroke.
       self.timer = setTimeout(function () {
-        var param = {},
+        var data = {},
+            param = {},
             params = {},
             cacheKey,
             $inputParent = $();
@@ -1089,10 +1092,14 @@
           return self;
         }
 
-        // Add the query to the additional data to be sent with the request.
+        // Get the additional data to send with the request.
+        data = $.isFunction(options.data) ? options.data.call(self.$input, q) : options.data;
+
+        // Add the query to be sent with the request.
         param[options.param] = q;
 
-        params = $.extend({}, options.data, param);
+        // Merge all parameters together.
+        params = $.extend({}, data, param);
 
         // Build the request URL with query string data to use as the cache
         // key.
