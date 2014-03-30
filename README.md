@@ -129,9 +129,9 @@ the `q` parameter to find and return the matching users in JSON format:
 ```json
 [
   {
-    "first_name": "James',
-    "last_name": "Butler',
-    "profile_url": "/users/78749',
+    "first_name": "James",
+    "last_name": "Butler",
+    "profile_url": "/users/78749",
     …
   },
   {
