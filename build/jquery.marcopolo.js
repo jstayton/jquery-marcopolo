@@ -272,13 +272,13 @@ $.Widget.prototype = {
 })( jQuery );
 
 /*!
- * Marco Polo v1.8.0
+ * Marco Polo v1.8.1
  *
  * A jQuery autocomplete plugin for the discerning developer.
  *
  * https://github.com/jstayton/jquery-marcopolo
  *
- * Copyright 2013 by Justin Stayton
+ * Copyright 2014 by Justin Stayton
  * Licensed MIT
  */
 (function (factory) {
@@ -801,9 +801,6 @@ $.Widget.prototype = {
 
             // Highlight the first item.
             case self.keys.HOME:
-              // The default scrolls the page to the top.
-              key.preventDefault();
-
               // Show the list if it has been hidden by ESC.
               self
                 ._showList()
@@ -813,9 +810,6 @@ $.Widget.prototype = {
 
             // Highlight the last item.
             case self.keys.END:
-              // The default scrolls the page to the bottom.
-              key.preventDefault();
-
               // Show the list if it has been hidden by ESC.
               self
                 ._showList()
