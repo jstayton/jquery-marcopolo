@@ -528,9 +528,6 @@
 
             // Highlight the first item.
             case self.keys.HOME:
-              // The default scrolls the page to the top.
-              key.preventDefault();
-
               // Show the list if it has been hidden by ESC.
               self
                 ._showList()
@@ -540,9 +537,6 @@
 
             // Highlight the last item.
             case self.keys.END:
-              // The default scrolls the page to the bottom.
-              key.preventDefault();
-
               // Show the list if it has been hidden by ESC.
               self
                 ._showList()
