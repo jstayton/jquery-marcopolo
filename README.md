@@ -1,3 +1,7 @@
+**NOTICE:** _This project is deprecated and no longer maintained. If you'd like
+to continue supporting a forked version, please reach out on Twitter
+([@kidjustino](https://twitter.com/kidjustino)) to have it listed here._
+
 Marco Polo
 ==========
 
@@ -12,7 +16,7 @@ and antiquated coding patterns. Surely something as fundamental as autocomplete
 could — really, _should_ — be done better. And now it has. Meet Marco Polo. For
 the discerning developer.
 
-Developed by [Justin Stayton](http://twitter.com/jstayton) while at
+Developed by [Justin Stayton](http://justinstayton.com) while at
 [Monk Development](http://monkdev.com) for the
 [Ekklesia 360](http://ekklesia360.com) CMS.
 
@@ -802,7 +806,7 @@ Feedback
 
 Please open an issue to request a feature or submit a bug report. Or even if
 you just want to provide some feedback, I'd love to hear. I'm also available on
-Twitter as [@jstayton](http://twitter.com/jstayton).
+Twitter as [@kidjustino](https://twitter.com/kidjustino).
 
 Contributing
 ------------
